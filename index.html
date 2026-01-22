@@ -147,17 +147,18 @@
         }
 
         /* Help Section */
-        .help-section {
+        /* Accordion Help System */
+        .help-accordion {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 8px;
         }
 
         .help-item {
-            padding: 12px;
             background: var(--bg-input);
             border: 1px solid var(--border-light);
             border-radius: 10px;
+            overflow: hidden;
             transition: all 0.3s ease;
         }
 
@@ -165,20 +166,144 @@
             border-color: rgba(255, 107, 53, 0.3);
         }
 
-        .help-item-title {
-            font-weight: 600;
-            color: var(--primary);
-            font-size: 0.85rem;
-            margin-bottom: 6px;
+        .help-item.active {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(255, 107, 53, 0.15);
+        }
+
+        .help-item-header {
             display: flex;
             align-items: center;
-            gap: 6px;
+            justify-content: space-between;
+            padding: 10px 12px;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s ease;
+        }
+
+        .help-item-header:hover {
+            background: rgba(255, 107, 53, 0.05);
+        }
+
+        .help-item-title {
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+        }
+
+        .help-item.active .help-item-title {
+            color: var(--primary);
+        }
+
+        .help-item-arrow {
+            font-size: 10px;
+            color: var(--text-muted);
+            transition: transform 0.3s ease;
+        }
+
+        .help-item.active .help-item-arrow {
+            transform: rotate(180deg);
+            color: var(--primary);
+        }
+
+        .help-item-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .help-item.active .help-item-content {
+            max-height: 200px;
         }
 
         .help-item-text {
+            padding: 0 12px 12px;
             color: var(--text-muted);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             line-height: 1.5;
+        }
+
+        .help-item-action {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 8px;
+            padding: 6px 10px;
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: 6px;
+            color: var(--primary);
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .help-item-action:hover {
+            background: rgba(255, 107, 53, 0.2);
+            transform: translateX(3px);
+        }
+
+        .help-item-action svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        /* Field Highlight Animation */
+        .field-highlight {
+            animation: highlightPulse 2s ease-in-out;
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.5), 0 0 20px rgba(255, 107, 53, 0.3) !important;
+            border-color: var(--primary) !important;
+        }
+
+        @keyframes highlightPulse {
+            0%, 100% { box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.5), 0 0 20px rgba(255, 107, 53, 0.3); }
+            50% { box-shadow: 0 0 0 6px rgba(255, 107, 53, 0.3), 0 0 30px rgba(255, 107, 53, 0.4); }
+        }
+
+        /* Floating Arrow Indicator */
+        .field-arrow {
+            position: fixed;
+            z-index: 1000;
+            pointer-events: none;
+            animation: arrowBounce 0.8s ease-in-out infinite;
+        }
+
+        .field-arrow svg {
+            width: 32px;
+            height: 32px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        @keyframes arrowBounce {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-8px); }
+        }
+
+        /* Collapse all button */
+        .help-collapse-all {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 6px;
+            background: transparent;
+            border: 1px dashed var(--border-light);
+            border-radius: 6px;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 4px;
+        }
+
+        .help-collapse-all:hover {
+            border-color: var(--primary);
+            color: var(--primary);
         }
 
         /* CTA Section */
@@ -914,35 +1039,113 @@
                     <span class="sidebar-title-icon">&#128218;</span>
                     Como Usar
                 </h3>
-                <div class="help-section">
-                    <div class="help-item">
-                        <div class="help-item-title">&#128196; Divisão por Caracteres</div>
-                        <div class="help-item-text">Define o número máximo de caracteres por bloco. Ideal para legendas de vídeo (490 chars é o padrão para ElevenLabs/TTS).</div>
+                <div class="help-accordion" id="helpAccordion">
+                    <div class="help-item" data-target="#charDivisionRow">
+                        <div class="help-item-header">
+                            <div class="help-item-title">&#128196; Divisão por Caracteres</div>
+                            <span class="help-item-arrow">&#9660;</span>
+                        </div>
+                        <div class="help-item-content">
+                            <div class="help-item-text">
+                                Define o número máximo de caracteres por bloco. Ideal para legendas de vídeo (490 chars é o padrão para ElevenLabs/TTS).
+                                <div class="help-item-action" data-target="#charDivisionRow">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                    Ver campo
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="help-item">
-                        <div class="help-item-title">&#128209; Divisão por Palavras</div>
-                        <div class="help-item-text">Divide o texto por quantidade de palavras. Útil para scripts de narração e roteiros.</div>
+                    <div class="help-item" data-target="#wordDivisionRow">
+                        <div class="help-item-header">
+                            <div class="help-item-title">&#128209; Divisão por Palavras</div>
+                            <span class="help-item-arrow">&#9660;</span>
+                        </div>
+                        <div class="help-item-content">
+                            <div class="help-item-text">
+                                Divide o texto por quantidade de palavras. Útil para scripts de narração e roteiros.
+                                <div class="help-item-action" data-target="#wordDivisionRow">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                    Ver campo
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="help-item">
-                        <div class="help-item-title">&#9881; Opções Avançadas</div>
-                        <div class="help-item-text">Filtrar números do texto, ignorar palavras específicas, ou limpar automaticamente após exportar.</div>
+                    <div class="help-item" data-target="#toggleOptionsBtn">
+                        <div class="help-item-header">
+                            <div class="help-item-title">&#9881; Opções Avançadas</div>
+                            <span class="help-item-arrow">&#9660;</span>
+                        </div>
+                        <div class="help-item-content">
+                            <div class="help-item-text">
+                                Filtrar números do texto, ignorar palavras específicas, ou limpar automaticamente após exportar.
+                                <div class="help-item-action" data-target="#toggleOptionsBtn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                    Ver campo
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="help-item">
-                        <div class="help-item-title">&#128337; C/S (Caracteres/Segundo)</div>
-                        <div class="help-item-text">Taxa de leitura para calcular duração. 14 c/s é a média humana. Usado para gerar timestamps no SRT.</div>
+                    <div class="help-item" data-target="#readingRate">
+                        <div class="help-item-header">
+                            <div class="help-item-title">&#128337; C/S (Caracteres/Segundo)</div>
+                            <span class="help-item-arrow">&#9660;</span>
+                        </div>
+                        <div class="help-item-content">
+                            <div class="help-item-text">
+                                Taxa de leitura para calcular duração. 14 c/s é a média humana. Usado para gerar timestamps no SRT.
+                                <div class="help-item-action" data-target="#readingRate">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                    Ver campo
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="help-item">
-                        <div class="help-item-title">&#128190; Exportar SRT + TXT</div>
-                        <div class="help-item-text">Gera arquivo .srt com timestamps prontos para importar em editores de vídeo, mais um .txt organizado.</div>
+                    <div class="help-item" data-target="#exportBtn">
+                        <div class="help-item-header">
+                            <div class="help-item-title">&#128190; Exportar SRT + TXT</div>
+                            <span class="help-item-arrow">&#9660;</span>
+                        </div>
+                        <div class="help-item-content">
+                            <div class="help-item-text">
+                                Gera arquivo .srt com timestamps prontos para importar em editores de vídeo, mais um .txt organizado.
+                                <div class="help-item-action" data-target="#exportBtn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                    Ver campo
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="help-item">
-                        <div class="help-item-title">&#128279; Juntar SRTs</div>
-                        <div class="help-item-text">Selecione vários arquivos SRT e junte em um único arquivo com timestamps ajustados automaticamente.</div>
+                    <div class="help-item" data-target="#srtFiles">
+                        <div class="help-item-header">
+                            <div class="help-item-title">&#128279; Juntar SRTs</div>
+                            <span class="help-item-arrow">&#9660;</span>
+                        </div>
+                        <div class="help-item-content">
+                            <div class="help-item-text">
+                                Selecione vários arquivos SRT e junte em um único arquivo com timestamps ajustados automaticamente.
+                                <div class="help-item-action" data-target="#srtFiles">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                    Ver campo
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="help-item">
-                        <div class="help-item-title">&#9999; Blocos Editáveis</div>
-                        <div class="help-item-text">Após dividir, clique em qualquer bloco para editar o texto. Use os botões para copiar, adicionar ou excluir blocos.</div>
+                    <div class="help-item" data-target="#blocksCard">
+                        <div class="help-item-header">
+                            <div class="help-item-title">&#9999; Blocos Editáveis</div>
+                            <span class="help-item-arrow">&#9660;</span>
+                        </div>
+                        <div class="help-item-content">
+                            <div class="help-item-text">
+                                Após dividir, clique em qualquer bloco para editar o texto. Use os botões para copiar, adicionar ou excluir blocos.
+                                <div class="help-item-action" data-target="#textInput">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                    Ver área de texto
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <button class="help-collapse-all" id="collapseAllHelp">&#8593; Fechar todos</button>
                 </div>
             </div>
 
@@ -2190,6 +2393,117 @@
 
         restoreState();
         setInterval(saveState, 5000);
+    });
+    </script>
+
+    <!-- Help Accordion Interactive Script -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const accordion = document.getElementById('helpAccordion');
+        const collapseAllBtn = document.getElementById('collapseAllHelp');
+
+        if (!accordion) return;
+
+        // Arrow indicator element
+        let arrowIndicator = null;
+
+        function createArrowIndicator() {
+            const arrow = document.createElement('div');
+            arrow.className = 'field-arrow';
+            arrow.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M13 5l7 7-7 7" stroke="#ff6b35" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5 12h15" stroke="#ff6b35" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+            `;
+            arrow.style.display = 'none';
+            document.body.appendChild(arrow);
+            return arrow;
+        }
+
+        arrowIndicator = createArrowIndicator();
+
+        // Toggle accordion item
+        accordion.querySelectorAll('.help-item-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.closest('.help-item');
+                const wasActive = item.classList.contains('active');
+
+                // Close all
+                accordion.querySelectorAll('.help-item').forEach(i => i.classList.remove('active'));
+
+                // Open clicked if it wasn't active
+                if (!wasActive) {
+                    item.classList.add('active');
+                }
+
+                hideArrow();
+            });
+        });
+
+        // Handle "Ver campo" buttons
+        accordion.querySelectorAll('.help-item-action').forEach(action => {
+            action.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const targetSelector = action.dataset.target;
+                if (!targetSelector) return;
+
+                const targetElement = document.querySelector(targetSelector);
+                if (!targetElement) return;
+
+                // Remove previous highlights
+                document.querySelectorAll('.field-highlight').forEach(el => {
+                    el.classList.remove('field-highlight');
+                });
+
+                // Scroll to element
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                // Add highlight
+                setTimeout(() => {
+                    targetElement.classList.add('field-highlight');
+                    showArrowAtElement(targetElement);
+
+                    // Remove highlight after animation
+                    setTimeout(() => {
+                        targetElement.classList.remove('field-highlight');
+                        hideArrow();
+                    }, 2500);
+                }, 300);
+            });
+        });
+
+        // Show arrow pointing to element
+        function showArrowAtElement(element) {
+            if (!arrowIndicator) return;
+
+            const rect = element.getBoundingClientRect();
+            const arrowX = rect.left - 40;
+            const arrowY = rect.top + (rect.height / 2) - 16;
+
+            arrowIndicator.style.left = `${arrowX}px`;
+            arrowIndicator.style.top = `${arrowY}px`;
+            arrowIndicator.style.display = 'block';
+        }
+
+        function hideArrow() {
+            if (arrowIndicator) {
+                arrowIndicator.style.display = 'none';
+            }
+        }
+
+        // Collapse all button
+        if (collapseAllBtn) {
+            collapseAllBtn.addEventListener('click', () => {
+                accordion.querySelectorAll('.help-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                hideArrow();
+            });
+        }
+
+        // Hide arrow on scroll
+        window.addEventListener('scroll', hideArrow);
     });
     </script>
 </body>
