@@ -12,22 +12,25 @@
             --bg-dark: #0a0a0f;
             --bg-card: #141419;
             --bg-card-hover: #1a1a22;
+            --bg-input: #0d0d12;
             --primary: #FF6B35;
             --primary-light: #FF8C5A;
             --primary-dark: #E85A2A;
+            --success: #22c55e;
+            --success-dark: #16a34a;
+            --danger: #ef4444;
             --text-primary: #f5f5f7;
             --text-secondary: #a1a1aa;
             --text-muted: #71717a;
             --border-light: rgba(255, 255, 255, 0.08);
+            --border-focus: rgba(255, 107, 53, 0.5);
             --gradient-primary: linear-gradient(135deg, #FF6B35 0%, #E85A2A 100%);
             --gradient-glow: radial-gradient(ellipse at center, rgba(255, 107, 53, 0.15) 0%, transparent 70%);
+            --shadow-primary: 0 4px 20px rgba(255, 107, 53, 0.3);
+            --shadow-primary-lg: 0 8px 30px rgba(255, 107, 53, 0.4);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -40,10 +43,9 @@
         /* Header */
         .header {
             text-align: center;
-            padding: 60px 20px 40px;
+            padding: 50px 20px 30px;
             position: relative;
         }
-
         .header::before {
             content: '';
             position: absolute;
@@ -55,14 +57,12 @@
             background: var(--gradient-glow);
             pointer-events: none;
         }
-
         .logo {
             display: inline-flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
-
         .logo-icon {
             width: 48px;
             height: 48px;
@@ -73,7 +73,6 @@
             justify-content: center;
             font-size: 24px;
         }
-
         h1 {
             font-family: 'DM Serif Display', serif;
             font-size: 2.5rem;
@@ -83,10 +82,9 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
         .subtitle {
             color: var(--text-secondary);
-            font-size: 1.1rem;
+            font-size: 1rem;
             margin-top: 8px;
         }
 
@@ -101,223 +99,241 @@
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border-light);
-            border-radius: 24px;
-            padding: 32px;
-            margin-bottom: 24px;
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 20px;
             transition: all 0.3s ease;
         }
-
         .card:hover {
             background: var(--bg-card-hover);
-            transform: translateY(-2px);
         }
-
         .card-title {
             font-family: 'DM Serif Display', serif;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: var(--text-primary);
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
-
         .card-title-icon {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             background: var(--gradient-primary);
-            border-radius: 10px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 16px;
         }
 
         /* Form Elements */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
+        .form-group { margin-bottom: 18px; }
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px;
+            gap: 14px;
         }
-
         @media (max-width: 600px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            h1 {
-                font-size: 1.8rem;
-            }
+            .form-row { grid-template-columns: 1fr; }
+            h1 { font-size: 1.8rem; }
         }
-
         label {
             display: block;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
             color: var(--text-secondary);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
-
         input[type="text"],
         input[type="number"],
         textarea {
             width: 100%;
-            padding: 14px 18px;
-            font-size: 1rem;
+            padding: 12px 16px;
+            font-size: 0.95rem;
             font-family: inherit;
-            background: var(--bg-dark);
+            background: var(--bg-input);
             border: 1px solid var(--border-light);
-            border-radius: 12px;
+            border-radius: 10px;
             color: var(--text-primary);
             transition: all 0.3s ease;
         }
-
-        input[type="text"]:focus,
-        input[type="number"]:focus,
-        textarea:focus {
+        input:focus, textarea:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.15);
         }
-
-        input[type="text"]::placeholder,
-        input[type="number"]::placeholder,
-        textarea::placeholder {
+        input::placeholder, textarea::placeholder {
             color: var(--text-muted);
         }
-
         textarea {
             resize: vertical;
-            min-height: 180px;
+            min-height: 160px;
         }
 
-        /* Range Slider */
-        .slider-group {
+        /* Options Panel */
+        .options-panel {
+            background: var(--bg-input);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 18px;
+            display: none;
+        }
+        .options-panel.show { display: block; }
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+        }
+        .option-item {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 8px;
         }
-
-        input[type="range"] {
-            flex: 1;
-            height: 6px;
-            -webkit-appearance: none;
-            appearance: none;
-            background: var(--bg-dark);
-            border-radius: 3px;
-            outline: none;
+        .option-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
         }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            background: var(--gradient-primary);
-            border-radius: 50%;
+        .option-item label {
+            margin-bottom: 0;
+            font-size: 0.85rem;
             cursor: pointer;
-            transition: transform 0.2s ease;
+        }
+        .option-item input[type="text"] {
+            width: 120px;
+            padding: 6px 10px;
+            font-size: 0.8rem;
         }
 
-        input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.1);
+        /* Division Rows */
+        .division-section { margin-bottom: 18px; }
+        .division-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
         }
-
-        .slider-value {
-            min-width: 60px;
-            padding: 8px 12px;
-            background: var(--bg-dark);
-            border-radius: 8px;
-            font-size: 0.9rem;
+        .division-row.active {
+            border-color: var(--primary);
+            background: rgba(255, 107, 53, 0.05);
+        }
+        .division-label {
             font-weight: 600;
+            color: var(--text-secondary);
+            min-width: 90px;
+            font-size: 0.9rem;
+        }
+        .division-row.active .division-label {
             color: var(--primary);
+        }
+        .division-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            flex-wrap: wrap;
+        }
+        .input-mini {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .input-mini label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+        .input-mini input {
+            width: 70px;
+            padding: 8px 10px;
             text-align: center;
+            font-weight: 600;
         }
 
         /* Buttons */
         .btn-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 24px;
+            gap: 10px;
+            margin-top: 18px;
         }
-
         .btn {
-            padding: 14px 28px;
-            font-size: 1rem;
+            padding: 12px 24px;
+            font-size: 0.95rem;
             font-weight: 600;
             font-family: inherit;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: inline-flex;
             align-items: center;
             gap: 8px;
         }
-
         .btn-primary {
             background: var(--gradient-primary);
             color: white;
-            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+            box-shadow: var(--shadow-primary);
         }
-
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.4);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-primary-lg);
         }
-
         .btn-secondary {
             background: transparent;
             color: var(--text-primary);
             border: 1px solid var(--border-light);
         }
-
         .btn-secondary:hover {
             background: var(--bg-card-hover);
             border-color: var(--primary);
             color: var(--primary);
         }
-
-        .btn-export {
-            background: var(--bg-dark);
-            color: var(--text-secondary);
-            border: 1px solid var(--border-light);
-        }
-
-        .btn-export:hover {
-            background: var(--primary);
+        .btn-success {
+            background: linear-gradient(135deg, var(--success) 0%, var(--success-dark) 100%);
             color: white;
-            border-color: var(--primary);
+        }
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);
+            color: white;
+        }
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
         /* Stats */
         .stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 14px;
+            margin-bottom: 20px;
         }
-
         .stat-item {
-            background: var(--bg-dark);
+            background: var(--bg-input);
             border: 1px solid var(--border-light);
-            border-radius: 16px;
-            padding: 20px;
+            border-radius: 14px;
+            padding: 16px;
             text-align: center;
         }
-
         .stat-value {
             font-family: 'DM Serif Display', serif;
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: var(--primary);
         }
-
         .stat-label {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
             margin-top: 4px;
         }
@@ -326,161 +342,172 @@
         .blocks-container {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
         }
-
         .block {
             background: var(--bg-card);
             border: 1px solid var(--border-light);
-            border-radius: 16px;
-            padding: 24px;
+            border-radius: 14px;
+            padding: 18px;
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
         }
-
         .block::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
+            height: 3px;
             background: var(--gradient-primary);
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-
         .block:hover {
-            transform: translateY(-4px);
+            transform: translateY(-3px);
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
         }
-
-        .block:hover::before {
-            opacity: 1;
-        }
-
+        .block:hover::before { opacity: 1; }
         .block-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px;
         }
-
         .block-title {
             font-weight: 600;
             color: var(--primary);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
-
         .block-meta {
             display: flex;
-            gap: 16px;
-            font-size: 0.85rem;
+            gap: 14px;
+            font-size: 0.8rem;
             color: var(--text-muted);
         }
-
+        .block-controls {
+            display: flex;
+            gap: 6px;
+        }
         .block-content {
+            background: var(--bg-input);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 14px;
             color: var(--text-secondary);
             line-height: 1.7;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
+            min-height: 60px;
+            transition: all 0.3s ease;
+        }
+        .block-content:focus {
+            outline: none;
+            border-color: var(--primary);
+            color: var(--text-primary);
+        }
+        .block-content.edited {
+            border-color: var(--success);
+        }
+        .btn-block {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            font-size: 14px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .btn-copy {
-            padding: 8px 16px;
-            font-size: 0.85rem;
-            font-family: inherit;
-            background: var(--bg-dark);
+        /* Merge Section */
+        .merge-section {
+            background: var(--bg-input);
+            border: 1px dashed var(--border-light);
+            border-radius: 12px;
+            padding: 16px;
+        }
+        .merge-section input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            background: var(--bg-card);
             border: 1px solid var(--border-light);
             border-radius: 8px;
             color: var(--text-secondary);
             cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-copy:hover {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .btn-copy.copied {
-            background: #22c55e;
-            border-color: #22c55e;
-            color: white;
         }
 
         /* Footer */
         .footer {
             text-align: center;
-            padding: 40px 20px;
+            padding: 30px 20px;
             color: var(--text-muted);
-            font-size: 0.95rem;
         }
-
         .footer-quote {
             font-family: 'DM Serif Display', serif;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: var(--text-secondary);
             font-style: italic;
         }
-
         .footer-brand {
-            margin-top: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            margin-top: 12px;
         }
-
         .footer-brand a {
             color: var(--primary);
             text-decoration: none;
             font-weight: 500;
         }
-
-        .footer-brand a:hover {
-            text-decoration: underline;
-        }
+        .footer-brand a:hover { text-decoration: underline; }
 
         /* Error */
         .error {
             background: rgba(239, 68, 68, 0.1);
             border: 1px solid rgba(239, 68, 68, 0.3);
             color: #ef4444;
-            padding: 16px 24px;
-            border-radius: 12px;
-            margin-bottom: 24px;
+            padding: 14px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
             text-align: center;
             animation: shake 0.5s ease;
         }
-
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
             25% { transform: translateX(-5px); }
             75% { transform: translateX(5px); }
         }
 
-        /* Preview hidden by default */
-        #preview {
-            display: none;
+        /* Toggle Button */
+        .toggle-btn {
+            background: var(--bg-input);
+            border: 1px solid var(--border-light);
+            color: var(--text-secondary);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
+        .toggle-btn:hover, .toggle-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        #preview { display: none; }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="logo">
             <div class="logo-icon">&#9889;</div>
             <h1>Otimizador Gold</h1>
         </div>
-        <p class="subtitle">Divida textos em blocos otimizados para legendas e audiovisual</p>
+        <p class="subtitle">Divisor de texto inteligente para legendas e audiovisual</p>
     </header>
 
-    <!-- Main Container -->
     <main class="container">
         <!-- Input Card -->
         <div class="card">
@@ -494,9 +521,26 @@
                     <label for="fileName">Nome do arquivo</label>
                     <input type="text" id="fileName" placeholder="Ex: meu-video-legenda">
                 </div>
-                <div class="form-group">
-                    <label for="charCount">Caracteres por bloco</label>
-                    <input type="number" id="charCount" value="490" min="50" max="1000">
+                <div class="form-group" style="display: flex; align-items: flex-end; gap: 10px;">
+                    <button class="toggle-btn" id="toggleOptionsBtn">&#9881; Opcoes</button>
+                </div>
+            </div>
+
+            <!-- Options Panel -->
+            <div id="optionsPanel" class="options-panel">
+                <div class="options-grid">
+                    <div class="option-item">
+                        <input type="checkbox" id="filterNumbers">
+                        <label for="filterNumbers">Filtrar numeros</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="clearAfterExport">
+                        <label for="clearAfterExport">Limpar apos exportar</label>
+                    </div>
+                    <div class="option-item">
+                        <label>Ignorar:</label>
+                        <input type="text" id="ignoreText" placeholder="texto...">
+                    </div>
                 </div>
             </div>
 
@@ -505,28 +549,42 @@
                 <textarea id="textInput" rows="8" placeholder="Cole seu texto aqui..."></textarea>
             </div>
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Espacamento entre audios</label>
-                    <div class="slider-group">
-                        <input type="range" id="speed" min="0.5" max="2" step="0.1" value="1">
-                        <span class="slider-value" id="speedValue">1.0x</span>
+            <!-- Division Controls -->
+            <div class="division-section">
+                <label>Modo de Divisao</label>
+
+                <div class="division-row" id="charDivisionRow">
+                    <span class="division-label">&#128196; Caracteres</span>
+                    <div class="division-controls">
+                        <div class="input-mini">
+                            <label>Max</label>
+                            <input type="number" id="charCount" value="490" min="50" max="2000">
+                        </div>
+                        <div class="input-mini">
+                            <label>c/s</label>
+                            <input type="number" id="readingRate" value="14" min="10" max="50">
+                        </div>
+                        <button class="btn btn-primary btn-sm" id="divideByCharsBtn">Dividir</button>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>Caracteres por segundo</label>
-                    <div class="slider-group">
-                        <input type="range" id="readingRate" min="10" max="50" step="1" value="14">
-                        <span class="slider-value" id="readingRateValue">14 c/s</span>
+
+                <div class="division-row" id="wordDivisionRow">
+                    <span class="division-label">&#128209; Palavras</span>
+                    <div class="division-controls">
+                        <div class="input-mini">
+                            <label>Max</label>
+                            <input type="number" id="wordCount" value="50" min="10" max="500">
+                        </div>
+                        <button class="btn btn-secondary btn-sm" id="divideByWordsBtn">Dividir</button>
                     </div>
                 </div>
             </div>
 
             <div class="btn-group">
-                <button class="btn btn-primary" onclick="divideTextByChars()">
-                    &#9986; Dividir Texto
+                <button class="btn btn-success" id="exportBtn" disabled>
+                    &#128190; Exportar SRT + TXT
                 </button>
-                <button class="btn btn-secondary" onclick="resetForm()">
+                <button class="btn btn-secondary" id="resetBtn">
                     &#128260; Limpar
                 </button>
             </div>
@@ -556,14 +614,6 @@
                     <div class="stat-label">Duracao</div>
                 </div>
             </div>
-            <div class="btn-group">
-                <button class="btn btn-export" onclick="exportToSrt()">
-                    &#128196; Exportar SRT
-                </button>
-                <button class="btn btn-export" onclick="exportToPdf()">
-                    &#128209; Exportar PDF
-                </button>
-            </div>
         </div>
 
         <!-- Blocks Card -->
@@ -571,14 +621,31 @@
             <h2 class="card-title">
                 <span class="card-title-icon">&#128230;</span>
                 Blocos Gerados
+                <button class="btn btn-secondary btn-sm" id="addBlockBtn" style="margin-left: auto;">+ Bloco</button>
             </h2>
             <div id="blocks" class="blocks-container"></div>
+        </div>
+
+        <!-- Merge SRT Card -->
+        <div class="card">
+            <h2 class="card-title">
+                <span class="card-title-icon">&#128279;</span>
+                Juntar Arquivos SRT
+            </h2>
+            <div class="merge-section">
+                <label for="srtFiles">Selecione os arquivos SRT:</label>
+                <input type="file" id="srtFiles" accept=".srt" multiple>
+                <div class="btn-group" style="margin-top: 12px;">
+                    <button class="btn btn-primary btn-sm" id="mergeSrtsBtn">Juntar SRTs</button>
+                    <button class="btn btn-secondary btn-sm" id="cancelMergeBtn">Cancelar</button>
+                </div>
+                <div id="mergeStatus" style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted);"></div>
+            </div>
         </div>
 
         <div id="preview"></div>
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
         <p class="footer-quote">"O sonho e a coisa mais real que existe!"</p>
         <p class="footer-brand">
@@ -587,126 +654,423 @@
     </footer>
 
     <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // ========================================
+        // MULTI-LANGUAGE ABBREVIATIONS DATABASE
+        // ========================================
+        const ABBREVIATIONS = {
+            en: ['mr', 'mrs', 'ms', 'dr', 'prof', 'sr', 'jr', 'vs', 'etc', 'al', 'eg', 'ie', 'inc', 'ltd', 'co', 'corp', 'dept', 'est', 'vol', 'rev', 'ed', 'pp', 'approx', 'govt', 'intl', 'natl', 'jan', 'feb', 'mar', 'apr', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec', 'fig', 'ref', 'sec', 'ch', 'pg'],
+            pt: ['sr', 'sra', 'srta', 'dr', 'dra', 'prof', 'profa', 'eng', 'adv', 'av', 'etc', 'ex', 'obs', 'vol', 'cap', 'ed', 'num', 'tel', 'cel', 'ltda', 'cia', 'gov', 'min', 'sec', 'dep', 'jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez', 'fig', 'tab', 'ref', 'art'],
+            es: ['sr', 'sra', 'srta', 'dr', 'dra', 'prof', 'profa', 'ing', 'lic', 'arq', 'etc', 'ej', 'vol', 'cap', 'ed', 'tel', 'cel', 'gov', 'min', 'sec', 'dip', 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic', 'fig', 'tab', 'ref', 'art']
+        };
+
+        const CONJUNCTIONS = {
+            en: ['and', 'or', 'but', 'nor', 'for', 'yet', 'so', 'because', 'although', 'while', 'when', 'if', 'unless', 'until', 'since', 'after', 'before', 'however', 'therefore', 'moreover', 'furthermore', 'meanwhile', 'otherwise', 'nevertheless', 'then', 'also'],
+            pt: ['e', 'ou', 'mas', 'porem', 'contudo', 'todavia', 'entretanto', 'nem', 'pois', 'logo', 'portanto', 'assim', 'entao', 'porque', 'que', 'se', 'caso', 'embora', 'quando', 'enquanto', 'onde', 'como', 'alem disso', 'ou seja', 'isto e'],
+            es: ['y', 'e', 'o', 'u', 'pero', 'sino', 'mas', 'aunque', 'sin embargo', 'ni', 'pues', 'luego', 'por lo tanto', 'asi', 'entonces', 'porque', 'que', 'si', 'cuando', 'mientras', 'donde', 'como', 'ademas', 'es decir']
+        };
+
+        const ALL_ABBREVIATIONS = new Set([...ABBREVIATIONS.en, ...ABBREVIATIONS.pt, ...ABBREVIATIONS.es].map(a => a.toLowerCase().replace(/\./g, '')));
+        const ALL_CONJUNCTIONS = new Set([...CONJUNCTIONS.en, ...CONJUNCTIONS.pt, ...CONJUNCTIONS.es].map(c => c.toLowerCase()));
+
+        // Constants
         const PAUSE_TIME = 0.9;
+        const TOLERANCE_PERCENT = 0.15;
+        const MIN_BLOCK_PERCENT = 0.5;
 
-        document.getElementById('speed').addEventListener('input', function() {
-            document.getElementById('speedValue').innerText = this.value + 'x';
+        // State
+        let currentDivisionMode = null;
+
+        // DOM Elements
+        const toggleOptionsBtn = document.getElementById('toggleOptionsBtn');
+        const optionsPanel = document.getElementById('optionsPanel');
+        const textInput = document.getElementById('textInput');
+        const fileNameInput = document.getElementById('fileName');
+        const charCountInput = document.getElementById('charCount');
+        const wordCountInput = document.getElementById('wordCount');
+        const readingRateInput = document.getElementById('readingRate');
+        const filterNumbersCheckbox = document.getElementById('filterNumbers');
+        const clearAfterExportCheckbox = document.getElementById('clearAfterExport');
+        const ignoreTextInput = document.getElementById('ignoreText');
+        const blocksDiv = document.getElementById('blocks');
+        const exportBtn = document.getElementById('exportBtn');
+        const charDivisionRow = document.getElementById('charDivisionRow');
+        const wordDivisionRow = document.getElementById('wordDivisionRow');
+
+        // Toggle Options
+        toggleOptionsBtn.addEventListener('click', () => {
+            optionsPanel.classList.toggle('show');
+            toggleOptionsBtn.classList.toggle('active');
         });
 
-        document.getElementById('readingRate').addEventListener('input', function() {
-            document.getElementById('readingRateValue').innerText = this.value + ' c/s';
+        // Division Buttons
+        document.getElementById('divideByCharsBtn').addEventListener('click', () => {
+            divideTextByChars();
+            setDivisionMode('chars');
         });
 
-        function copyToClipboard(text, button) {
-            navigator.clipboard.writeText(text).then(() => {
-                if (button) {
-                    button.classList.add('copied');
-                    button.textContent = 'Copiado!';
-                    setTimeout(() => {
-                        button.classList.remove('copied');
-                        button.textContent = 'Copiar';
-                    }, 2000);
+        document.getElementById('divideByWordsBtn').addEventListener('click', () => {
+            divideTextByWords();
+            setDivisionMode('words');
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', resetForm);
+        document.getElementById('exportBtn').addEventListener('click', exportBoth);
+        document.getElementById('addBlockBtn').addEventListener('click', () => createBlock(''));
+
+        // SRT Merge
+        document.getElementById('mergeSrtsBtn').addEventListener('click', mergeSrtFiles);
+        document.getElementById('cancelMergeBtn').addEventListener('click', () => {
+            document.getElementById('srtFiles').value = '';
+            document.getElementById('mergeStatus').textContent = '';
+        });
+
+        function setDivisionMode(mode) {
+            currentDivisionMode = mode;
+            charDivisionRow.classList.toggle('active', mode === 'chars');
+            wordDivisionRow.classList.toggle('active', mode === 'words');
+            exportBtn.disabled = false;
+        }
+
+        // ========================================
+        // TEXT PROCESSING
+        // ========================================
+        function formatText(text) {
+            return text
+                .replace(/["«»""]/g, "'")
+                .replace(/['']/g, "'")
+                .replace(/[—–]/g, " - ")
+                .replace(/\.{3,}/g, "...")
+                .replace(/…/g, "...")
+                .replace(/\n/g, " ")
+                .replace(/\s+([.,!?;:])/g, "$1")
+                .replace(/([.,!?;:])([a-zA-ZáàâãéèêíìîóòôõúùûñçÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÑÇ])/g, "$1 $2")
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+
+        function isAbbreviation(word) {
+            if (!word) return false;
+            const cleaned = word.toLowerCase().replace(/[.,!?;:]+$/, '').replace(/\./g, '');
+            return ALL_ABBREVIATIONS.has(cleaned);
+        }
+
+        function splitIntoSentences(text) {
+            const sentences = [];
+            let currentSentence = '';
+            let i = 0;
+
+            while (i < text.length) {
+                const char = text[i];
+                currentSentence += char;
+
+                if (/[.!?]/.test(char)) {
+                    let j = i + 1;
+                    while (j < text.length && /[.!?]/.test(text[j])) {
+                        currentSentence += text[j];
+                        j++;
+                    }
+
+                    let whitespace = '';
+                    while (j < text.length && /\s/.test(text[j])) {
+                        whitespace += text[j];
+                        j++;
+                    }
+
+                    const wordsBefore = currentSentence.trim().split(/\s+/);
+                    const lastWord = wordsBefore[wordsBefore.length - 1];
+                    const nextChar = text[j];
+
+                    const isRealBreak = !isAbbreviation(lastWord) &&
+                                        !(nextChar && /[a-záàâãéèêíìîóòôõúùûñç\d]/.test(nextChar)) &&
+                                        whitespace.length > 0;
+
+                    if (isRealBreak && currentSentence.trim().length > 0) {
+                        sentences.push(currentSentence.trim());
+                        currentSentence = '';
+                        i = j - 1;
+                    }
                 }
+                i++;
+            }
+
+            if (currentSentence.trim()) {
+                sentences.push(currentSentence.trim());
+            }
+
+            return sentences.length > 0 ? sentences : [text];
+        }
+
+        function findBestCutPoint(text, maxLength) {
+            const maxWithTolerance = Math.floor(maxLength * (1 + TOLERANCE_PERCENT));
+            const cutCandidates = [];
+
+            // Sentence endings
+            let match;
+            const sentenceEndRegex = /[.!?]+\s+/g;
+            while ((match = sentenceEndRegex.exec(text)) !== null) {
+                const pos = match.index + match[0].length;
+                if (pos <= maxWithTolerance) {
+                    cutCandidates.push({ pos, priority: 1 });
+                }
+            }
+
+            // Clause separators
+            const clauseRegex = /[;:]\s+/g;
+            while ((match = clauseRegex.exec(text)) !== null) {
+                const pos = match.index + match[0].length;
+                if (pos <= maxWithTolerance) {
+                    cutCandidates.push({ pos, priority: 2 });
+                }
+            }
+
+            // Commas
+            const commaRegex = /,\s+/g;
+            while ((match = commaRegex.exec(text)) !== null) {
+                const pos = match.index + match[0].length;
+                if (pos <= maxWithTolerance) {
+                    cutCandidates.push({ pos, priority: 3 });
+                }
+            }
+
+            // Spaces
+            const spaceRegex = /\s+/g;
+            while ((match = spaceRegex.exec(text)) !== null) {
+                const pos = match.index + match[0].length;
+                if (pos <= maxWithTolerance) {
+                    cutCandidates.push({ pos, priority: 4 });
+                }
+            }
+
+            if (cutCandidates.length === 0) {
+                return { pos: maxLength };
+            }
+
+            cutCandidates.sort((a, b) => {
+                if (a.priority === b.priority) {
+                    return Math.abs(maxLength - a.pos) - Math.abs(maxLength - b.pos);
+                }
+                return a.priority - b.priority;
             });
+
+            const bestPriority = cutCandidates[0].priority;
+            const bestCandidates = cutCandidates.filter(c => c.priority === bestPriority);
+
+            let bestCandidate = bestCandidates[0];
+            for (const candidate of bestCandidates) {
+                if (candidate.pos >= maxLength * 0.7 && candidate.pos <= maxWithTolerance) {
+                    if (candidate.pos > bestCandidate.pos) {
+                        bestCandidate = candidate;
+                    }
+                }
+            }
+
+            return bestCandidate;
         }
 
-        function exportToSrt() {
-            const speed = parseFloat(document.getElementById('speed').value);
-            const blocks = document.querySelectorAll('.block');
-            let srtContent = '';
-            blocks.forEach((block, index) => {
-                const content = block.querySelector('.block-content');
-                const startTime = adjustTimestamp(content.dataset.startTime, speed);
-                const endTime = adjustTimestamp(content.dataset.endTime, speed);
-                srtContent += `${index + 1}\n${startTime} --> ${endTime}\n${content.innerText.trim()}\n\n`;
-            });
-            downloadSrtFile(srtContent.trim());
+        function splitLongSentence(sentence, maxLength) {
+            const parts = [];
+            let remaining = sentence;
+
+            while (remaining.length > maxLength) {
+                const cutPoint = findBestCutPoint(remaining, maxLength);
+                if (cutPoint.pos <= 0 || cutPoint.pos >= remaining.length) {
+                    parts.push(remaining.substring(0, maxLength).trim());
+                    remaining = remaining.substring(maxLength).trim();
+                } else {
+                    parts.push(remaining.substring(0, cutPoint.pos).trim());
+                    remaining = remaining.substring(cutPoint.pos).trim();
+                }
+            }
+
+            if (remaining.trim()) {
+                parts.push(remaining.trim());
+            }
+
+            return parts;
         }
 
-        function adjustTimestamp(timestamp, speed) {
-            if (!timestamp) return '00:00:00,000';
+        // ========================================
+        // DIVISION FUNCTIONS
+        // ========================================
+        function getTextBlocksWithCustomLength(text, maxLength) {
+            const blocks = [];
+            let currentBlock = "";
+            const maxWithTolerance = Math.floor(maxLength * (1 + TOLERANCE_PERCENT));
+            const minBlockLength = Math.floor(maxLength * MIN_BLOCK_PERCENT);
 
-            const parts = timestamp.split(':');
-            const hours = parseInt(parts[0]);
-            const minutes = parseInt(parts[1]);
-            const secondsParts = parts[2].split(',');
-            const seconds = parseInt(secondsParts[0]);
-            const milliseconds = parseInt(secondsParts[1]);
+            const formattedText = formatText(text);
+            const sentences = splitIntoSentences(formattedText);
 
-            let totalMilliseconds = ((hours * 3600 + minutes * 60 + seconds) * 1000 + milliseconds) * speed;
+            const flushCurrentBlock = () => {
+                if (currentBlock.trim()) {
+                    blocks.push(currentBlock.trim());
+                    currentBlock = "";
+                }
+            };
 
-            const newHours = Math.floor(totalMilliseconds / 3600000);
-            totalMilliseconds %= 3600000;
-            const newMinutes = Math.floor(totalMilliseconds / 60000);
-            totalMilliseconds %= 60000;
-            const newSeconds = Math.floor(totalMilliseconds / 1000);
-            const newMilliseconds = totalMilliseconds % 1000;
+            for (const sentence of sentences) {
+                const trimmedSentence = sentence.trim();
+                if (!trimmedSentence) continue;
 
-            return `${String(newHours).padStart(2, '0')}:${String(newMinutes).padStart(2, '0')}:${String(newSeconds).padStart(2, '0')},${String(Math.floor(newMilliseconds)).padStart(3, '0')}`;
+                if (trimmedSentence.length > maxWithTolerance) {
+                    flushCurrentBlock();
+                    const splitParts = splitLongSentence(trimmedSentence, maxLength);
+                    for (let i = 0; i < splitParts.length - 1; i++) {
+                        blocks.push(splitParts[i]);
+                    }
+                    currentBlock = splitParts[splitParts.length - 1] + " ";
+                    continue;
+                }
+
+                const potentialBlock = currentBlock + trimmedSentence;
+
+                if (potentialBlock.length > maxLength) {
+                    if (currentBlock.trim().length >= minBlockLength) {
+                        flushCurrentBlock();
+                        currentBlock = trimmedSentence + " ";
+                    } else {
+                        if (potentialBlock.length <= maxWithTolerance) {
+                            currentBlock = potentialBlock + " ";
+                            flushCurrentBlock();
+                        } else {
+                            flushCurrentBlock();
+                            currentBlock = trimmedSentence + " ";
+                        }
+                    }
+                } else {
+                    currentBlock += trimmedSentence + " ";
+                    if (currentBlock.length >= maxLength) {
+                        flushCurrentBlock();
+                    }
+                }
+            }
+
+            flushCurrentBlock();
+            return blocks.filter(b => b.length > 0);
         }
 
-        function downloadSrtFile(content) {
-            const fileName = document.getElementById('fileName').value || 'subtitles';
-            const blob = new Blob([content], { type: 'text/srt' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `${fileName}.srt`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+        function getTextBlocksByWords(text, wordsPerBlock) {
+            const blocks = [];
+            let currentWords = [];
+            let currentCount = 0;
+            const maxWithTolerance = Math.floor(wordsPerBlock * (1 + TOLERANCE_PERCENT));
+            const minBlockWords = Math.floor(wordsPerBlock * MIN_BLOCK_PERCENT);
+
+            const formattedText = formatText(text);
+            const sentences = splitIntoSentences(formattedText);
+
+            const flushCurrent = () => {
+                if (currentWords.length > 0) {
+                    blocks.push(currentWords.join(' ').trim());
+                    currentWords = [];
+                    currentCount = 0;
+                }
+            };
+
+            for (const sentence of sentences) {
+                const tokens = sentence.trim().split(/\s+/).filter(Boolean);
+                if (tokens.length === 0) continue;
+
+                const sentenceWordCount = tokens.length;
+
+                if (currentCount + sentenceWordCount <= maxWithTolerance) {
+                    currentWords.push(...tokens);
+                    currentCount += sentenceWordCount;
+                    if (currentCount >= wordsPerBlock) {
+                        flushCurrent();
+                    }
+                } else {
+                    if (currentCount >= minBlockWords) {
+                        flushCurrent();
+                    }
+
+                    if (sentenceWordCount <= maxWithTolerance) {
+                        currentWords.push(...tokens);
+                        currentCount = sentenceWordCount;
+                        if (currentCount >= wordsPerBlock) {
+                            flushCurrent();
+                        }
+                    } else {
+                        const sentenceText = tokens.join(' ');
+                        const avgCharsPerWord = sentenceText.length / sentenceWordCount;
+                        const targetChars = Math.floor(wordsPerBlock * avgCharsPerWord);
+                        const parts = splitLongSentence(sentenceText, targetChars);
+
+                        for (const part of parts) {
+                            const partTokens = part.split(/\s+/).filter(Boolean);
+                            if (currentCount + partTokens.length <= maxWithTolerance) {
+                                currentWords.push(...partTokens);
+                                currentCount += partTokens.length;
+                            } else {
+                                if (currentCount >= minBlockWords) {
+                                    flushCurrent();
+                                }
+                                currentWords.push(...partTokens);
+                                currentCount = partTokens.length;
+                            }
+                            if (currentCount >= wordsPerBlock) {
+                                flushCurrent();
+                            }
+                        }
+                    }
+                }
+            }
+
+            flushCurrent();
+            return blocks.filter(b => b.length > 0);
         }
 
-        function createBlock(type, content, startTime, endTime, index) {
-            const blockDiv = document.createElement('div');
-            blockDiv.classList.add('block');
-
-            const charCount = content.length;
-            const wordCount = content.split(/\s+/).filter(w => w.length > 0).length;
-            const escapedContent = content.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-
-            blockDiv.innerHTML = `
-                <div class="block-header">
-                    <span class="block-title">${type}</span>
-                    <div class="block-meta">
-                        <span>${charCount} caracteres</span>
-                        <span>${wordCount} palavras</span>
-                    </div>
-                    <button class="btn-copy" onclick="copyToClipboard('${escapedContent}', this)">Copiar</button>
-                </div>
-                <div class="block-content" data-start-time="${formatTimestamp(startTime)}" data-end-time="${formatTimestamp(endTime)}">
-                    ${content}
-                </div>
-            `;
-            document.getElementById('blocks').appendChild(blockDiv);
+        // ========================================
+        // UI HANDLERS
+        // ========================================
+        function applyFilters(text) {
+            const ignored = ignoreTextInput.value.trim();
+            if (ignored) {
+                const regex = new RegExp(ignored.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+                text = text.replace(regex, '');
+            }
+            if (filterNumbersCheckbox.checked) {
+                text = text.replace(/\d+/g, '');
+            }
+            return text;
         }
 
         function divideTextByChars() {
-            if (!validateCharCount()) return;
-            const charCount = document.getElementById('charCount').value;
-            const text = document.getElementById('textInput').value;
-
-            if (!text.trim()) {
-                showError("Por favor, insira um texto para dividir.");
+            const charCount = parseInt(charCountInput.value, 10);
+            if (isNaN(charCount) || charCount <= 0) {
+                showError("Por favor, insira um numero valido de caracteres.");
                 return;
             }
 
-            const totalChars = text.length;
-            const totalWords = text.split(/\s+/).filter(word => word.length > 0).length;
+            let text = applyFilters(textInput.value);
+            const blocks = getTextBlocksWithCustomLength(text, charCount);
+            renderBlocks(blocks, text);
+        }
 
-            const blocks = getTextBlocksWithCustomLength(text, parseInt(charCount));
-            document.getElementById('blocks').innerHTML = '';
+        function divideTextByWords() {
+            const wordCount = parseInt(wordCountInput.value, 10);
+            if (isNaN(wordCount) || wordCount <= 0) {
+                showError("Por favor, insira um numero valido de palavras.");
+                return;
+            }
 
-            let currentTime = 0;
-            const readingRate = parseInt(document.getElementById('readingRate').value);
+            let text = applyFilters(textInput.value);
+            const blocks = getTextBlocksByWords(text, wordCount);
+            renderBlocks(blocks, text);
+        }
 
+        function renderBlocks(blocks, originalText) {
+            blocksDiv.innerHTML = '';
+
+            const totalChars = originalText.length;
+            const totalWords = originalText.split(/\s+/).filter(w => w.length > 0).length;
+            const readingRate = parseInt(readingRateInput.value, 10);
+
+            let totalDuration = 0;
             blocks.forEach((block, index) => {
-                const duration = block.length / readingRate;
-                const startTime = currentTime;
-                const endTime = currentTime + duration;
-                createBlock(`Bloco ${index + 1}`, block, startTime, endTime, index);
-                currentTime = endTime + PAUSE_TIME;
+                totalDuration += block.length / readingRate + PAUSE_TIME;
+                createBlock(block, index + 1);
             });
 
             // Update stats
@@ -714,36 +1078,121 @@
             document.getElementById('totalWords').textContent = totalWords.toLocaleString();
             document.getElementById('totalBlocks').textContent = blocks.length;
 
-            const totalSeconds = Math.floor(currentTime);
-            const minutes = Math.floor(totalSeconds / 60);
-            const seconds = totalSeconds % 60;
+            const minutes = Math.floor(totalDuration / 60);
+            const seconds = Math.floor(totalDuration % 60);
             document.getElementById('totalDuration').textContent = `${minutes}:${String(seconds).padStart(2, '0')}`;
 
-            // Show cards
             document.getElementById('statsCard').style.display = 'block';
             document.getElementById('blocksCard').style.display = 'block';
 
-            // Scroll to stats
             document.getElementById('statsCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        function resetForm() {
-            document.getElementById('charCount').value = '490';
-            document.getElementById('textInput').value = '';
-            document.getElementById('fileName').value = '';
-            document.getElementById('blocks').innerHTML = '';
-            document.getElementById('statsCard').style.display = 'none';
-            document.getElementById('blocksCard').style.display = 'none';
-            document.getElementById('preview').innerHTML = '';
+        function createBlock(content, number = null) {
+            const blockDiv = document.createElement('div');
+            blockDiv.classList.add('block');
+
+            const blockNum = number || (blocksDiv.children.length + 1);
+            const charCount = content.length;
+            const wordCount = content.split(/\s+/).filter(w => w.length > 0).length;
+
+            blockDiv.innerHTML = `
+                <div class="block-header">
+                    <span class="block-title">Bloco ${blockNum}</span>
+                    <div class="block-meta">
+                        <span class="char-count">${charCount} chars</span>
+                        <span class="word-count">${wordCount} palavras</span>
+                    </div>
+                    <div class="block-controls">
+                        <button class="btn btn-secondary btn-block btn-copy" title="Copiar">&#128203;</button>
+                        <button class="btn btn-secondary btn-block btn-add" title="Adicionar abaixo">&#10133;</button>
+                        <button class="btn btn-danger btn-block btn-delete" title="Excluir">&#10060;</button>
+                    </div>
+                </div>
+                <div class="block-content" contenteditable="true">${content}</div>
+            `;
+
+            // Event listeners
+            const contentDiv = blockDiv.querySelector('.block-content');
+            contentDiv.addEventListener('input', () => {
+                const text = contentDiv.innerText;
+                blockDiv.querySelector('.char-count').textContent = `${text.length} chars`;
+                blockDiv.querySelector('.word-count').textContent = `${text.split(/\s+/).filter(Boolean).length} palavras`;
+                contentDiv.classList.add('edited');
+            });
+
+            blockDiv.querySelector('.btn-copy').addEventListener('click', () => {
+                navigator.clipboard.writeText(contentDiv.innerText);
+                const btn = blockDiv.querySelector('.btn-copy');
+                btn.innerHTML = '&#10003;';
+                setTimeout(() => { btn.innerHTML = '&#128203;'; }, 1500);
+            });
+
+            blockDiv.querySelector('.btn-add').addEventListener('click', () => {
+                const newBlock = document.createElement('div');
+                createBlockElement(newBlock, '');
+                blockDiv.after(newBlock);
+                updateBlockNumbers();
+            });
+
+            blockDiv.querySelector('.btn-delete').addEventListener('click', () => {
+                blockDiv.remove();
+                updateBlockNumbers();
+            });
+
+            blocksDiv.appendChild(blockDiv);
         }
 
-        function validateCharCount() {
-            const charCount = document.getElementById('charCount').value;
-            if (isNaN(charCount) || charCount <= 0) {
-                showError("Por favor, insira um numero valido de caracteres.");
-                return false;
-            }
-            return true;
+        function createBlockElement(container, content) {
+            container.classList.add('block');
+            const blockNum = blocksDiv.children.length + 1;
+
+            container.innerHTML = `
+                <div class="block-header">
+                    <span class="block-title">Bloco ${blockNum}</span>
+                    <div class="block-meta">
+                        <span class="char-count">0 chars</span>
+                        <span class="word-count">0 palavras</span>
+                    </div>
+                    <div class="block-controls">
+                        <button class="btn btn-secondary btn-block btn-copy" title="Copiar">&#128203;</button>
+                        <button class="btn btn-secondary btn-block btn-add" title="Adicionar abaixo">&#10133;</button>
+                        <button class="btn btn-danger btn-block btn-delete" title="Excluir">&#10060;</button>
+                    </div>
+                </div>
+                <div class="block-content" contenteditable="true">${content}</div>
+            `;
+
+            const contentDiv = container.querySelector('.block-content');
+            contentDiv.addEventListener('input', () => {
+                const text = contentDiv.innerText;
+                container.querySelector('.char-count').textContent = `${text.length} chars`;
+                container.querySelector('.word-count').textContent = `${text.split(/\s+/).filter(Boolean).length} palavras`;
+            });
+
+            container.querySelector('.btn-copy').addEventListener('click', () => {
+                navigator.clipboard.writeText(contentDiv.innerText);
+            });
+
+            container.querySelector('.btn-add').addEventListener('click', () => {
+                const newBlock = document.createElement('div');
+                createBlockElement(newBlock, '');
+                container.after(newBlock);
+                updateBlockNumbers();
+            });
+
+            container.querySelector('.btn-delete').addEventListener('click', () => {
+                container.remove();
+                updateBlockNumbers();
+            });
+        }
+
+        function updateBlockNumbers() {
+            const blocks = blocksDiv.querySelectorAll('.block');
+            blocks.forEach((block, index) => {
+                block.querySelector('.block-title').textContent = `Bloco ${index + 1}`;
+            });
+            document.getElementById('totalBlocks').textContent = blocks.length;
         }
 
         function showError(message) {
@@ -757,121 +1206,256 @@
             setTimeout(() => errorDiv.remove(), 4000);
         }
 
-        function getTextBlocksWithCustomLength(text, maxLength) {
-            text = formatText(text);
-            return splitTextIntoBlocks(text, maxLength);
+        function resetForm() {
+            textInput.value = '';
+            fileNameInput.value = '';
+            charCountInput.value = '490';
+            wordCountInput.value = '50';
+            readingRateInput.value = '14';
+            ignoreTextInput.value = '';
+            filterNumbersCheckbox.checked = false;
+            clearAfterExportCheckbox.checked = false;
+            blocksDiv.innerHTML = '';
+            document.getElementById('statsCard').style.display = 'none';
+            document.getElementById('blocksCard').style.display = 'none';
+            currentDivisionMode = null;
+            charDivisionRow.classList.remove('active');
+            wordDivisionRow.classList.remove('active');
+            exportBtn.disabled = true;
         }
 
-        function formatText(text) {
-            text = text.replace(/\"/g, "'");
-            text = text.replace(/\u00AB/g, "'").replace(/\u00BB/g, "'");
-            text = text.replace(/\n/g, " ");
-            text = text.replace(/([a-zA-Z])([.,!?;:])/g, "$1 $2");
-            text = text.replace(/([.,!?;:])([a-zA-Z])/g, "$1 $2");
-            text = text.replace(/([.,!?;:])([.,!?;:])/g, "$1 $2").replace(/([.,!?;:])\s([.,!?;:])/g, "$1$2");
-            text = text.replace(/\. \. \./g, "...");
-            text = addSpacesAroundSingleQuotes(text);
-            return text;
+        // ========================================
+        // EXPORT FUNCTIONS
+        // ========================================
+        function exportBoth() {
+            if (!currentDivisionMode) {
+                showError('Primeiro divida o texto.');
+                return;
+            }
+            exportToSrt();
+            exportToTxt();
+
+            if (clearAfterExportCheckbox.checked) {
+                textInput.value = '';
+            }
         }
 
-        function addSpacesAroundSingleQuotes(text) {
-            return text.replace(/(\B')(?=\w)|(?<=\w)('\B)/g, "$1 $2");
+        function formatTimestamp(totalSeconds) {
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = Math.floor(totalSeconds % 60);
+            const milliseconds = Math.round((totalSeconds - Math.floor(totalSeconds)) * 1000);
+            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')},${String(milliseconds).padStart(3, '0')}`;
         }
 
-        function splitTextIntoBlocks(text, maxLength) {
-            const blocks = [];
-            let currentBlock = "";
-            const sentences = text.split(/(?<=\.|\?|!)(?=\s)/g);
+        function exportToSrt() {
+            const readingRate = parseInt(readingRateInput.value, 10);
+            const blocks = blocksDiv.querySelectorAll('.block-content');
+            let srtContent = '';
+            let currentTime = 0;
 
-            for (let i = 0; i < sentences.length; i++) {
-                const sentence = sentences[i].trim();
-                if ((currentBlock.length + sentence.length + 1) <= maxLength) {
-                    currentBlock += sentence + " ";
-                } else {
-                    if (currentBlock.trim().length > 0) {
-                        blocks.push(currentBlock.trim());
-                    }
-                    currentBlock = sentence + " ";
+            blocks.forEach((block, index) => {
+                const text = block.innerText.trim();
+                if (!text) return;
+
+                const duration = text.length / readingRate;
+                const startTime = formatTimestamp(currentTime);
+                const endTime = formatTimestamp(currentTime + duration);
+
+                srtContent += `${index + 1}\n${startTime} --> ${endTime}\n${text}\n\n`;
+                currentTime += duration + PAUSE_TIME;
+            });
+
+            const fileName = fileNameInput.value || 'subtitles';
+            const blob = new Blob([srtContent.trim()], { type: 'text/srt' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${fileName}.srt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function exportToTxt() {
+            const blocks = blocksDiv.querySelectorAll('.block-content');
+            let txtContent = '';
+
+            blocks.forEach((block, index) => {
+                const text = block.innerText.trim();
+                if (text) {
+                    txtContent += `Bloco ${index + 1}:\n${text}\n\n`;
                 }
+            });
+
+            const fileName = fileNameInput.value || 'documento';
+            const blob = new Blob([txtContent.trim()], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${fileName}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // ========================================
+        // SRT MERGE
+        // ========================================
+        async function mergeSrtFiles() {
+            const fileInput = document.getElementById('srtFiles');
+            const statusDiv = document.getElementById('mergeStatus');
+            const files = fileInput.files;
+
+            if (files.length < 2) {
+                statusDiv.textContent = 'Selecione pelo menos 2 arquivos SRT.';
+                return;
             }
 
-            if (currentBlock.trim().length > 0) {
-                blocks.push(currentBlock.trim());
+            statusDiv.textContent = 'Processando...';
+
+            try {
+                const srtContents = [];
+                for (const file of files) {
+                    const content = await file.text();
+                    srtContents.push({ name: file.name, content });
+                }
+
+                // Sort by filename
+                srtContents.sort((a, b) => a.name.localeCompare(b.name));
+
+                let mergedContent = '';
+                let blockIndex = 1;
+                let timeOffset = 0;
+
+                for (const srt of srtContents) {
+                    const blocks = parseSrt(srt.content);
+
+                    for (const block of blocks) {
+                        const startSeconds = parseTimestamp(block.start) + timeOffset;
+                        const endSeconds = parseTimestamp(block.end) + timeOffset;
+
+                        mergedContent += `${blockIndex}\n`;
+                        mergedContent += `${formatTimestamp(startSeconds)} --> ${formatTimestamp(endSeconds)}\n`;
+                        mergedContent += `${block.text}\n\n`;
+                        blockIndex++;
+                    }
+
+                    // Get last timestamp for offset
+                    if (blocks.length > 0) {
+                        timeOffset = parseTimestamp(blocks[blocks.length - 1].end) + timeOffset + 1;
+                    }
+                }
+
+                // Download merged file
+                const blob = new Blob([mergedContent.trim()], { type: 'text/srt' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'merged.srt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                statusDiv.textContent = `${files.length} arquivos unidos com sucesso!`;
+                fileInput.value = '';
+            } catch (error) {
+                statusDiv.textContent = 'Erro ao processar arquivos: ' + error.message;
+            }
+        }
+
+        function parseSrt(content) {
+            const blocks = [];
+            const lines = content.split('\n');
+            let i = 0;
+
+            while (i < lines.length) {
+                // Skip empty lines and block number
+                while (i < lines.length && (lines[i].trim() === '' || /^\d+$/.test(lines[i].trim()))) {
+                    i++;
+                }
+
+                if (i >= lines.length) break;
+
+                // Parse timestamp line
+                const timestampLine = lines[i].trim();
+                const timestampMatch = timestampLine.match(/(\d{2}:\d{2}:\d{2},\d{3})\s*-->\s*(\d{2}:\d{2}:\d{2},\d{3})/);
+
+                if (timestampMatch) {
+                    const start = timestampMatch[1];
+                    const end = timestampMatch[2];
+                    i++;
+
+                    // Collect text lines
+                    let text = '';
+                    while (i < lines.length && lines[i].trim() !== '' && !/^\d+$/.test(lines[i].trim()) && !lines[i].includes('-->')) {
+                        text += (text ? '\n' : '') + lines[i].trim();
+                        i++;
+                    }
+
+                    if (text) {
+                        blocks.push({ start, end, text });
+                    }
+                } else {
+                    i++;
+                }
             }
 
             return blocks;
         }
 
-        function formatTimestamp(seconds) {
-            const date = new Date(seconds * 1000);
-            const hours = String(date.getUTCHours()).padStart(2, '0');
-            const minutes = String(date.getUTCMinutes()).padStart(2, '0');
-            const secs = String(date.getUTCSeconds()).padStart(2, '0');
-            const millis = String(date.getUTCMilliseconds()).padStart(3, '0');
-            return `${hours}:${minutes}:${secs},${millis}`;
+        function parseTimestamp(timestamp) {
+            const parts = timestamp.split(':');
+            const hours = parseInt(parts[0], 10);
+            const minutes = parseInt(parts[1], 10);
+            const secondsParts = parts[2].split(',');
+            const seconds = parseInt(secondsParts[0], 10);
+            const milliseconds = parseInt(secondsParts[1], 10);
+            return hours * 3600 + minutes * 60 + seconds + milliseconds / 1000;
         }
 
-        async function exportToPdf() {
-            const { jsPDF } = window.jspdf;
-            const fileName = document.getElementById('fileName').value || 'documento';
-
-            const doc = new jsPDF();
-            const blocks = document.querySelectorAll('.block');
-
-            if (blocks.length > 0) {
-                let y = 20;
-
-                doc.setFontSize(18);
-                doc.setTextColor(232, 90, 42);
-                doc.text('Otimizador Gold - Blocos', 105, y, { align: 'center' });
-                y += 15;
-
-                doc.setFontSize(11);
-                doc.setTextColor(60, 60, 60);
-
-                blocks.forEach((block, index) => {
-                    const blockContent = block.querySelector('.block-content').innerText;
-
-                    doc.setFontSize(12);
-                    doc.setTextColor(232, 90, 42);
-                    doc.text(`Bloco ${index + 1}`, 10, y);
-                    y += 8;
-
-                    doc.setFontSize(10);
-                    doc.setTextColor(60, 60, 60);
-                    const lines = doc.splitTextToSize(blockContent, 180);
-                    lines.forEach(line => {
-                        doc.text(line, 10, y);
-                        y += 6;
-
-                        if (y > 270) {
-                            doc.addPage();
-                            y = 20;
-                        }
-                    });
-
-                    y += 10;
-                });
-            } else {
-                const text = document.getElementById('textInput').value;
-                const lines = doc.splitTextToSize(text, 180);
-
-                let y = 20;
-                doc.setFontSize(11);
-
-                lines.forEach((line) => {
-                    doc.text(line, 10, y);
-                    y += 7;
-
-                    if (y > 270) {
-                        doc.addPage();
-                        y = 20;
-                    }
-                });
-            }
-
-            doc.save(`${fileName}.pdf`);
+        // ========================================
+        // LOCAL STORAGE
+        // ========================================
+        function saveState() {
+            try {
+                const state = {
+                    fileName: fileNameInput.value,
+                    textInput: textInput.value,
+                    charCount: charCountInput.value,
+                    wordCount: wordCountInput.value,
+                    readingRate: readingRateInput.value,
+                    timestamp: Date.now()
+                };
+                localStorage.setItem('otimizadorGoldState', JSON.stringify(state));
+            } catch (e) {}
         }
+
+        function restoreState() {
+            try {
+                const savedState = localStorage.getItem('otimizadorGoldState');
+                if (!savedState) return;
+
+                const state = JSON.parse(savedState);
+                if (Date.now() - state.timestamp > 3600000) {
+                    localStorage.removeItem('otimizadorGoldState');
+                    return;
+                }
+
+                if (state.fileName) fileNameInput.value = state.fileName;
+                if (state.textInput) textInput.value = state.textInput;
+                if (state.charCount) charCountInput.value = state.charCount;
+                if (state.wordCount) wordCountInput.value = state.wordCount;
+                if (state.readingRate) readingRateInput.value = state.readingRate;
+            } catch (e) {}
+        }
+
+        restoreState();
+        setInterval(saveState, 5000);
+    });
     </script>
 </body>
 </html>
