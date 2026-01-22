@@ -1336,7 +1336,7 @@
                                     <div class="comment-author">${escapeHtml(data.authorName.split(' ')[0])}</div>
                                     <div class="comment-date">${date}</div>
                                 </div>
-                                ${currentUser && currentUser.uid === data.authorId ? `<button class="comment-delete-btn" onclick="deleteComment('${doc.id}')" title="Apagar">&#128465;</button>` : ''}
+                                ${currentUser && currentUser.uid === data.authorId ? `<button class="comment-delete-btn" onclick="deleteComment('${doc.id}')">excluir</button>` : ''}
                             </div>
                             <div class="comment-text">${escapeHtml(data.text)}</div>
                         </div>
