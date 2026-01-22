@@ -2,144 +2,592 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Otimizador Gold</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otimizador Gold - Nardoto</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #FFFFFF;
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #141419;
+            --bg-card-hover: #1a1a22;
+            --primary: #FF6B35;
+            --primary-light: #FF8C5A;
+            --primary-dark: #E85A2A;
+            --text-primary: #f5f5f7;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --border-light: rgba(255, 255, 255, 0.08);
+            --gradient-primary: linear-gradient(135deg, #FF6B35 0%, #E85A2A 100%);
+            --gradient-glow: radial-gradient(ellipse at center, rgba(255, 107, 53, 0.15) 0%, transparent 70%);
+        }
+
+        * {
             margin: 0;
-            padding: 20px;
+            padding: 0;
             box-sizing: border-box;
         }
-        h2 {
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
             text-align: center;
-            color: #DAA520;
+            padding: 60px 20px 40px;
+            position: relative;
         }
-        #form {
-            display: flex;
-            flex-direction: column;
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 300px;
+            background: var(--gradient-glow);
+            pointer-events: none;
+        }
+
+        .logo {
+            display: inline-flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 12px;
+            margin-bottom: 16px;
         }
-        #form input, #form textarea {
-            width: 80%;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #B8860B;
-            border-radius: 5px;
-            background-color: #FFD700;
-            color: #4B0082;
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
         }
-        #form button {
-            width: 40%;
-            padding: 15px;
-            font-size: 16px;
-            background-color: #DAA520;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
+
+        h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        #form button:hover {
-            background-color: #FFD700;
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-top: 8px;
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        /* Card */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            padding: 32px;
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            background: var(--bg-card-hover);
             transform: translateY(-2px);
         }
-        #blocks {
+
+        .card-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.4rem;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-title-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+
+        label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 14px 18px;
+            font-size: 1rem;
+            font-family: inherit;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.15);
+        }
+
+        input[type="text"]::placeholder,
+        input[type="number"]::placeholder,
+        textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 180px;
+        }
+
+        /* Range Slider */
+        .slider-group {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            height: 6px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: var(--bg-dark);
+            border-radius: 3px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .slider-value {
+            min-width: 60px;
+            padding: 8px 12px;
+            background: var(--bg-dark);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-light);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-export {
+            background: var(--bg-dark);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-light);
+        }
+
+        .btn-export:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-item {
+            background: var(--bg-dark);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Blocks */
+        .blocks-container {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 10px;
+            gap: 16px;
         }
+
         .block {
-            width: 80%;
-            padding: 15px;
-            background-color: #DAA520;
-            border: 1px solid #B8860B;
-            border-radius: 5px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 24px;
             position: relative;
-            color: #FFFFFF;
+            overflow: hidden;
+            transition: all 0.3s ease;
         }
-        .block .info {
+
+        .block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .block:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .block:hover::before {
+            opacity: 1;
+        }
+
+        .block-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 12px;
         }
-        .block .info span {
-            font-size: 14px;
-            color: #FFFFFF;
+
+        .block-title {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.95rem;
         }
-        .block button.copy {
-            background-color: #B8860B;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            padding: 5px 10px;
-            transition: background-color 0.3s;
-        }
-        .block button.copy.copied {
-            background-color: #FFD700;
-            color: black;
-        }
-        .block button.copy:hover {
-            background-color: #FFD700;
-        }
-        .error {
-            background-color: #ffdddd;
-            color: red;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid red;
-            border-radius: 5px;
-            text-align: center;
-        }
-        #srt-form {
+
+        .block-meta {
             display: flex;
-            flex-direction: column;
+            gap: 16px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .block-content {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .btn-copy {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            font-family: inherit;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-copy:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .btn-copy.copied {
+            background: #22c55e;
+            border-color: #22c55e;
+            color: white;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .footer-quote {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .footer-brand {
+            margin-top: 16px;
+            display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
+            justify-content: center;
+            gap: 8px;
         }
-        #thanks {
+
+        .footer-brand a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer-brand a:hover {
+            text-decoration: underline;
+        }
+
+        /* Error */
+        .error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            padding: 16px 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
             text-align: center;
-            margin-top: 20px;
-            font-size: 18px;
-            color: #DAA520;
+            animation: shake 0.5s ease;
         }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* Preview hidden by default */
         #preview {
-            margin-bottom: 20px;
-            color: #4B0082;
-            text-align: center;
+            display: none;
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 </head>
 <body>
-    <h2>Otimizador Gold</h2>
-    <div id="form">
-        <input type="text" id="fileName" placeholder="Nome do arquivo" />
-        <input type="number" id="charCount" placeholder="Dividir em quantos caracteres:" value="490" />
-        <textarea id="textInput" rows="10" placeholder="Insira o texto aqui..."></textarea>
-        <button onclick="divideTextByChars()">Dividir por Caracteres</button>
-        <button onclick="resetForm()">Redefinir</button>
-        <label for="speed">Espaçamento entre áudios:</label>
-        <input type="range" id="speed" min="0.5" max="2" step="0.1" value="1">
-        <span id="speedValue">1.0x</span>
-        <label for="readingRate">Caracteres por segundo:</label>
-        <input type="range" id="readingRate" min="10" max="50" step="1" value="14">
-        <span id="readingRateValue">14 c/s</span>
-        <button onclick="exportToSrt()">Exportar para SRT</button>
-        <button onclick="exportToPdf()">Exportar para PDF</button>
-    </div>
-    <div id="preview"></div>
-    <div id="totalInfo" style="text-align: center; font-size: 16px; color: #4B0082; margin-bottom: 10px;"></div>
-    <div id="blocks"></div>
-    <p id="thanks">O sonho é a coisa mais real que Existe! Gratidão</p>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">&#9889;</div>
+            <h1>Otimizador Gold</h1>
+        </div>
+        <p class="subtitle">Divida textos em blocos otimizados para legendas e audiovisual</p>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container">
+        <!-- Input Card -->
+        <div class="card">
+            <h2 class="card-title">
+                <span class="card-title-icon">&#128221;</span>
+                Configuracoes
+            </h2>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="fileName">Nome do arquivo</label>
+                    <input type="text" id="fileName" placeholder="Ex: meu-video-legenda">
+                </div>
+                <div class="form-group">
+                    <label for="charCount">Caracteres por bloco</label>
+                    <input type="number" id="charCount" value="490" min="50" max="1000">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="textInput">Texto para dividir</label>
+                <textarea id="textInput" rows="8" placeholder="Cole seu texto aqui..."></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Espacamento entre audios</label>
+                    <div class="slider-group">
+                        <input type="range" id="speed" min="0.5" max="2" step="0.1" value="1">
+                        <span class="slider-value" id="speedValue">1.0x</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Caracteres por segundo</label>
+                    <div class="slider-group">
+                        <input type="range" id="readingRate" min="10" max="50" step="1" value="14">
+                        <span class="slider-value" id="readingRateValue">14 c/s</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="divideTextByChars()">
+                    &#9986; Dividir Texto
+                </button>
+                <button class="btn btn-secondary" onclick="resetForm()">
+                    &#128260; Limpar
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats Card -->
+        <div id="statsCard" class="card" style="display: none;">
+            <h2 class="card-title">
+                <span class="card-title-icon">&#128202;</span>
+                Estatisticas
+            </h2>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="totalChars">0</div>
+                    <div class="stat-label">Caracteres</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="totalWords">0</div>
+                    <div class="stat-label">Palavras</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="totalBlocks">0</div>
+                    <div class="stat-label">Blocos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="totalDuration">0:00</div>
+                    <div class="stat-label">Duracao</div>
+                </div>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-export" onclick="exportToSrt()">
+                    &#128196; Exportar SRT
+                </button>
+                <button class="btn btn-export" onclick="exportToPdf()">
+                    &#128209; Exportar PDF
+                </button>
+            </div>
+        </div>
+
+        <!-- Blocks Card -->
+        <div id="blocksCard" class="card" style="display: none;">
+            <h2 class="card-title">
+                <span class="card-title-icon">&#128230;</span>
+                Blocos Gerados
+            </h2>
+            <div id="blocks" class="blocks-container"></div>
+        </div>
+
+        <div id="preview"></div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p class="footer-quote">"O sonho e a coisa mais real que existe!"</p>
+        <p class="footer-brand">
+            Feito com &#10084; por <a href="https://nardoto.com.br" target="_blank">Nardoto</a>
+        </p>
+    </footer>
 
     <script>
-        const PAUSE_TIME = 0.9; // Tempo de pausa entre blocos (segundos)
+        const PAUSE_TIME = 0.9;
 
         document.getElementById('speed').addEventListener('input', function() {
             document.getElementById('speedValue').innerText = this.value + 'x';
@@ -150,32 +598,33 @@
         });
 
         function copyToClipboard(text, button) {
-            const tempTextArea = document.createElement('textarea');
-            tempTextArea.value = text;
-            document.body.appendChild(tempTextArea);
-            tempTextArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempTextArea);
-            if (button) {
-                button.classList.add('copied');
-                button.textContent = 'Copiado!';
-            }
+            navigator.clipboard.writeText(text).then(() => {
+                if (button) {
+                    button.classList.add('copied');
+                    button.textContent = 'Copiado!';
+                    setTimeout(() => {
+                        button.classList.remove('copied');
+                        button.textContent = 'Copiar';
+                    }, 2000);
+                }
+            });
         }
 
         function exportToSrt() {
             const speed = parseFloat(document.getElementById('speed').value);
-            const blocks = document.querySelectorAll('.block .srt');
+            const blocks = document.querySelectorAll('.block');
             let srtContent = '';
             blocks.forEach((block, index) => {
-                const startTime = adjustTimestamp(block.dataset.startTime, speed);
-                const endTime = adjustTimestamp(block.dataset.endTime, speed);
-                srtContent += `${index + 1}\n${startTime} --> ${endTime}\n${block.innerText.trim()}\n\n`;
+                const content = block.querySelector('.block-content');
+                const startTime = adjustTimestamp(content.dataset.startTime, speed);
+                const endTime = adjustTimestamp(content.dataset.endTime, speed);
+                srtContent += `${index + 1}\n${startTime} --> ${endTime}\n${content.innerText.trim()}\n\n`;
             });
             downloadSrtFile(srtContent.trim());
         }
 
         function adjustTimestamp(timestamp, speed) {
-            if (!timestamp) return '00:00:00,000'; // Evita erro se timestamp for indefinido
+            if (!timestamp) return '00:00:00,000';
 
             const parts = timestamp.split(':');
             const hours = parseInt(parts[0]);
@@ -193,7 +642,7 @@
             const newSeconds = Math.floor(totalMilliseconds / 1000);
             const newMilliseconds = totalMilliseconds % 1000;
 
-            return `${String(newHours).padStart(2, '0')}:${String(newMinutes).padStart(2, '0')}:${String(newSeconds).padStart(2, '0')},${String(newMilliseconds).padStart(3, '0')}`;
+            return `${String(newHours).padStart(2, '0')}:${String(newMinutes).padStart(2, '0')}:${String(newSeconds).padStart(2, '0')},${String(Math.floor(newMilliseconds)).padStart(3, '0')}`;
         }
 
         function downloadSrtFile(content) {
@@ -209,15 +658,24 @@
             URL.revokeObjectURL(url);
         }
 
-        function createBlock(type, content, startTime, endTime) {
+        function createBlock(type, content, startTime, endTime, index) {
             const blockDiv = document.createElement('div');
             blockDiv.classList.add('block');
+
+            const charCount = content.length;
+            const wordCount = content.split(/\s+/).filter(w => w.length > 0).length;
+            const escapedContent = content.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+
             blockDiv.innerHTML = `
-                <div class="info">
-                    <span>${type}</span>
-                    <span>${content.length} caracteres, ${content.split(/\s+/).length} palavras</span>
+                <div class="block-header">
+                    <span class="block-title">${type}</span>
+                    <div class="block-meta">
+                        <span>${charCount} caracteres</span>
+                        <span>${wordCount} palavras</span>
+                    </div>
+                    <button class="btn-copy" onclick="copyToClipboard('${escapedContent}', this)">Copiar</button>
                 </div>
-                <div class="srt" data-start-time="${formatTimestamp(startTime)}" data-end-time="${formatTimestamp(endTime)}">
+                <div class="block-content" data-start-time="${formatTimestamp(startTime)}" data-end-time="${formatTimestamp(endTime)}">
                     ${content}
                 </div>
             `;
@@ -229,52 +687,74 @@
             const charCount = document.getElementById('charCount').value;
             const text = document.getElementById('textInput').value;
 
-            // Calcular total de caracteres e palavras
+            if (!text.trim()) {
+                showError("Por favor, insira um texto para dividir.");
+                return;
+            }
+
             const totalChars = text.length;
             const totalWords = text.split(/\s+/).filter(word => word.length > 0).length;
 
-            // Exibir total de caracteres e palavras
-            document.getElementById('totalInfo').textContent = `Total de caracteres: ${totalChars} | Total de palavras: ${totalWords}`;
-
             const blocks = getTextBlocksWithCustomLength(text, parseInt(charCount));
             document.getElementById('blocks').innerHTML = '';
+
             let currentTime = 0;
-            const readingRate = parseInt(document.getElementById('readingRate').value); // Obtém o valor atual do slider
+            const readingRate = parseInt(document.getElementById('readingRate').value);
+
             blocks.forEach((block, index) => {
                 const duration = block.length / readingRate;
                 const startTime = currentTime;
                 const endTime = currentTime + duration;
-                createBlock(`Bloco ${index + 1}`, block, startTime, endTime);
-                currentTime = endTime + PAUSE_TIME; // adiciona a pausa entre blocos
+                createBlock(`Bloco ${index + 1}`, block, startTime, endTime, index);
+                currentTime = endTime + PAUSE_TIME;
             });
 
-            // Atualiza a pré-visualização
-            updatePreview(blocks);
+            // Update stats
+            document.getElementById('totalChars').textContent = totalChars.toLocaleString();
+            document.getElementById('totalWords').textContent = totalWords.toLocaleString();
+            document.getElementById('totalBlocks').textContent = blocks.length;
+
+            const totalSeconds = Math.floor(currentTime);
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            document.getElementById('totalDuration').textContent = `${minutes}:${String(seconds).padStart(2, '0')}`;
+
+            // Show cards
+            document.getElementById('statsCard').style.display = 'block';
+            document.getElementById('blocksCard').style.display = 'block';
+
+            // Scroll to stats
+            document.getElementById('statsCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function resetForm() {
             document.getElementById('charCount').value = '490';
             document.getElementById('textInput').value = '';
+            document.getElementById('fileName').value = '';
             document.getElementById('blocks').innerHTML = '';
-            document.getElementById('totalInfo').textContent = '';
+            document.getElementById('statsCard').style.display = 'none';
+            document.getElementById('blocksCard').style.display = 'none';
             document.getElementById('preview').innerHTML = '';
         }
 
         function validateCharCount() {
             const charCount = document.getElementById('charCount').value;
             if (isNaN(charCount) || charCount <= 0) {
-                showError("Por favor, insira um número válido de caracteres.");
+                showError("Por favor, insira um numero valido de caracteres.");
                 return false;
             }
             return true;
         }
 
         function showError(message) {
+            const existingError = document.querySelector('.error');
+            if (existingError) existingError.remove();
+
             const errorDiv = document.createElement('div');
             errorDiv.classList.add('error');
             errorDiv.textContent = message;
-            document.body.prepend(errorDiv);
-            setTimeout(() => errorDiv.remove(), 3000);
+            document.querySelector('.container').prepend(errorDiv);
+            setTimeout(() => errorDiv.remove(), 4000);
         }
 
         function getTextBlocksWithCustomLength(text, maxLength) {
@@ -284,7 +764,7 @@
 
         function formatText(text) {
             text = text.replace(/\"/g, "'");
-            text = text.replace(/«/g, "'").replace(/»/g, "'");
+            text = text.replace(/\u00AB/g, "'").replace(/\u00BB/g, "'");
             text = text.replace(/\n/g, " ");
             text = text.replace(/([a-zA-Z])([.,!?;:])/g, "$1 $2");
             text = text.replace(/([.,!?;:])([a-zA-Z])/g, "$1 $2");
@@ -331,16 +811,6 @@
             return `${hours}:${minutes}:${secs},${millis}`;
         }
 
-        function updatePreview(blocks) {
-            const previewDiv = document.getElementById('preview');
-            previewDiv.innerHTML = '';
-            blocks.forEach((block, index) => {
-                const previewItem = document.createElement('div');
-                previewItem.textContent = `Bloco ${index + 1}: ${block}`;
-                previewDiv.appendChild(previewItem);
-            });
-        }
-
         async function exportToPdf() {
             const { jsPDF } = window.jspdf;
             const fileName = document.getElementById('fileName').value || 'documento';
@@ -349,49 +819,57 @@
             const blocks = document.querySelectorAll('.block');
 
             if (blocks.length > 0) {
-                let y = 10; // posição inicial
+                let y = 20;
+
+                doc.setFontSize(18);
+                doc.setTextColor(232, 90, 42);
+                doc.text('Otimizador Gold - Blocos', 105, y, { align: 'center' });
+                y += 15;
+
+                doc.setFontSize(11);
+                doc.setTextColor(60, 60, 60);
 
                 blocks.forEach((block, index) => {
-                    const blockContent = block.querySelector('.srt').innerText;
-                    const blockInfo = `Bloco ${index + 1}\n${blockContent}`;
-                    
-                    // Adiciona o texto do bloco ao PDF
-                    const lines = doc.splitTextToSize(blockInfo, 180); // Divide o texto em linhas com largura máxima de 180 unidades
+                    const blockContent = block.querySelector('.block-content').innerText;
+
+                    doc.setFontSize(12);
+                    doc.setTextColor(232, 90, 42);
+                    doc.text(`Bloco ${index + 1}`, 10, y);
+                    y += 8;
+
+                    doc.setFontSize(10);
+                    doc.setTextColor(60, 60, 60);
+                    const lines = doc.splitTextToSize(blockContent, 180);
                     lines.forEach(line => {
                         doc.text(line, 10, y);
-                        y += 10;
+                        y += 6;
 
-                        // Adiciona nova página se necessário
                         if (y > 270) {
                             doc.addPage();
-                            y = 10;
+                            y = 20;
                         }
                     });
 
-                    y += 10; // Adiciona um espaço após cada bloco
+                    y += 10;
                 });
             } else {
                 const text = document.getElementById('textInput').value;
-                const lines = doc.splitTextToSize(text, 180); // Divide o texto em linhas com largura máxima de 180 unidades
+                const lines = doc.splitTextToSize(text, 180);
 
-                let y = 10; // posição inicial
+                let y = 20;
+                doc.setFontSize(11);
 
                 lines.forEach((line) => {
-                    // Adiciona o texto ao PDF
                     doc.text(line, 10, y);
-                    
-                    // Atualiza a posição para a próxima linha
-                    y += 10;
+                    y += 7;
 
-                    // Adiciona nova página se necessário
                     if (y > 270) {
                         doc.addPage();
-                        y = 10;
+                        y = 20;
                     }
                 });
             }
 
-            // Salva o PDF com nome definido pelo usuário
             doc.save(`${fileName}.pdf`);
         }
     </script>
