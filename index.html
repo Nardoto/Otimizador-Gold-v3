@@ -750,6 +750,98 @@
             font-size: 0.8rem;
         }
 
+        /* Rating System */
+        .rating-section {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(232, 90, 42, 0.05) 100%);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        .rating-title {
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .rating-stars {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+        .rating-stars .star {
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+            line-height: 1;
+        }
+        .rating-stars .star:hover,
+        .rating-stars .star.active {
+            color: #FFD700;
+            transform: scale(1.1);
+        }
+        .rating-stars .star.hovered {
+            color: #FFD700;
+        }
+        .rating-average {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .rating-average-stars {
+            color: #FFD700;
+            font-size: 0.9rem;
+        }
+        .rating-average-value {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+        .rating-average-count {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+        .rating-thanks {
+            color: var(--success);
+            font-size: 0.8rem;
+            margin-top: 8px;
+            display: none;
+        }
+        .rating-thanks.show {
+            display: block;
+        }
+
+        /* Delete Comment Button */
+        .comment-delete-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            opacity: 0;
+        }
+        .comment-item:hover .comment-delete-btn {
+            opacity: 1;
+        }
+        .comment-delete-btn:hover {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+        .comment-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
         /* Footer */
         .footer {
             text-align: center;
@@ -1039,6 +1131,26 @@
 
         <!-- RIGHT SIDEBAR - Comments -->
         <aside class="sidebar-right">
+            <!-- Rating Section -->
+            <div class="sidebar-card">
+                <div class="rating-section">
+                    <div class="rating-title">Avalie o Otimizador Gold</div>
+                    <div class="rating-stars" id="ratingStars">
+                        <span class="star" data-value="1">&#9733;</span>
+                        <span class="star" data-value="2">&#9733;</span>
+                        <span class="star" data-value="3">&#9733;</span>
+                        <span class="star" data-value="4">&#9733;</span>
+                        <span class="star" data-value="5">&#9733;</span>
+                    </div>
+                    <div class="rating-average" id="ratingAverage">
+                        <span class="rating-average-stars" id="avgStars"></span>
+                        <span class="rating-average-value" id="avgValue">-</span>
+                        <span class="rating-average-count" id="avgCount"></span>
+                    </div>
+                    <div class="rating-thanks" id="ratingThanks">Obrigado pela avaliacao!</div>
+                </div>
+            </div>
+
             <div class="sidebar-card comments-sidebar">
                 <h3 class="sidebar-title">
                     <span class="sidebar-title-icon">&#128172;</span>
@@ -1090,7 +1202,7 @@
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
         import { getAuth, signInWithPopup, signOut, onAuthStateChanged, GoogleAuthProvider } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-        import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, limit } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, where, serverTimestamp, limit, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
         const firebaseConfig = {
             apiKey: "AIzaSyBQPGu8l-JQqjHRubcAcYeUK7aIgH7vPIE",
@@ -1112,8 +1224,14 @@
         const submitCommentBtn = document.getElementById('submitCommentBtn');
         const commentsList = document.getElementById('commentsList');
         const commentsCount = document.getElementById('commentsCount');
+        const ratingStars = document.getElementById('ratingStars');
+        const avgStars = document.getElementById('avgStars');
+        const avgValue = document.getElementById('avgValue');
+        const avgCount = document.getElementById('avgCount');
+        const ratingThanks = document.getElementById('ratingThanks');
 
         let currentUser = null;
+        let userRating = 0;
 
         onAuthStateChanged(auth, (user) => {
             currentUser = user;
@@ -1218,6 +1336,7 @@
                                     <div class="comment-author">${escapeHtml(data.authorName.split(' ')[0])}</div>
                                     <div class="comment-date">${date}</div>
                                 </div>
+                                ${currentUser && currentUser.uid === data.authorId ? `<button class="comment-delete-btn" onclick="deleteComment('${doc.id}')" title="Apagar">&#128465;</button>` : ''}
                             </div>
                             <div class="comment-text">${escapeHtml(data.text)}</div>
                         </div>
@@ -1248,7 +1367,121 @@
             return div.innerHTML;
         }
 
+        // Delete comment function
+        window.deleteComment = async function(commentId) {
+            if (!currentUser) return;
+            if (!confirm('Tem certeza que deseja apagar este comentario?')) return;
+
+            try {
+                await deleteDoc(doc(db, 'otimizador-gold-comments', commentId));
+                await loadComments();
+            } catch (error) {
+                alert('Erro ao apagar: ' + error.message);
+            }
+        };
+
+        // Rating System
+        const stars = ratingStars.querySelectorAll('.star');
+
+        stars.forEach(star => {
+            star.addEventListener('mouseenter', () => {
+                const value = parseInt(star.dataset.value);
+                updateStarsDisplay(value, true);
+            });
+
+            star.addEventListener('mouseleave', () => {
+                updateStarsDisplay(userRating, false);
+            });
+
+            star.addEventListener('click', async () => {
+                if (!currentUser) {
+                    alert('Faca login para avaliar!');
+                    return;
+                }
+                const value = parseInt(star.dataset.value);
+                userRating = value;
+                updateStarsDisplay(value, false);
+                await submitRating(value);
+            });
+        });
+
+        function updateStarsDisplay(value, isHover) {
+            stars.forEach(star => {
+                const starValue = parseInt(star.dataset.value);
+                star.classList.remove('active', 'hovered');
+                if (starValue <= value) {
+                    star.classList.add(isHover ? 'hovered' : 'active');
+                }
+            });
+        }
+
+        async function submitRating(value) {
+            try {
+                const ratingRef = doc(db, 'otimizador-gold-ratings', currentUser.uid);
+                await setDoc(ratingRef, {
+                    rating: value,
+                    userId: currentUser.uid,
+                    userName: currentUser.displayName || 'Usuario',
+                    userEmail: currentUser.email,
+                    updatedAt: serverTimestamp()
+                });
+                ratingThanks.classList.add('show');
+                setTimeout(() => ratingThanks.classList.remove('show'), 3000);
+                await loadRatings();
+            } catch (error) {
+                alert('Erro ao avaliar: ' + error.message);
+            }
+        }
+
+        async function loadRatings() {
+            try {
+                const ratingsQuery = query(collection(db, 'otimizador-gold-ratings'));
+                const snapshot = await getDocs(ratingsQuery);
+
+                if (snapshot.empty) {
+                    avgValue.textContent = '-';
+                    avgCount.textContent = '';
+                    avgStars.textContent = '';
+                    return;
+                }
+
+                let total = 0;
+                let count = 0;
+                snapshot.forEach(doc => {
+                    total += doc.data().rating;
+                    count++;
+                    // Check if current user has rated
+                    if (currentUser && doc.id === currentUser.uid) {
+                        userRating = doc.data().rating;
+                        updateStarsDisplay(userRating, false);
+                    }
+                });
+
+                const average = (total / count).toFixed(1);
+                avgValue.textContent = average;
+                avgCount.textContent = `(${count} ${count === 1 ? 'voto' : 'votos'})`;
+                avgStars.textContent = '★'.repeat(Math.round(average));
+            } catch (error) {
+                console.error('Erro ao carregar avaliacoes:', error);
+            }
+        }
+
+        async function loadUserRating() {
+            if (!currentUser) return;
+            try {
+                const ratingRef = doc(db, 'otimizador-gold-ratings', currentUser.uid);
+                const ratingDoc = await getDoc(ratingRef);
+                if (ratingDoc.exists()) {
+                    userRating = ratingDoc.data().rating;
+                    updateStarsDisplay(userRating, false);
+                }
+            } catch (error) {
+                console.error('Erro ao carregar avaliacao do usuario:', error);
+            }
+        }
+
         loadComments();
+        loadRatings();
     </script>
 
     <!-- Main App Script -->
