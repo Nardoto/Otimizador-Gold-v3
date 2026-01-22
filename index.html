@@ -23,11 +23,9 @@
             --text-secondary: #a1a1aa;
             --text-muted: #71717a;
             --border-light: rgba(255, 255, 255, 0.08);
-            --border-focus: rgba(255, 107, 53, 0.5);
             --gradient-primary: linear-gradient(135deg, #FF6B35 0%, #E85A2A 100%);
             --gradient-glow: radial-gradient(ellipse at center, rgba(255, 107, 53, 0.15) 0%, transparent 70%);
             --shadow-primary: 0 4px 20px rgba(255, 107, 53, 0.3);
-            --shadow-primary-lg: 0 8px 30px rgba(255, 107, 53, 0.4);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -43,7 +41,7 @@
         /* Header */
         .header {
             text-align: center;
-            padding: 50px 20px 30px;
+            padding: 40px 20px 30px;
             position: relative;
         }
         .header::before {
@@ -61,7 +59,7 @@
             display: inline-flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
         .logo-icon {
             width: 48px;
@@ -75,7 +73,7 @@
         }
         h1 {
             font-family: 'DM Serif Display', serif;
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 400;
             background: var(--gradient-primary);
             -webkit-background-clip: text;
@@ -84,24 +82,194 @@
         }
         .subtitle {
             color: var(--text-secondary);
-            font-size: 1rem;
-            margin-top: 8px;
+            font-size: 0.95rem;
+            margin-top: 6px;
         }
 
-        /* Container */
-        .container {
-            max-width: 900px;
+        /* 3-Column Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr 300px;
+            gap: 24px;
+            max-width: 1600px;
             margin: 0 auto;
-            padding: 0 20px 60px;
+            padding: 0 24px 60px;
+        }
+
+        @media (max-width: 1200px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+                max-width: 900px;
+            }
+            .sidebar-left { order: 2; }
+            .main-content { order: 1; }
+            .sidebar-right { order: 3; }
+        }
+
+        /* Sidebars */
+        .sidebar-left, .sidebar-right {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sidebar-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 20px;
+            position: sticky;
+            top: 20px;
+        }
+
+        .sidebar-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-title-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--gradient-primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        /* Help Section */
+        .help-section {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .help-item {
+            padding: 12px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .help-item:hover {
+            border-color: rgba(255, 107, 53, 0.3);
+        }
+
+        .help-item-title {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .help-item-text {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(232, 90, 42, 0.05) 100%);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .cta-badge {
+            display: inline-block;
+            background: var(--gradient-primary);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .cta-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .cta-text {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .cta-features {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .cta-feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .cta-feature-icon {
+            color: var(--success);
+            font-size: 12px;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px 20px;
+            background: var(--gradient-primary);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-primary);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.4);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
 
         /* Card */
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border-light);
-            border-radius: 20px;
-            padding: 28px;
-            margin-bottom: 20px;
+            border-radius: 16px;
+            padding: 24px;
             transition: all 0.3s ease;
         }
         .card:hover {
@@ -109,52 +277,51 @@
         }
         .card-title {
             font-family: 'DM Serif Display', serif;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: var(--text-primary);
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
         .card-title-icon {
-            width: 32px;
-            height: 32px;
+            width: 30px;
+            height: 30px;
             background: var(--gradient-primary);
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 14px;
         }
 
         /* Form Elements */
-        .form-group { margin-bottom: 18px; }
+        .form-group { margin-bottom: 16px; }
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 14px;
+            gap: 12px;
         }
-        @media (max-width: 600px) {
+        @media (max-width: 500px) {
             .form-row { grid-template-columns: 1fr; }
-            h1 { font-size: 1.8rem; }
         }
         label {
             display: block;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 500;
             color: var(--text-secondary);
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
         input[type="text"],
         input[type="number"],
         textarea {
             width: 100%;
-            padding: 12px 16px;
-            font-size: 0.95rem;
+            padding: 10px 14px;
+            font-size: 0.9rem;
             font-family: inherit;
             background: var(--bg-input);
             border: 1px solid var(--border-light);
-            border-radius: 10px;
+            border-radius: 8px;
             color: var(--text-primary);
             transition: all 0.3s ease;
         }
@@ -168,57 +335,58 @@
         }
         textarea {
             resize: vertical;
-            min-height: 160px;
+            min-height: 140px;
         }
 
         /* Options Panel */
         .options-panel {
             background: var(--bg-input);
             border: 1px solid var(--border-light);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 18px;
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 16px;
             display: none;
         }
         .options-panel.show { display: block; }
         .options-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
             gap: 12px;
         }
         .option-item {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
         .option-item input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             accent-color: var(--primary);
         }
         .option-item label {
             margin-bottom: 0;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
         }
         .option-item input[type="text"] {
-            width: 120px;
-            padding: 6px 10px;
-            font-size: 0.8rem;
+            width: 100px;
+            padding: 5px 8px;
+            font-size: 0.75rem;
         }
 
         /* Division Rows */
-        .division-section { margin-bottom: 18px; }
+        .division-section { margin-bottom: 16px; }
         .division-row {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 14px 16px;
+            gap: 10px;
+            padding: 12px 14px;
             background: var(--bg-input);
             border: 1px solid var(--border-light);
-            border-radius: 12px;
-            margin-bottom: 10px;
+            border-radius: 10px;
+            margin-bottom: 8px;
             transition: all 0.3s ease;
+            flex-wrap: wrap;
         }
         .division-row.active {
             border-color: var(--primary);
@@ -227,8 +395,7 @@
         .division-label {
             font-weight: 600;
             color: var(--text-secondary);
-            min-width: 90px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         .division-row.active .division-label {
             color: var(--primary);
@@ -236,7 +403,7 @@
         .division-controls {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             flex: 1;
             flex-wrap: wrap;
         }
@@ -246,36 +413,37 @@
             gap: 2px;
         }
         .input-mini label {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--text-muted);
             text-transform: uppercase;
         }
         .input-mini input {
-            width: 70px;
-            padding: 8px 10px;
+            width: 60px;
+            padding: 6px 8px;
             text-align: center;
             font-weight: 600;
+            font-size: 0.85rem;
         }
 
         /* Buttons */
         .btn-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 18px;
+            gap: 8px;
+            margin-top: 16px;
         }
         .btn {
-            padding: 12px 24px;
-            font-size: 0.95rem;
+            padding: 10px 20px;
+            font-size: 0.9rem;
             font-weight: 600;
             font-family: inherit;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
         .btn-primary {
             background: var(--gradient-primary);
@@ -284,7 +452,6 @@
         }
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: var(--shadow-primary-lg);
         }
         .btn-secondary {
             background: transparent;
@@ -305,50 +472,70 @@
             color: white;
         }
         .btn-sm {
-            padding: 8px 16px;
-            font-size: 0.85rem;
+            padding: 7px 14px;
+            font-size: 0.8rem;
         }
         .btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
 
+        /* Toggle Button */
+        .toggle-btn {
+            background: var(--bg-input);
+            border: 1px solid var(--border-light);
+            color: var(--text-secondary);
+            padding: 7px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .toggle-btn:hover, .toggle-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
         /* Stats */
         .stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 14px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        @media (max-width: 500px) {
+            .stats { grid-template-columns: repeat(2, 1fr); }
         }
         .stat-item {
             background: var(--bg-input);
             border: 1px solid var(--border-light);
-            border-radius: 14px;
-            padding: 16px;
+            border-radius: 10px;
+            padding: 12px;
             text-align: center;
         }
         .stat-value {
             font-family: 'DM Serif Display', serif;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: var(--primary);
         }
         .stat-label {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
-            margin-top: 4px;
+            margin-top: 2px;
         }
 
         /* Blocks */
         .blocks-container {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 12px;
         }
         .block {
             background: var(--bg-card);
             border: 1px solid var(--border-light);
-            border-radius: 14px;
-            padding: 18px;
+            border-radius: 12px;
+            padding: 14px;
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
@@ -365,42 +552,42 @@
             transition: opacity 0.3s ease;
         }
         .block:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
         }
         .block:hover::before { opacity: 1; }
         .block-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
         }
         .block-title {
             font-weight: 600;
             color: var(--primary);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         .block-meta {
             display: flex;
-            gap: 14px;
-            font-size: 0.8rem;
+            gap: 12px;
+            font-size: 0.75rem;
             color: var(--text-muted);
         }
         .block-controls {
             display: flex;
-            gap: 6px;
+            gap: 4px;
         }
         .block-content {
             background: var(--bg-input);
             border: 1px solid var(--border-light);
-            border-radius: 8px;
-            padding: 14px;
+            border-radius: 6px;
+            padding: 12px;
             color: var(--text-secondary);
-            line-height: 1.7;
-            font-size: 0.9rem;
-            min-height: 60px;
+            line-height: 1.6;
+            font-size: 0.85rem;
+            min-height: 50px;
             transition: all 0.3s ease;
         }
         .block-content:focus {
@@ -412,11 +599,11 @@
             border-color: var(--success);
         }
         .btn-block {
-            width: 28px;
-            height: 28px;
+            width: 26px;
+            height: 26px;
             padding: 0;
-            font-size: 14px;
-            border-radius: 6px;
+            font-size: 12px;
+            border-radius: 5px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -426,17 +613,141 @@
         .merge-section {
             background: var(--bg-input);
             border: 1px dashed var(--border-light);
-            border-radius: 12px;
-            padding: 16px;
+            border-radius: 10px;
+            padding: 14px;
         }
         .merge-section input[type="file"] {
             width: 100%;
-            padding: 10px;
+            padding: 8px;
             background: var(--bg-card);
             border: 1px solid var(--border-light);
-            border-radius: 8px;
+            border-radius: 6px;
             color: var(--text-secondary);
             cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        /* Comments Section (Right Sidebar) */
+        .comments-sidebar {
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+        }
+        .auth-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 16px;
+            padding: 10px 12px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            flex-wrap: wrap;
+        }
+        .auth-bar .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .auth-bar .user-photo {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+        }
+        .auth-bar .user-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.8rem;
+        }
+        .google-login-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: white;
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .google-login-btn:hover {
+            background: #f8f9fa;
+            border-color: var(--primary);
+        }
+        .google-login-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+        .comment-form textarea {
+            min-height: 60px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+        }
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 16px;
+        }
+        .comment-item {
+            background: var(--bg-input);
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 12px;
+            transition: all 0.3s ease;
+        }
+        .comment-item:hover {
+            border-color: rgba(255, 107, 53, 0.3);
+        }
+        .comment-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .comment-photo {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+        }
+        .comment-meta {
+            flex: 1;
+        }
+        .comment-author {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.8rem;
+        }
+        .comment-date {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+        }
+        .comment-text {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+        .comments-count {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-left: auto;
+        }
+        .no-comments {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        .loading-comments {
+            text-align: center;
+            padding: 16px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
         }
 
         /* Footer */
@@ -447,12 +758,12 @@
         }
         .footer-quote {
             font-family: 'DM Serif Display', serif;
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--text-secondary);
             font-style: italic;
         }
         .footer-brand {
-            margin-top: 12px;
+            margin-top: 10px;
         }
         .footer-brand a {
             color: var(--primary);
@@ -466,10 +777,11 @@
             background: rgba(239, 68, 68, 0.1);
             border: 1px solid rgba(239, 68, 68, 0.3);
             color: #ef4444;
-            padding: 14px 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
             text-align: center;
+            font-size: 0.85rem;
             animation: shake 0.5s ease;
         }
         @keyframes shake {
@@ -478,151 +790,17 @@
             75% { transform: translateX(5px); }
         }
 
-        /* Toggle Button */
-        .toggle-btn {
-            background: var(--bg-input);
-            border: 1px solid var(--border-light);
-            color: var(--text-secondary);
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .toggle-btn:hover, .toggle-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
         #preview { display: none; }
 
-        /* Comments Section */
-        .comments-section {
-            margin-top: 20px;
-        }
-        .auth-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 20px;
-            padding: 14px 18px;
-            background: var(--bg-input);
-            border: 1px solid var(--border-light);
-            border-radius: 12px;
-            flex-wrap: wrap;
-        }
-        .auth-bar .user-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .auth-bar .user-photo {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border: 2px solid var(--primary);
-        }
-        .auth-bar .user-name {
-            font-weight: 600;
-            color: var(--text-primary);
-            font-size: 0.9rem;
-        }
-        .google-login-btn {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 18px;
-            background: white;
-            border: 1px solid var(--border-light);
-            border-radius: 10px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #333;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .google-login-btn:hover {
-            background: #f8f9fa;
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-        .google-login-btn svg {
-            width: 18px;
-            height: 18px;
-        }
-        .comment-form {
-            margin-bottom: 24px;
-        }
-        .comment-form textarea {
-            min-height: 80px;
-            margin-bottom: 10px;
-        }
-        .comments-list {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-        .comment-item {
-            background: var(--bg-input);
-            border: 1px solid var(--border-light);
-            border-radius: 12px;
-            padding: 16px;
-            transition: all 0.3s ease;
-        }
-        .comment-item:hover {
-            border-color: rgba(255, 107, 53, 0.3);
-        }
-        .comment-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        .comment-photo {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: 2px solid var(--primary);
-        }
-        .comment-meta {
-            flex: 1;
-        }
-        .comment-author {
-            font-weight: 600;
-            color: var(--text-primary);
-            font-size: 0.9rem;
-        }
-        .comment-date {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-        .comment-text {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-        .comments-count {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-left: auto;
-        }
-        .no-comments {
-            text-align: center;
-            padding: 30px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        .loading-comments {
-            text-align: center;
-            padding: 20px;
-            color: var(--text-muted);
-        }
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 </head>
 <body>
+    <!-- Header -->
     <header class="header">
         <div class="logo">
             <div class="logo-icon">&#9889;</div>
@@ -631,182 +809,276 @@
         <p class="subtitle">Divisor de texto inteligente para legendas e audiovisual</p>
     </header>
 
-    <main class="container">
-        <!-- Input Card -->
-        <div class="card">
-            <h2 class="card-title">
-                <span class="card-title-icon">&#128221;</span>
-                Configuracoes
-            </h2>
+    <!-- 3-Column Layout -->
+    <div class="main-layout">
+        <!-- LEFT SIDEBAR - Help & CTA -->
+        <aside class="sidebar-left">
+            <!-- Help Section -->
+            <div class="sidebar-card">
+                <h3 class="sidebar-title">
+                    <span class="sidebar-title-icon">&#128218;</span>
+                    Como Usar
+                </h3>
+                <div class="help-section">
+                    <div class="help-item">
+                        <div class="help-item-title">&#128196; Divisao por Caracteres</div>
+                        <div class="help-item-text">Define o numero maximo de caracteres por bloco. Ideal para legendas de video (490 chars e o padrao para ElevenLabs/TTS).</div>
+                    </div>
+                    <div class="help-item">
+                        <div class="help-item-title">&#128209; Divisao por Palavras</div>
+                        <div class="help-item-text">Divide o texto por quantidade de palavras. Util para scripts de narracao e roteiros.</div>
+                    </div>
+                    <div class="help-item">
+                        <div class="help-item-title">&#9881; Opcoes Avancadas</div>
+                        <div class="help-item-text">Filtrar numeros do texto, ignorar palavras especificas, ou limpar automaticamente apos exportar.</div>
+                    </div>
+                    <div class="help-item">
+                        <div class="help-item-title">&#128337; C/S (Caracteres/Segundo)</div>
+                        <div class="help-item-text">Taxa de leitura para calcular duracao. 14 c/s e a media humana. Usado para gerar timestamps no SRT.</div>
+                    </div>
+                    <div class="help-item">
+                        <div class="help-item-title">&#128190; Exportar SRT + TXT</div>
+                        <div class="help-item-text">Gera arquivo .srt com timestamps prontos para importar em editores de video, mais um .txt organizado.</div>
+                    </div>
+                    <div class="help-item">
+                        <div class="help-item-title">&#128279; Juntar SRTs</div>
+                        <div class="help-item-text">Selecione varios arquivos SRT e junte em um unico arquivo com timestamps ajustados automaticamente.</div>
+                    </div>
+                    <div class="help-item">
+                        <div class="help-item-title">&#9999; Blocos Editaveis</div>
+                        <div class="help-item-text">Apos dividir, clique em qualquer bloco para editar o texto. Use os botoes para copiar, adicionar ou excluir blocos.</div>
+                    </div>
+                </div>
+            </div>
 
-            <div class="form-row">
+            <!-- CTA Section -->
+            <div class="cta-section">
+                <span class="cta-badge">&#10024; Novidade</span>
+                <h4 class="cta-title">Conheca o Ecossistema Nardoto</h4>
+                <p class="cta-text">Ferramentas de automacao para criadores de conteudo que querem escalar sua producao.</p>
+                <div class="cta-features">
+                    <div class="cta-feature">
+                        <span class="cta-feature-icon">&#10003;</span>
+                        <span>Automacao de IA (GPT, Claude, Gemini)</span>
+                    </div>
+                    <div class="cta-feature">
+                        <span class="cta-feature-icon">&#10003;</span>
+                        <span>Geracao de videos com VEO3</span>
+                    </div>
+                    <div class="cta-feature">
+                        <span class="cta-feature-icon">&#10003;</span>
+                        <span>TTS profissional (ElevenLabs)</span>
+                    </div>
+                    <div class="cta-feature">
+                        <span class="cta-feature-icon">&#10003;</span>
+                        <span>Edicao automatica (CapCut)</span>
+                    </div>
+                    <div class="cta-feature">
+                        <span class="cta-feature-icon">&#10003;</span>
+                        <span>Hub centralizado de ferramentas</span>
+                    </div>
+                </div>
+                <a href="https://nardoto.com.br" target="_blank" class="cta-btn">
+                    &#128640; Conhecer Ferramentas
+                </a>
+            </div>
+
+            <!-- App Coming Soon -->
+            <div class="sidebar-card" style="text-align: center;">
+                <span class="cta-badge" style="background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);">&#128241; Em Breve</span>
+                <h4 class="sidebar-title" style="justify-content: center; margin-top: 12px;">
+                    Nardoto Studio
+                </h4>
+                <p style="color: var(--text-muted); font-size: 0.8rem; line-height: 1.5;">
+                    App desktop para Windows com todas as ferramentas integradas, trabalho offline e interface ainda mais poderosa.
+                </p>
+                <a href="https://nardoto.com.br" target="_blank" style="color: var(--primary); font-size: 0.8rem; font-weight: 600; text-decoration: none; display: inline-block; margin-top: 12px;">
+                    Saiba mais &#8594;
+                </a>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <!-- Input Card -->
+            <div class="card">
+                <h2 class="card-title">
+                    <span class="card-title-icon">&#128221;</span>
+                    Configuracoes
+                </h2>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fileName">Nome do arquivo</label>
+                        <input type="text" id="fileName" placeholder="Ex: meu-video-legenda">
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: flex-end; gap: 8px;">
+                        <button class="toggle-btn" id="toggleOptionsBtn">&#9881; Opcoes</button>
+                    </div>
+                </div>
+
+                <!-- Options Panel -->
+                <div id="optionsPanel" class="options-panel">
+                    <div class="options-grid">
+                        <div class="option-item">
+                            <input type="checkbox" id="filterNumbers">
+                            <label for="filterNumbers">Filtrar numeros</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="checkbox" id="clearAfterExport">
+                            <label for="clearAfterExport">Limpar apos exportar</label>
+                        </div>
+                        <div class="option-item">
+                            <label>Ignorar:</label>
+                            <input type="text" id="ignoreText" placeholder="texto...">
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group">
-                    <label for="fileName">Nome do arquivo</label>
-                    <input type="text" id="fileName" placeholder="Ex: meu-video-legenda">
+                    <label for="textInput">Texto para dividir</label>
+                    <textarea id="textInput" rows="6" placeholder="Cole seu texto aqui..."></textarea>
                 </div>
-                <div class="form-group" style="display: flex; align-items: flex-end; gap: 10px;">
-                    <button class="toggle-btn" id="toggleOptionsBtn">&#9881; Opcoes</button>
-                </div>
-            </div>
 
-            <!-- Options Panel -->
-            <div id="optionsPanel" class="options-panel">
-                <div class="options-grid">
-                    <div class="option-item">
-                        <input type="checkbox" id="filterNumbers">
-                        <label for="filterNumbers">Filtrar numeros</label>
-                    </div>
-                    <div class="option-item">
-                        <input type="checkbox" id="clearAfterExport">
-                        <label for="clearAfterExport">Limpar apos exportar</label>
-                    </div>
-                    <div class="option-item">
-                        <label>Ignorar:</label>
-                        <input type="text" id="ignoreText" placeholder="texto...">
-                    </div>
-                </div>
-            </div>
+                <!-- Division Controls -->
+                <div class="division-section">
+                    <label>Modo de Divisao</label>
 
-            <div class="form-group">
-                <label for="textInput">Texto para dividir</label>
-                <textarea id="textInput" rows="8" placeholder="Cole seu texto aqui..."></textarea>
-            </div>
-
-            <!-- Division Controls -->
-            <div class="division-section">
-                <label>Modo de Divisao</label>
-
-                <div class="division-row" id="charDivisionRow">
-                    <span class="division-label">&#128196; Caracteres</span>
-                    <div class="division-controls">
-                        <div class="input-mini">
-                            <label>Max</label>
-                            <input type="number" id="charCount" value="490" min="50" max="2000">
+                    <div class="division-row" id="charDivisionRow">
+                        <span class="division-label">&#128196; Caracteres</span>
+                        <div class="division-controls">
+                            <div class="input-mini">
+                                <label>Max</label>
+                                <input type="number" id="charCount" value="490" min="50" max="2000">
+                            </div>
+                            <div class="input-mini">
+                                <label>c/s</label>
+                                <input type="number" id="readingRate" value="14" min="10" max="50">
+                            </div>
+                            <button class="btn btn-primary btn-sm" id="divideByCharsBtn">Dividir</button>
                         </div>
-                        <div class="input-mini">
-                            <label>c/s</label>
-                            <input type="number" id="readingRate" value="14" min="10" max="50">
+                    </div>
+
+                    <div class="division-row" id="wordDivisionRow">
+                        <span class="division-label">&#128209; Palavras</span>
+                        <div class="division-controls">
+                            <div class="input-mini">
+                                <label>Max</label>
+                                <input type="number" id="wordCount" value="50" min="10" max="500">
+                            </div>
+                            <button class="btn btn-secondary btn-sm" id="divideByWordsBtn">Dividir</button>
                         </div>
-                        <button class="btn btn-primary btn-sm" id="divideByCharsBtn">Dividir</button>
                     </div>
                 </div>
 
-                <div class="division-row" id="wordDivisionRow">
-                    <span class="division-label">&#128209; Palavras</span>
-                    <div class="division-controls">
-                        <div class="input-mini">
-                            <label>Max</label>
-                            <input type="number" id="wordCount" value="50" min="10" max="500">
-                        </div>
-                        <button class="btn btn-secondary btn-sm" id="divideByWordsBtn">Dividir</button>
+                <div class="btn-group">
+                    <button class="btn btn-success" id="exportBtn" disabled>
+                        &#128190; Exportar SRT + TXT
+                    </button>
+                    <button class="btn btn-secondary" id="resetBtn">
+                        &#128260; Limpar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Card -->
+            <div id="statsCard" class="card" style="display: none;">
+                <h2 class="card-title">
+                    <span class="card-title-icon">&#128202;</span>
+                    Estatisticas
+                </h2>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalChars">0</div>
+                        <div class="stat-label">Caracteres</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalWords">0</div>
+                        <div class="stat-label">Palavras</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalBlocks">0</div>
+                        <div class="stat-label">Blocos</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalDuration">0:00</div>
+                        <div class="stat-label">Duracao</div>
                     </div>
                 </div>
             </div>
 
-            <div class="btn-group">
-                <button class="btn btn-success" id="exportBtn" disabled>
-                    &#128190; Exportar SRT + TXT
-                </button>
-                <button class="btn btn-secondary" id="resetBtn">
-                    &#128260; Limpar
-                </button>
-            </div>
-        </div>
-
-        <!-- Stats Card -->
-        <div id="statsCard" class="card" style="display: none;">
-            <h2 class="card-title">
-                <span class="card-title-icon">&#128202;</span>
-                Estatisticas
-            </h2>
-            <div class="stats">
-                <div class="stat-item">
-                    <div class="stat-value" id="totalChars">0</div>
-                    <div class="stat-label">Caracteres</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="totalWords">0</div>
-                    <div class="stat-label">Palavras</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="totalBlocks">0</div>
-                    <div class="stat-label">Blocos</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="totalDuration">0:00</div>
-                    <div class="stat-label">Duracao</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Blocks Card -->
-        <div id="blocksCard" class="card" style="display: none;">
-            <h2 class="card-title">
-                <span class="card-title-icon">&#128230;</span>
-                Blocos Gerados
-                <button class="btn btn-secondary btn-sm" id="addBlockBtn" style="margin-left: auto;">+ Bloco</button>
-            </h2>
-            <div id="blocks" class="blocks-container"></div>
-        </div>
-
-        <!-- Merge SRT Card -->
-        <div class="card">
-            <h2 class="card-title">
-                <span class="card-title-icon">&#128279;</span>
-                Juntar Arquivos SRT
-            </h2>
-            <div class="merge-section">
-                <label for="srtFiles">Selecione os arquivos SRT:</label>
-                <input type="file" id="srtFiles" accept=".srt" multiple>
-                <div class="btn-group" style="margin-top: 12px;">
-                    <button class="btn btn-primary btn-sm" id="mergeSrtsBtn">Juntar SRTs</button>
-                    <button class="btn btn-secondary btn-sm" id="cancelMergeBtn">Cancelar</button>
-                </div>
-                <div id="mergeStatus" style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted);"></div>
-            </div>
-        </div>
-
-        <div id="preview"></div>
-
-        <!-- Comments Card -->
-        <div class="card comments-section">
-            <h2 class="card-title">
-                <span class="card-title-icon">&#128172;</span>
-                Comentarios da Galera
-                <span id="commentsCount" class="comments-count"></span>
-            </h2>
-
-            <!-- Auth Bar -->
-            <div class="auth-bar">
-                <div id="authStatus">
-                    <span style="color: var(--text-muted); font-size: 0.9rem;">Entre com Google para comentar</span>
-                </div>
-                <button id="googleLoginBtn" class="google-login-btn">
-                    <svg viewBox="0 0 18 18">
-                        <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/>
-                        <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/>
-                        <path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z"/>
-                        <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/>
-                    </svg>
-                    Entrar com Google
-                </button>
+            <!-- Blocks Card -->
+            <div id="blocksCard" class="card" style="display: none;">
+                <h2 class="card-title">
+                    <span class="card-title-icon">&#128230;</span>
+                    Blocos Gerados
+                    <button class="btn btn-secondary btn-sm" id="addBlockBtn" style="margin-left: auto;">+ Bloco</button>
+                </h2>
+                <div id="blocks" class="blocks-container"></div>
             </div>
 
-            <!-- Comment Form -->
-            <div class="comment-form">
-                <textarea id="commentInput" placeholder="Deixe seu comentario, sugestao ou feedback..." disabled></textarea>
-                <button id="submitCommentBtn" class="btn btn-primary btn-sm" disabled>
-                    &#128172; Enviar Comentario
-                </button>
+            <!-- Merge SRT Card -->
+            <div class="card">
+                <h2 class="card-title">
+                    <span class="card-title-icon">&#128279;</span>
+                    Juntar Arquivos SRT
+                </h2>
+                <div class="merge-section">
+                    <label for="srtFiles">Selecione os arquivos SRT:</label>
+                    <input type="file" id="srtFiles" accept=".srt" multiple>
+                    <div class="btn-group" style="margin-top: 10px;">
+                        <button class="btn btn-primary btn-sm" id="mergeSrtsBtn">Juntar SRTs</button>
+                        <button class="btn btn-secondary btn-sm" id="cancelMergeBtn">Cancelar</button>
+                    </div>
+                    <div id="mergeStatus" style="margin-top: 8px; font-size: 0.8rem; color: var(--text-muted);"></div>
+                </div>
             </div>
 
-            <!-- Comments List -->
-            <div id="commentsList" class="comments-list">
-                <div class="loading-comments">Carregando comentarios...</div>
-            </div>
-        </div>
-    </main>
+            <div id="preview"></div>
+        </main>
 
+        <!-- RIGHT SIDEBAR - Comments -->
+        <aside class="sidebar-right">
+            <div class="sidebar-card comments-sidebar">
+                <h3 class="sidebar-title">
+                    <span class="sidebar-title-icon">&#128172;</span>
+                    Comentarios
+                    <span id="commentsCount" class="comments-count"></span>
+                </h3>
+
+                <!-- Auth Bar -->
+                <div class="auth-bar">
+                    <div id="authStatus">
+                        <span style="color: var(--text-muted); font-size: 0.75rem;">Entre para comentar</span>
+                    </div>
+                    <button id="googleLoginBtn" class="google-login-btn">
+                        <svg viewBox="0 0 18 18">
+                            <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/>
+                            <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/>
+                            <path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z"/>
+                            <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/>
+                        </svg>
+                        Google
+                    </button>
+                </div>
+
+                <!-- Comment Form -->
+                <div class="comment-form">
+                    <textarea id="commentInput" placeholder="Deixe seu feedback..." disabled></textarea>
+                    <button id="submitCommentBtn" class="btn btn-primary btn-sm" style="width: 100%;" disabled>
+                        &#128172; Enviar
+                    </button>
+                </div>
+
+                <!-- Comments List -->
+                <div id="commentsList" class="comments-list">
+                    <div class="loading-comments">Carregando...</div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Footer -->
     <footer class="footer">
         <p class="footer-quote">"O sonho e a coisa mais real que existe!"</p>
         <p class="footer-brand">
@@ -820,7 +1092,6 @@
         import { getAuth, signInWithPopup, signOut, onAuthStateChanged, GoogleAuthProvider } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
         import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, limit } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-        // Firebase Config (Nardoto Labs)
         const firebaseConfig = {
             apiKey: "AIzaSyBQPGu8l-JQqjHRubcAcYeUK7aIgH7vPIE",
             authDomain: "nardoto-labs.web.app",
@@ -835,7 +1106,6 @@
         const db = getFirestore(app);
         const provider = new GoogleAuthProvider();
 
-        // DOM Elements
         const authStatus = document.getElementById('authStatus');
         const googleLoginBtn = document.getElementById('googleLoginBtn');
         const commentInput = document.getElementById('commentInput');
@@ -845,23 +1115,22 @@
 
         let currentUser = null;
 
-        // Auth State
         onAuthStateChanged(auth, (user) => {
             currentUser = user;
             if (user) {
                 authStatus.innerHTML = `
                     <div class="user-info">
                         <img src="${user.photoURL || ''}" alt="" class="user-photo" onerror="this.style.display='none'">
-                        <span class="user-name">${user.displayName || 'Usuario'}</span>
+                        <span class="user-name">${(user.displayName || 'Usuario').split(' ')[0]}</span>
                     </div>
                 `;
                 googleLoginBtn.textContent = 'Sair';
                 googleLoginBtn.onclick = handleLogout;
                 commentInput.disabled = false;
                 submitCommentBtn.disabled = false;
-                commentInput.placeholder = 'Deixe seu comentario, sugestao ou feedback...';
+                commentInput.placeholder = 'Deixe seu feedback...';
             } else {
-                authStatus.innerHTML = '<span style="color: var(--text-muted); font-size: 0.9rem;">Entre com Google para comentar</span>';
+                authStatus.innerHTML = '<span style="color: var(--text-muted); font-size: 0.75rem;">Entre para comentar</span>';
                 googleLoginBtn.innerHTML = `
                     <svg viewBox="0 0 18 18">
                         <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/>
@@ -869,7 +1138,7 @@
                         <path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z"/>
                         <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/>
                     </svg>
-                    Entrar com Google
+                    Google
                 `;
                 googleLoginBtn.onclick = handleLogin;
                 commentInput.disabled = true;
@@ -878,19 +1147,16 @@
             }
         });
 
-        // Login
         async function handleLogin() {
             try {
                 await signInWithPopup(auth, provider);
             } catch (error) {
-                console.error('Erro no login:', error);
                 if (error.code !== 'auth/popup-closed-by-user') {
                     alert('Erro ao fazer login: ' + error.message);
                 }
             }
         }
 
-        // Logout
         async function handleLogout() {
             try {
                 await signOut(auth);
@@ -899,18 +1165,10 @@
             }
         }
 
-        // Submit Comment
         submitCommentBtn.addEventListener('click', async () => {
-            if (!currentUser) {
-                alert('Faca login para comentar');
-                return;
-            }
-
+            if (!currentUser) return;
             const text = commentInput.value.trim();
-            if (!text) {
-                alert('Digite um comentario');
-                return;
-            }
+            if (!text) return;
 
             try {
                 submitCommentBtn.disabled = true;
@@ -927,25 +1185,18 @@
 
                 commentInput.value = '';
                 await loadComments();
-
                 submitCommentBtn.disabled = false;
-                submitCommentBtn.innerHTML = '&#128172; Enviar Comentario';
+                submitCommentBtn.innerHTML = '&#128172; Enviar';
             } catch (error) {
-                console.error('Erro ao enviar comentario:', error);
                 alert('Erro ao enviar: ' + error.message);
                 submitCommentBtn.disabled = false;
-                submitCommentBtn.innerHTML = '&#128172; Enviar Comentario';
+                submitCommentBtn.innerHTML = '&#128172; Enviar';
             }
         });
 
-        // Load Comments
         async function loadComments() {
             try {
-                const q = query(
-                    collection(db, 'otimizador-gold-comments'),
-                    orderBy('createdAt', 'desc'),
-                    limit(50)
-                );
+                const q = query(collection(db, 'otimizador-gold-comments'), orderBy('createdAt', 'desc'), limit(30));
                 const snapshot = await getDocs(q);
 
                 if (snapshot.empty) {
@@ -955,18 +1206,16 @@
                 }
 
                 commentsCount.textContent = `(${snapshot.size})`;
-
                 let html = '';
                 snapshot.forEach((doc) => {
                     const data = doc.data();
                     const date = data.createdAt ? formatDate(data.createdAt.toDate()) : 'Agora';
-
                     html += `
                         <div class="comment-item">
                             <div class="comment-header">
                                 ${data.authorPhoto ? `<img src="${data.authorPhoto}" alt="" class="comment-photo" onerror="this.style.display='none'">` : ''}
                                 <div class="comment-meta">
-                                    <div class="comment-author">${escapeHtml(data.authorName)}</div>
+                                    <div class="comment-author">${escapeHtml(data.authorName.split(' ')[0])}</div>
                                     <div class="comment-date">${date}</div>
                                 </div>
                             </div>
@@ -974,11 +1223,9 @@
                         </div>
                     `;
                 });
-
                 commentsList.innerHTML = html;
             } catch (error) {
-                console.error('Erro ao carregar comentarios:', error);
-                commentsList.innerHTML = '<div class="no-comments">Erro ao carregar comentarios</div>';
+                commentsList.innerHTML = '<div class="no-comments">Erro ao carregar</div>';
             }
         }
 
@@ -988,11 +1235,10 @@
             const minutes = Math.floor(diff / 60000);
             const hours = Math.floor(diff / 3600000);
             const days = Math.floor(diff / 86400000);
-
             if (minutes < 1) return 'Agora';
-            if (minutes < 60) return `${minutes} min atras`;
-            if (hours < 24) return `${hours}h atras`;
-            if (days < 7) return `${days} dias atras`;
+            if (minutes < 60) return `${minutes}min`;
+            if (hours < 24) return `${hours}h`;
+            if (days < 7) return `${days}d`;
             return date.toLocaleDateString('pt-BR');
         }
 
@@ -1002,39 +1248,26 @@
             return div.innerHTML;
         }
 
-        // Load comments on page load
         loadComments();
     </script>
 
+    <!-- Main App Script -->
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // ========================================
-        // MULTI-LANGUAGE ABBREVIATIONS DATABASE
-        // ========================================
         const ABBREVIATIONS = {
             en: ['mr', 'mrs', 'ms', 'dr', 'prof', 'sr', 'jr', 'vs', 'etc', 'al', 'eg', 'ie', 'inc', 'ltd', 'co', 'corp', 'dept', 'est', 'vol', 'rev', 'ed', 'pp', 'approx', 'govt', 'intl', 'natl', 'jan', 'feb', 'mar', 'apr', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec', 'fig', 'ref', 'sec', 'ch', 'pg'],
             pt: ['sr', 'sra', 'srta', 'dr', 'dra', 'prof', 'profa', 'eng', 'adv', 'av', 'etc', 'ex', 'obs', 'vol', 'cap', 'ed', 'num', 'tel', 'cel', 'ltda', 'cia', 'gov', 'min', 'sec', 'dep', 'jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez', 'fig', 'tab', 'ref', 'art'],
             es: ['sr', 'sra', 'srta', 'dr', 'dra', 'prof', 'profa', 'ing', 'lic', 'arq', 'etc', 'ej', 'vol', 'cap', 'ed', 'tel', 'cel', 'gov', 'min', 'sec', 'dip', 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic', 'fig', 'tab', 'ref', 'art']
         };
 
-        const CONJUNCTIONS = {
-            en: ['and', 'or', 'but', 'nor', 'for', 'yet', 'so', 'because', 'although', 'while', 'when', 'if', 'unless', 'until', 'since', 'after', 'before', 'however', 'therefore', 'moreover', 'furthermore', 'meanwhile', 'otherwise', 'nevertheless', 'then', 'also'],
-            pt: ['e', 'ou', 'mas', 'porem', 'contudo', 'todavia', 'entretanto', 'nem', 'pois', 'logo', 'portanto', 'assim', 'entao', 'porque', 'que', 'se', 'caso', 'embora', 'quando', 'enquanto', 'onde', 'como', 'alem disso', 'ou seja', 'isto e'],
-            es: ['y', 'e', 'o', 'u', 'pero', 'sino', 'mas', 'aunque', 'sin embargo', 'ni', 'pues', 'luego', 'por lo tanto', 'asi', 'entonces', 'porque', 'que', 'si', 'cuando', 'mientras', 'donde', 'como', 'ademas', 'es decir']
-        };
-
         const ALL_ABBREVIATIONS = new Set([...ABBREVIATIONS.en, ...ABBREVIATIONS.pt, ...ABBREVIATIONS.es].map(a => a.toLowerCase().replace(/\./g, '')));
-        const ALL_CONJUNCTIONS = new Set([...CONJUNCTIONS.en, ...CONJUNCTIONS.pt, ...CONJUNCTIONS.es].map(c => c.toLowerCase()));
 
-        // Constants
         const PAUSE_TIME = 0.9;
         const TOLERANCE_PERCENT = 0.15;
         const MIN_BLOCK_PERCENT = 0.5;
 
-        // State
         let currentDivisionMode = null;
 
-        // DOM Elements
         const toggleOptionsBtn = document.getElementById('toggleOptionsBtn');
         const optionsPanel = document.getElementById('optionsPanel');
         const textInput = document.getElementById('textInput');
@@ -1050,13 +1283,11 @@
         const charDivisionRow = document.getElementById('charDivisionRow');
         const wordDivisionRow = document.getElementById('wordDivisionRow');
 
-        // Toggle Options
         toggleOptionsBtn.addEventListener('click', () => {
             optionsPanel.classList.toggle('show');
             toggleOptionsBtn.classList.toggle('active');
         });
 
-        // Division Buttons
         document.getElementById('divideByCharsBtn').addEventListener('click', () => {
             divideTextByChars();
             setDivisionMode('chars');
@@ -1071,7 +1302,6 @@
         document.getElementById('exportBtn').addEventListener('click', exportBoth);
         document.getElementById('addBlockBtn').addEventListener('click', () => createBlock(''));
 
-        // SRT Merge
         document.getElementById('mergeSrtsBtn').addEventListener('click', mergeSrtFiles);
         document.getElementById('cancelMergeBtn').addEventListener('click', () => {
             document.getElementById('srtFiles').value = '';
@@ -1085,9 +1315,6 @@
             exportBtn.disabled = false;
         }
 
-        // ========================================
-        // TEXT PROCESSING
-        // ========================================
         function formatText(text) {
             return text
                 .replace(/["«»""]/g, "'")
@@ -1158,51 +1385,35 @@
             const maxWithTolerance = Math.floor(maxLength * (1 + TOLERANCE_PERCENT));
             const cutCandidates = [];
 
-            // Sentence endings
             let match;
             const sentenceEndRegex = /[.!?]+\s+/g;
             while ((match = sentenceEndRegex.exec(text)) !== null) {
                 const pos = match.index + match[0].length;
-                if (pos <= maxWithTolerance) {
-                    cutCandidates.push({ pos, priority: 1 });
-                }
+                if (pos <= maxWithTolerance) cutCandidates.push({ pos, priority: 1 });
             }
 
-            // Clause separators
             const clauseRegex = /[;:]\s+/g;
             while ((match = clauseRegex.exec(text)) !== null) {
                 const pos = match.index + match[0].length;
-                if (pos <= maxWithTolerance) {
-                    cutCandidates.push({ pos, priority: 2 });
-                }
+                if (pos <= maxWithTolerance) cutCandidates.push({ pos, priority: 2 });
             }
 
-            // Commas
             const commaRegex = /,\s+/g;
             while ((match = commaRegex.exec(text)) !== null) {
                 const pos = match.index + match[0].length;
-                if (pos <= maxWithTolerance) {
-                    cutCandidates.push({ pos, priority: 3 });
-                }
+                if (pos <= maxWithTolerance) cutCandidates.push({ pos, priority: 3 });
             }
 
-            // Spaces
             const spaceRegex = /\s+/g;
             while ((match = spaceRegex.exec(text)) !== null) {
                 const pos = match.index + match[0].length;
-                if (pos <= maxWithTolerance) {
-                    cutCandidates.push({ pos, priority: 4 });
-                }
+                if (pos <= maxWithTolerance) cutCandidates.push({ pos, priority: 4 });
             }
 
-            if (cutCandidates.length === 0) {
-                return { pos: maxLength };
-            }
+            if (cutCandidates.length === 0) return { pos: maxLength };
 
             cutCandidates.sort((a, b) => {
-                if (a.priority === b.priority) {
-                    return Math.abs(maxLength - a.pos) - Math.abs(maxLength - b.pos);
-                }
+                if (a.priority === b.priority) return Math.abs(maxLength - a.pos) - Math.abs(maxLength - b.pos);
                 return a.priority - b.priority;
             });
 
@@ -1212,9 +1423,7 @@
             let bestCandidate = bestCandidates[0];
             for (const candidate of bestCandidates) {
                 if (candidate.pos >= maxLength * 0.7 && candidate.pos <= maxWithTolerance) {
-                    if (candidate.pos > bestCandidate.pos) {
-                        bestCandidate = candidate;
-                    }
+                    if (candidate.pos > bestCandidate.pos) bestCandidate = candidate;
                 }
             }
 
@@ -1236,16 +1445,10 @@
                 }
             }
 
-            if (remaining.trim()) {
-                parts.push(remaining.trim());
-            }
-
+            if (remaining.trim()) parts.push(remaining.trim());
             return parts;
         }
 
-        // ========================================
-        // DIVISION FUNCTIONS
-        // ========================================
         function getTextBlocksWithCustomLength(text, maxLength) {
             const blocks = [];
             let currentBlock = "";
@@ -1269,9 +1472,7 @@
                 if (trimmedSentence.length > maxWithTolerance) {
                     flushCurrentBlock();
                     const splitParts = splitLongSentence(trimmedSentence, maxLength);
-                    for (let i = 0; i < splitParts.length - 1; i++) {
-                        blocks.push(splitParts[i]);
-                    }
+                    for (let i = 0; i < splitParts.length - 1; i++) blocks.push(splitParts[i]);
                     currentBlock = splitParts[splitParts.length - 1] + " ";
                     continue;
                 }
@@ -1293,9 +1494,7 @@
                     }
                 } else {
                     currentBlock += trimmedSentence + " ";
-                    if (currentBlock.length >= maxLength) {
-                        flushCurrentBlock();
-                    }
+                    if (currentBlock.length >= maxLength) flushCurrentBlock();
                 }
             }
 
@@ -1330,20 +1529,14 @@
                 if (currentCount + sentenceWordCount <= maxWithTolerance) {
                     currentWords.push(...tokens);
                     currentCount += sentenceWordCount;
-                    if (currentCount >= wordsPerBlock) {
-                        flushCurrent();
-                    }
+                    if (currentCount >= wordsPerBlock) flushCurrent();
                 } else {
-                    if (currentCount >= minBlockWords) {
-                        flushCurrent();
-                    }
+                    if (currentCount >= minBlockWords) flushCurrent();
 
                     if (sentenceWordCount <= maxWithTolerance) {
                         currentWords.push(...tokens);
                         currentCount = sentenceWordCount;
-                        if (currentCount >= wordsPerBlock) {
-                            flushCurrent();
-                        }
+                        if (currentCount >= wordsPerBlock) flushCurrent();
                     } else {
                         const sentenceText = tokens.join(' ');
                         const avgCharsPerWord = sentenceText.length / sentenceWordCount;
@@ -1356,15 +1549,11 @@
                                 currentWords.push(...partTokens);
                                 currentCount += partTokens.length;
                             } else {
-                                if (currentCount >= minBlockWords) {
-                                    flushCurrent();
-                                }
+                                if (currentCount >= minBlockWords) flushCurrent();
                                 currentWords.push(...partTokens);
                                 currentCount = partTokens.length;
                             }
-                            if (currentCount >= wordsPerBlock) {
-                                flushCurrent();
-                            }
+                            if (currentCount >= wordsPerBlock) flushCurrent();
                         }
                     }
                 }
@@ -1374,28 +1563,22 @@
             return blocks.filter(b => b.length > 0);
         }
 
-        // ========================================
-        // UI HANDLERS
-        // ========================================
         function applyFilters(text) {
             const ignored = ignoreTextInput.value.trim();
             if (ignored) {
                 const regex = new RegExp(ignored.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
                 text = text.replace(regex, '');
             }
-            if (filterNumbersCheckbox.checked) {
-                text = text.replace(/\d+/g, '');
-            }
+            if (filterNumbersCheckbox.checked) text = text.replace(/\d+/g, '');
             return text;
         }
 
         function divideTextByChars() {
             const charCount = parseInt(charCountInput.value, 10);
             if (isNaN(charCount) || charCount <= 0) {
-                showError("Por favor, insira um numero valido de caracteres.");
+                showError("Insira um numero valido de caracteres.");
                 return;
             }
-
             let text = applyFilters(textInput.value);
             const blocks = getTextBlocksWithCustomLength(text, charCount);
             renderBlocks(blocks, text);
@@ -1404,10 +1587,9 @@
         function divideTextByWords() {
             const wordCount = parseInt(wordCountInput.value, 10);
             if (isNaN(wordCount) || wordCount <= 0) {
-                showError("Por favor, insira um numero valido de palavras.");
+                showError("Insira um numero valido de palavras.");
                 return;
             }
-
             let text = applyFilters(textInput.value);
             const blocks = getTextBlocksByWords(text, wordCount);
             renderBlocks(blocks, text);
@@ -1415,7 +1597,6 @@
 
         function renderBlocks(blocks, originalText) {
             blocksDiv.innerHTML = '';
-
             const totalChars = originalText.length;
             const totalWords = originalText.split(/\s+/).filter(w => w.length > 0).length;
             const readingRate = parseInt(readingRateInput.value, 10);
@@ -1426,7 +1607,6 @@
                 createBlock(block, index + 1);
             });
 
-            // Update stats
             document.getElementById('totalChars').textContent = totalChars.toLocaleString();
             document.getElementById('totalWords').textContent = totalWords.toLocaleString();
             document.getElementById('totalBlocks').textContent = blocks.length;
@@ -1437,7 +1617,6 @@
 
             document.getElementById('statsCard').style.display = 'block';
             document.getElementById('blocksCard').style.display = 'block';
-
             document.getElementById('statsCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
@@ -1458,14 +1637,13 @@
                     </div>
                     <div class="block-controls">
                         <button class="btn btn-secondary btn-block btn-copy" title="Copiar">&#128203;</button>
-                        <button class="btn btn-secondary btn-block btn-add" title="Adicionar abaixo">&#10133;</button>
+                        <button class="btn btn-secondary btn-block btn-add" title="Adicionar">&#10133;</button>
                         <button class="btn btn-danger btn-block btn-delete" title="Excluir">&#10060;</button>
                     </div>
                 </div>
                 <div class="block-content" contenteditable="true">${content}</div>
             `;
 
-            // Event listeners
             const contentDiv = blockDiv.querySelector('.block-content');
             contentDiv.addEventListener('input', () => {
                 const text = contentDiv.innerText;
@@ -1509,7 +1687,7 @@
                     </div>
                     <div class="block-controls">
                         <button class="btn btn-secondary btn-block btn-copy" title="Copiar">&#128203;</button>
-                        <button class="btn btn-secondary btn-block btn-add" title="Adicionar abaixo">&#10133;</button>
+                        <button class="btn btn-secondary btn-block btn-add" title="Adicionar">&#10133;</button>
                         <button class="btn btn-danger btn-block btn-delete" title="Excluir">&#10060;</button>
                     </div>
                 </div>
@@ -1551,11 +1729,10 @@
         function showError(message) {
             const existingError = document.querySelector('.error');
             if (existingError) existingError.remove();
-
             const errorDiv = document.createElement('div');
             errorDiv.classList.add('error');
             errorDiv.textContent = message;
-            document.querySelector('.container').prepend(errorDiv);
+            document.querySelector('.main-content').prepend(errorDiv);
             setTimeout(() => errorDiv.remove(), 4000);
         }
 
@@ -1577,9 +1754,6 @@
             exportBtn.disabled = true;
         }
 
-        // ========================================
-        // EXPORT FUNCTIONS
-        // ========================================
         function exportBoth() {
             if (!currentDivisionMode) {
                 showError('Primeiro divida o texto.');
@@ -1587,10 +1761,7 @@
             }
             exportToSrt();
             exportToTxt();
-
-            if (clearAfterExportCheckbox.checked) {
-                textInput.value = '';
-            }
+            if (clearAfterExportCheckbox.checked) textInput.value = '';
         }
 
         function formatTimestamp(totalSeconds) {
@@ -1610,11 +1781,9 @@
             blocks.forEach((block, index) => {
                 const text = block.innerText.trim();
                 if (!text) return;
-
                 const duration = text.length / readingRate;
                 const startTime = formatTimestamp(currentTime);
                 const endTime = formatTimestamp(currentTime + duration);
-
                 srtContent += `${index + 1}\n${startTime} --> ${endTime}\n${text}\n\n`;
                 currentTime += duration + PAUSE_TIME;
             });
@@ -1634,12 +1803,9 @@
         function exportToTxt() {
             const blocks = blocksDiv.querySelectorAll('.block-content');
             let txtContent = '';
-
             blocks.forEach((block, index) => {
                 const text = block.innerText.trim();
-                if (text) {
-                    txtContent += `Bloco ${index + 1}:\n${text}\n\n`;
-                }
+                if (text) txtContent += `Bloco ${index + 1}:\n${text}\n\n`;
             });
 
             const fileName = fileNameInput.value || 'documento';
@@ -1654,16 +1820,13 @@
             URL.revokeObjectURL(url);
         }
 
-        // ========================================
-        // SRT MERGE
-        // ========================================
         async function mergeSrtFiles() {
             const fileInput = document.getElementById('srtFiles');
             const statusDiv = document.getElementById('mergeStatus');
             const files = fileInput.files;
 
             if (files.length < 2) {
-                statusDiv.textContent = 'Selecione pelo menos 2 arquivos SRT.';
+                statusDiv.textContent = 'Selecione pelo menos 2 arquivos.';
                 return;
             }
 
@@ -1676,7 +1839,6 @@
                     srtContents.push({ name: file.name, content });
                 }
 
-                // Sort by filename
                 srtContents.sort((a, b) => a.name.localeCompare(b.name));
 
                 let mergedContent = '';
@@ -1685,24 +1847,19 @@
 
                 for (const srt of srtContents) {
                     const blocks = parseSrt(srt.content);
-
                     for (const block of blocks) {
                         const startSeconds = parseTimestamp(block.start) + timeOffset;
                         const endSeconds = parseTimestamp(block.end) + timeOffset;
-
                         mergedContent += `${blockIndex}\n`;
                         mergedContent += `${formatTimestamp(startSeconds)} --> ${formatTimestamp(endSeconds)}\n`;
                         mergedContent += `${block.text}\n\n`;
                         blockIndex++;
                     }
-
-                    // Get last timestamp for offset
                     if (blocks.length > 0) {
                         timeOffset = parseTimestamp(blocks[blocks.length - 1].end) + timeOffset + 1;
                     }
                 }
 
-                // Download merged file
                 const blob = new Blob([mergedContent.trim()], { type: 'text/srt' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -1713,10 +1870,10 @@
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
 
-                statusDiv.textContent = `${files.length} arquivos unidos com sucesso!`;
+                statusDiv.textContent = `${files.length} arquivos unidos!`;
                 fileInput.value = '';
             } catch (error) {
-                statusDiv.textContent = 'Erro ao processar arquivos: ' + error.message;
+                statusDiv.textContent = 'Erro: ' + error.message;
             }
         }
 
@@ -1726,14 +1883,9 @@
             let i = 0;
 
             while (i < lines.length) {
-                // Skip empty lines and block number
-                while (i < lines.length && (lines[i].trim() === '' || /^\d+$/.test(lines[i].trim()))) {
-                    i++;
-                }
-
+                while (i < lines.length && (lines[i].trim() === '' || /^\d+$/.test(lines[i].trim()))) i++;
                 if (i >= lines.length) break;
 
-                // Parse timestamp line
                 const timestampLine = lines[i].trim();
                 const timestampMatch = timestampLine.match(/(\d{2}:\d{2}:\d{2},\d{3})\s*-->\s*(\d{2}:\d{2}:\d{2},\d{3})/);
 
@@ -1742,16 +1894,13 @@
                     const end = timestampMatch[2];
                     i++;
 
-                    // Collect text lines
                     let text = '';
                     while (i < lines.length && lines[i].trim() !== '' && !/^\d+$/.test(lines[i].trim()) && !lines[i].includes('-->')) {
                         text += (text ? '\n' : '') + lines[i].trim();
                         i++;
                     }
 
-                    if (text) {
-                        blocks.push({ start, end, text });
-                    }
+                    if (text) blocks.push({ start, end, text });
                 } else {
                     i++;
                 }
@@ -1770,9 +1919,6 @@
             return hours * 3600 + minutes * 60 + seconds + milliseconds / 1000;
         }
 
-        // ========================================
-        // LOCAL STORAGE
-        // ========================================
         function saveState() {
             try {
                 const state = {
