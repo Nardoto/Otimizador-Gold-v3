@@ -284,6 +284,32 @@
             50% { transform: translateX(-8px); }
         }
 
+        /* Collapsible Card */
+        .sidebar-title-collapsible {
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.2s ease;
+        }
+
+        .sidebar-title-collapsible:hover {
+            color: var(--primary);
+        }
+
+        .sidebar-collapse-arrow {
+            margin-left: auto;
+            font-size: 12px;
+            color: var(--text-muted);
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-card.collapsed .sidebar-collapse-arrow {
+            transform: rotate(-90deg);
+        }
+
+        .sidebar-card.collapsed .help-accordion {
+            display: none;
+        }
+
         /* Collapse all button */
         .help-collapse-all {
             display: flex;
@@ -1034,10 +1060,11 @@
         <!-- LEFT SIDEBAR - Help & CTA -->
         <aside class="sidebar-left">
             <!-- Help Section -->
-            <div class="sidebar-card">
-                <h3 class="sidebar-title">
+            <div class="sidebar-card" id="helpCard">
+                <h3 class="sidebar-title sidebar-title-collapsible" id="helpCardToggle">
                     <span class="sidebar-title-icon">?</span>
                     Como Usar
+                    <span class="sidebar-collapse-arrow">v</span>
                 </h3>
                 <div class="help-accordion" id="helpAccordion">
                     <div class="help-item" data-target="#charDivisionRow">
@@ -2504,6 +2531,20 @@
 
         // Hide arrow on scroll
         window.addEventListener('scroll', hideArrow);
+
+        // Collapsible Help Card
+        const helpCardToggle = document.getElementById('helpCardToggle');
+        const helpCard = document.getElementById('helpCard');
+
+        if (helpCardToggle && helpCard) {
+            // Start collapsed by default
+            helpCard.classList.add('collapsed');
+
+            helpCardToggle.addEventListener('click', () => {
+                helpCard.classList.toggle('collapsed');
+                hideArrow();
+            });
+        }
     });
     </script>
 </body>
