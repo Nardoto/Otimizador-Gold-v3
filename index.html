@@ -496,6 +496,129 @@
         }
 
         #preview { display: none; }
+
+        /* Comments Section */
+        .comments-section {
+            margin-top: 20px;
+        }
+        .auth-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 14px 18px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            flex-wrap: wrap;
+        }
+        .auth-bar .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .auth-bar .user-photo {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+        }
+        .auth-bar .user-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+        .google-login-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 18px;
+            background: white;
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .google-login-btn:hover {
+            background: #f8f9fa;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        .google-login-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+        .comment-form {
+            margin-bottom: 24px;
+        }
+        .comment-form textarea {
+            min-height: 80px;
+            margin-bottom: 10px;
+        }
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .comment-item {
+            background: var(--bg-input);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 16px;
+            transition: all 0.3s ease;
+        }
+        .comment-item:hover {
+            border-color: rgba(255, 107, 53, 0.3);
+        }
+        .comment-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .comment-photo {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+        }
+        .comment-meta {
+            flex: 1;
+        }
+        .comment-author {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+        .comment-date {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .comment-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .comments-count {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-left: auto;
+        }
+        .no-comments {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .loading-comments {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 </head>
@@ -644,6 +767,44 @@
         </div>
 
         <div id="preview"></div>
+
+        <!-- Comments Card -->
+        <div class="card comments-section">
+            <h2 class="card-title">
+                <span class="card-title-icon">&#128172;</span>
+                Comentarios da Galera
+                <span id="commentsCount" class="comments-count"></span>
+            </h2>
+
+            <!-- Auth Bar -->
+            <div class="auth-bar">
+                <div id="authStatus">
+                    <span style="color: var(--text-muted); font-size: 0.9rem;">Entre com Google para comentar</span>
+                </div>
+                <button id="googleLoginBtn" class="google-login-btn">
+                    <svg viewBox="0 0 18 18">
+                        <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/>
+                        <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/>
+                        <path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z"/>
+                        <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/>
+                    </svg>
+                    Entrar com Google
+                </button>
+            </div>
+
+            <!-- Comment Form -->
+            <div class="comment-form">
+                <textarea id="commentInput" placeholder="Deixe seu comentario, sugestao ou feedback..." disabled></textarea>
+                <button id="submitCommentBtn" class="btn btn-primary btn-sm" disabled>
+                    &#128172; Enviar Comentario
+                </button>
+            </div>
+
+            <!-- Comments List -->
+            <div id="commentsList" class="comments-list">
+                <div class="loading-comments">Carregando comentarios...</div>
+            </div>
+        </div>
     </main>
 
     <footer class="footer">
@@ -652,6 +813,198 @@
             Feito com &#10084; por <a href="https://nardoto.com.br" target="_blank">Nardoto</a>
         </p>
     </footer>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, signInWithPopup, signOut, onAuthStateChanged, GoogleAuthProvider } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, limit } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // Firebase Config (Nardoto Labs)
+        const firebaseConfig = {
+            apiKey: "AIzaSyBQPGu8l-JQqjHRubcAcYeUK7aIgH7vPIE",
+            authDomain: "nardoto-labs.web.app",
+            projectId: "tradutor-profissional-ai",
+            storageBucket: "tradutor-profissional-ai.firebasestorage.app",
+            messagingSenderId: "943297790089",
+            appId: "1:943297790089:web:75c2fa533bbe1310d2c658"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const provider = new GoogleAuthProvider();
+
+        // DOM Elements
+        const authStatus = document.getElementById('authStatus');
+        const googleLoginBtn = document.getElementById('googleLoginBtn');
+        const commentInput = document.getElementById('commentInput');
+        const submitCommentBtn = document.getElementById('submitCommentBtn');
+        const commentsList = document.getElementById('commentsList');
+        const commentsCount = document.getElementById('commentsCount');
+
+        let currentUser = null;
+
+        // Auth State
+        onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            if (user) {
+                authStatus.innerHTML = `
+                    <div class="user-info">
+                        <img src="${user.photoURL || ''}" alt="" class="user-photo" onerror="this.style.display='none'">
+                        <span class="user-name">${user.displayName || 'Usuario'}</span>
+                    </div>
+                `;
+                googleLoginBtn.textContent = 'Sair';
+                googleLoginBtn.onclick = handleLogout;
+                commentInput.disabled = false;
+                submitCommentBtn.disabled = false;
+                commentInput.placeholder = 'Deixe seu comentario, sugestao ou feedback...';
+            } else {
+                authStatus.innerHTML = '<span style="color: var(--text-muted); font-size: 0.9rem;">Entre com Google para comentar</span>';
+                googleLoginBtn.innerHTML = `
+                    <svg viewBox="0 0 18 18">
+                        <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/>
+                        <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/>
+                        <path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z"/>
+                        <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/>
+                    </svg>
+                    Entrar com Google
+                `;
+                googleLoginBtn.onclick = handleLogin;
+                commentInput.disabled = true;
+                submitCommentBtn.disabled = true;
+                commentInput.placeholder = 'Faca login para comentar...';
+            }
+        });
+
+        // Login
+        async function handleLogin() {
+            try {
+                await signInWithPopup(auth, provider);
+            } catch (error) {
+                console.error('Erro no login:', error);
+                if (error.code !== 'auth/popup-closed-by-user') {
+                    alert('Erro ao fazer login: ' + error.message);
+                }
+            }
+        }
+
+        // Logout
+        async function handleLogout() {
+            try {
+                await signOut(auth);
+            } catch (error) {
+                console.error('Erro no logout:', error);
+            }
+        }
+
+        // Submit Comment
+        submitCommentBtn.addEventListener('click', async () => {
+            if (!currentUser) {
+                alert('Faca login para comentar');
+                return;
+            }
+
+            const text = commentInput.value.trim();
+            if (!text) {
+                alert('Digite um comentario');
+                return;
+            }
+
+            try {
+                submitCommentBtn.disabled = true;
+                submitCommentBtn.textContent = 'Enviando...';
+
+                await addDoc(collection(db, 'otimizador-gold-comments'), {
+                    text: text,
+                    authorId: currentUser.uid,
+                    authorName: currentUser.displayName || 'Usuario',
+                    authorPhoto: currentUser.photoURL || '',
+                    authorEmail: currentUser.email,
+                    createdAt: serverTimestamp()
+                });
+
+                commentInput.value = '';
+                await loadComments();
+
+                submitCommentBtn.disabled = false;
+                submitCommentBtn.innerHTML = '&#128172; Enviar Comentario';
+            } catch (error) {
+                console.error('Erro ao enviar comentario:', error);
+                alert('Erro ao enviar: ' + error.message);
+                submitCommentBtn.disabled = false;
+                submitCommentBtn.innerHTML = '&#128172; Enviar Comentario';
+            }
+        });
+
+        // Load Comments
+        async function loadComments() {
+            try {
+                const q = query(
+                    collection(db, 'otimizador-gold-comments'),
+                    orderBy('createdAt', 'desc'),
+                    limit(50)
+                );
+                const snapshot = await getDocs(q);
+
+                if (snapshot.empty) {
+                    commentsList.innerHTML = '<div class="no-comments">Nenhum comentario ainda. Seja o primeiro!</div>';
+                    commentsCount.textContent = '';
+                    return;
+                }
+
+                commentsCount.textContent = `(${snapshot.size})`;
+
+                let html = '';
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const date = data.createdAt ? formatDate(data.createdAt.toDate()) : 'Agora';
+
+                    html += `
+                        <div class="comment-item">
+                            <div class="comment-header">
+                                ${data.authorPhoto ? `<img src="${data.authorPhoto}" alt="" class="comment-photo" onerror="this.style.display='none'">` : ''}
+                                <div class="comment-meta">
+                                    <div class="comment-author">${escapeHtml(data.authorName)}</div>
+                                    <div class="comment-date">${date}</div>
+                                </div>
+                            </div>
+                            <div class="comment-text">${escapeHtml(data.text)}</div>
+                        </div>
+                    `;
+                });
+
+                commentsList.innerHTML = html;
+            } catch (error) {
+                console.error('Erro ao carregar comentarios:', error);
+                commentsList.innerHTML = '<div class="no-comments">Erro ao carregar comentarios</div>';
+            }
+        }
+
+        function formatDate(date) {
+            const now = new Date();
+            const diff = now - date;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+
+            if (minutes < 1) return 'Agora';
+            if (minutes < 60) return `${minutes} min atras`;
+            if (hours < 24) return `${hours}h atras`;
+            if (days < 7) return `${days} dias atras`;
+            return date.toLocaleDateString('pt-BR');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Load comments on page load
+        loadComments();
+    </script>
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
