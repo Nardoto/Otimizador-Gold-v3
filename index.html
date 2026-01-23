@@ -546,6 +546,80 @@
             box-shadow: 0 8px 30px rgba(255, 107, 53, 0.4);
         }
 
+        /* Free Tools Section */
+        .free-tools-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .free-tool-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .free-tool-item:hover {
+            background: var(--bg-hover);
+            border-color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .free-tool-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-primary);
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        .free-tool-icon svg {
+            width: 16px;
+            height: 16px;
+            stroke: white;
+        }
+
+        .free-tool-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+        }
+
+        .free-tool-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .free-tool-desc {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .free-tool-badge {
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 3px 6px;
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            color: white;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
         /* Main Content */
         .main-content {
             display: flex;
@@ -1507,6 +1581,46 @@
                 <a href="https://nardoto.com.br" target="_blank" class="cta-btn">
                     Conhecer Ferramentas
                 </a>
+            </div>
+
+            <!-- Free Tools Section -->
+            <div class="sidebar-card">
+                <h3 class="sidebar-title">
+                    <span class="sidebar-title-icon">*</span>
+                    Ferramentas Gratis
+                </h3>
+                <div class="free-tools-list">
+                    <a href="https://chromewebstore.google.com/detail/tts-automator-nardoto-lab/plbbiepdnfkellpdokblnjfpligcjpel" target="_blank" class="free-tool-item">
+                        <div class="free-tool-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                        </div>
+                        <div class="free-tool-info">
+                            <span class="free-tool-name">TTS Automator</span>
+                            <span class="free-tool-desc">Extensao Chrome - Automatiza ElevenLabs</span>
+                        </div>
+                        <span class="free-tool-badge">Gratis</span>
+                    </a>
+                    <a href="https://ttsreader.com/" target="_blank" class="free-tool-item">
+                        <div class="free-tool-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                        </div>
+                        <div class="free-tool-info">
+                            <span class="free-tool-name">TTSReader</span>
+                            <span class="free-tool-desc">Narrador online gratuito</span>
+                        </div>
+                        <span class="free-tool-badge">Gratis</span>
+                    </a>
+                    <a href="https://www.naturalreaders.com/online/" target="_blank" class="free-tool-item">
+                        <div class="free-tool-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                        </div>
+                        <div class="free-tool-info">
+                            <span class="free-tool-name">NaturalReader</span>
+                            <span class="free-tool-desc">Vozes naturais online</span>
+                        </div>
+                        <span class="free-tool-badge">Gratis</span>
+                    </a>
+                </div>
             </div>
 
             <!-- App Coming Soon -->
