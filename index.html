@@ -211,30 +211,35 @@
             background: var(--gradient-glow);
             pointer-events: none;
         }
-        .theme-switcher {
+        .theme-buttons {
             position: absolute;
             top: 20px;
             right: 20px;
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+        .theme-btn {
             background: var(--bg-card);
             border: 1px solid var(--border-light);
-            border-radius: 8px;
-            padding: 8px 16px;
-            cursor: pointer;
-            font-size: 0.85rem;
             color: var(--text-secondary);
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 0.75rem;
+            cursor: pointer;
             transition: all 0.3s ease;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            opacity: 0.7;
         }
-        .theme-switcher:hover {
+        .theme-btn:hover {
+            opacity: 1;
             border-color: var(--primary);
-            color: var(--primary);
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
-        .theme-icon {
-            font-size: 1.1rem;
+        .theme-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            opacity: 1;
         }
         .logo {
             display: inline-flex;
@@ -1355,22 +1360,38 @@
             padding: 0 !important;
         }
 
-        body.retro-theme .theme-switcher {
+        body.retro-theme .theme-buttons {
             position: fixed;
+            top: 20px;
+            right: 20px;
+        }
+        body.retro-theme .theme-btn {
             background: #DAA520 !important;
             border: 1px solid #B8860B !important;
             color: white !important;
+            opacity: 0.7;
+        }
+        body.retro-theme .theme-btn:hover {
+            opacity: 1;
+            background: #FFD700 !important;
+            color: #4B0082 !important;
+        }
+        body.retro-theme .theme-btn.active {
+            background: #FFD700 !important;
+            color: #4B0082 !important;
+            opacity: 1;
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 </head>
-<body class="retro-theme">
+<body>
     <!-- Header -->
     <header class="header">
-        <button class="theme-switcher" id="themeSwitcher" title="Alternar tema">
-            <span class="theme-icon" id="themeIcon">&#9733;</span>
-            <span id="themeLabel">Retro Original</span>
-        </button>
+        <div class="theme-buttons">
+            <button class="theme-btn" data-theme="retro">Retro</button>
+            <button class="theme-btn" data-theme="classic">Claro</button>
+            <button class="theme-btn active" data-theme="modern">Escuro</button>
+        </div>
         <div class="logo">
             <div class="logo-icon">G</div>
             <h1>Otimizador Gold</h1>
@@ -2979,42 +3000,34 @@
             });
         }
 
-        // Theme Switcher - 3 temas ciclicos
-        const themeSwitcher = document.getElementById('themeSwitcher');
-        const themeIcon = document.getElementById('themeIcon');
-        const themeLabel = document.getElementById('themeLabel');
-
-        const THEMES = ['retro', 'modern', 'classic'];
-        const THEME_LABELS = {
-            retro: 'Retro Original',
-            modern: 'Modo Escuro',
-            classic: 'Modo Claro'
-        };
-        const THEME_ICONS = {
-            retro: '&#9733;',
-            modern: '&#9790;',
-            classic: '&#9788;'
-        };
-
-        const savedTheme = localStorage.getItem('otimizador-theme') || 'retro';
-        let currentThemeIndex = THEMES.indexOf(savedTheme);
-        if (currentThemeIndex === -1) currentThemeIndex = 0;
+        // Theme Buttons - 3 botoes separados
+        const themeButtons = document.querySelectorAll('.theme-btn');
+        const savedTheme = localStorage.getItem('otimizador-theme') || 'modern';
 
         function applyTheme(theme) {
             document.body.classList.remove('classic-theme', 'retro-theme');
             if (theme === 'classic') document.body.classList.add('classic-theme');
             if (theme === 'retro') document.body.classList.add('retro-theme');
 
-            themeIcon.innerHTML = THEME_ICONS[theme];
-            themeLabel.textContent = THEME_LABELS[theme];
+            // Atualiza botoes ativos
+            themeButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.theme === theme) {
+                    btn.classList.add('active');
+                }
+            });
+
             localStorage.setItem('otimizador-theme', theme);
         }
 
-        applyTheme(THEMES[currentThemeIndex]);
+        // Aplica tema salvo
+        applyTheme(savedTheme);
 
-        themeSwitcher.addEventListener('click', () => {
-            currentThemeIndex = (currentThemeIndex + 1) % THEMES.length;
-            applyTheme(THEMES[currentThemeIndex]);
+        // Event listeners nos botoes
+        themeButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                applyTheme(btn.dataset.theme);
+            });
         });
     });
     </script>
