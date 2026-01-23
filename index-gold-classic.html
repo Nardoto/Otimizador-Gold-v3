@@ -2,1818 +2,203 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
     <title>Otimizador Gold</title>
     <style>
-        /* Design Classico Dourado */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Arial', sans-serif;
             background-color: #FFFFFF;
-            color: #4B0082;
+            margin: 0;
             padding: 20px;
-            line-height: 1.6;
+            box-sizing: border-box;
         }
-
-        h1, h2 {
+        h2 {
             text-align: center;
             color: #DAA520;
+        }
+        #form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
             margin-bottom: 20px;
         }
-
-        h1 { font-size: 2rem; }
-        h2 { font-size: 1.5rem; margin-top: 30px; }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        /* Cards */
-        .card {
-            background-color: #FFFACD;
-            border: 2px solid #B8860B;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .card-title {
-            font-size: 1.2rem;
-            color: #DAA520;
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
-
-        /* Form Elements */
-        label {
-            display: block;
-            font-size: 0.9rem;
-            color: #4B0082;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        input[type="text"],
-        input[type="number"],
-        textarea {
-            width: 100%;
-            padding: 12px;
+        #form input, #form textarea {
+            width: 80%;
+            padding: 10px;
             font-size: 16px;
-            border: 2px solid #B8860B;
+            border: 1px solid #B8860B;
             border-radius: 5px;
             background-color: #FFD700;
             color: #4B0082;
-            margin-bottom: 15px;
-            font-family: inherit;
         }
-
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: #DAA520;
-            box-shadow: 0 0 5px #DAA520;
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 150px;
-        }
-
-        /* Buttons */
-        button, .btn {
-            padding: 12px 20px;
+        #form button {
+            width: 40%;
+            padding: 15px;
             font-size: 16px;
             background-color: #DAA520;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
-            margin: 5px;
+            transition: background-color 0.3s, transform 0.2s;
         }
-
-        button:hover, .btn:hover {
+        #form button:hover {
             background-color: #FFD700;
-            color: #4B0082;
             transform: translateY(-2px);
         }
-
-        button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .btn-danger {
-            background-color: #dc3545;
-        }
-
-        .btn-danger:hover {
-            background-color: #c82333;
-            color: white;
-        }
-
-        /* Division Rows */
-        .division-section {
+        #blocks {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .division-row {
-            display: flex;
             align-items: center;
             gap: 10px;
-            padding: 15px;
-            background: #FFFACD;
-            border: 2px solid #B8860B;
-            border-radius: 8px;
-            flex-wrap: wrap;
         }
-
-        .division-row.active {
-            border-color: #DAA520;
-            background: #FFD700;
-            box-shadow: 0 0 10px rgba(218, 165, 32, 0.5);
-        }
-
-        .division-row label {
-            margin: 0 10px 0 0;
-        }
-
-        .division-row input {
-            width: 120px;
-            margin: 0;
-        }
-
-        .division-row button {
-            margin: 0;
-        }
-
-        /* Blocks */
         .block {
-            background-color: #DAA520;
-            border: 2px solid #B8860B;
-            border-radius: 8px;
+            width: 80%;
             padding: 15px;
-            margin-bottom: 15px;
+            background-color: #DAA520;
+            border: 1px solid #B8860B;
+            border-radius: 5px;
+            position: relative;
             color: #FFFFFF;
         }
-
-        .block-header {
+        .block .info {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 10px;
-            gap: 10px;
         }
-
-        .block-title {
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        .block-meta {
-            display: flex;
-            gap: 15px;
-            font-size: 0.9rem;
-        }
-
-        .block-controls {
-            display: flex;
-            gap: 5px;
-        }
-
-        .btn-block {
-            padding: 5px 12px;
+        .block .info span {
             font-size: 14px;
-            margin: 0;
+            color: #FFFFFF;
         }
-
-        .btn-secondary {
+        .block button.copy {
             background-color: #B8860B;
-        }
-
-        .btn-secondary:hover {
-            background-color: #FFD700;
-            color: #4B0082;
-        }
-
-        .block-content {
-            background: white;
-            color: #4B0082;
-            padding: 10px;
-            border-radius: 5px;
-            min-height: 50px;
-            line-height: 1.5;
-        }
-
-        .block-content:focus {
-            outline: 2px solid #FFD700;
-        }
-
-        .block-content.edited {
-            border-left: 4px solid #28a745;
-        }
-
-        /* Stats Card */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 10px;
-            background: white;
-            border-radius: 5px;
-            border: 1px solid #B8860B;
-        }
-
-        .stat-label {
-            font-size: 0.85rem;
-            color: #666;
-            margin-bottom: 5px;
-        }
-
-        .stat-value {
-            font-size: 1.5rem;
-            color: #DAA520;
-            font-weight: bold;
-        }
-
-        /* Options Panel */
-        .options-panel {
-            background: white;
-            border: 2px solid #B8860B;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-            display: none;
-        }
-
-        .options-panel.show {
-            display: block;
-        }
-
-        .options-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .option-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .option-item input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            accent-color: #DAA520;
-        }
-
-        .option-item label {
-            margin: 0;
-            font-size: 0.9rem;
-        }
-
-        .option-item input[type="text"] {
-            width: 150px;
-            padding: 5px 10px;
-            margin: 0;
-        }
-
-        /* Comments Section */
-        .auth-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #B8860B;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .user-photo {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: 2px solid #DAA520;
-        }
-
-        .user-name {
-            font-weight: bold;
-            color: #DAA520;
-        }
-
-        .google-login-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: #4285F4;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 14px;
+            padding: 5px 10px;
+            transition: background-color 0.3s;
         }
-
-        .google-login-btn svg {
-            width: 18px;
-            height: 18px;
-        }
-
-        .comment-form textarea {
-            min-height: 80px;
-            background: white;
-        }
-
-        .comments-list {
-            margin-top: 15px;
-        }
-
-        .comment-item {
-            background: white;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #B8860B;
-        }
-
-        .comment-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-        }
-
-        .comment-photo {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            border: 1px solid #DAA520;
-        }
-
-        .comment-meta {
-            flex: 1;
-        }
-
-        .comment-author {
-            font-weight: bold;
-            color: #DAA520;
-            font-size: 0.9rem;
-        }
-
-        .comment-date {
-            font-size: 0.75rem;
-            color: #999;
-        }
-
-        .comment-delete-btn {
-            padding: 4px 10px;
-            font-size: 12px;
-            background: #dc3545;
-            margin: 0;
-        }
-
-        .comment-reply-btn {
-            font-size: 0.75rem;
-            color: #DAA520;
-            background: none;
-            border: 1px solid #B8860B;
-            padding: 4px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-left: auto;
-            margin: 0;
-        }
-
-        .comment-reply-btn:hover {
-            background: #FFD700;
-            color: #4B0082;
-        }
-
-        .comment-replies {
-            margin-left: 40px;
-            margin-top: 12px;
-            padding-left: 12px;
-            border-left: 3px solid #B8860B;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .reply-form {
-            display: none;
-            margin-top: 10px;
-            padding: 10px;
-            background: #FFFACD;
-            border-radius: 8px;
-            border: 2px solid #B8860B;
-        }
-
-        .reply-form.show {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .reply-form textarea {
-            min-height: 60px;
-            padding: 8px;
-            font-size: 0.9rem;
-            background: white;
-            border: 2px solid #B8860B;
-            border-radius: 5px;
-            color: #4B0082;
-            resize: vertical;
-        }
-
-        .reply-form textarea:focus {
-            outline: none;
-            border-color: #DAA520;
-            box-shadow: 0 0 5px #DAA520;
-        }
-
-        .reply-form-actions {
-            display: flex;
-            gap: 8px;
-            justify-content: flex-end;
-        }
-
-        .reply-form-actions button {
-            padding: 6px 14px;
-            font-size: 0.85rem;
-        }
-
-        .btn-sm {
-            padding: 6px 12px;
-            font-size: 0.85rem;
-        }
-
-        .btn-secondary {
-            background-color: #999;
-        }
-
-        .btn-secondary:hover {
-            background-color: #777;
-        }
-
-        .btn-primary {
-            background-color: #DAA520;
-        }
-
-        .btn-primary:hover {
+        .block button.copy.copied {
             background-color: #FFD700;
-            color: #4B0082;
+            color: black;
         }
-
-        .comment-text {
-            color: #4B0082;
-            line-height: 1.4;
+        .block button.copy:hover {
+            background-color: #FFD700;
         }
-
-        .no-comments, .loading-comments {
-            text-align: center;
-            color: #999;
-            padding: 20px;
-        }
-
-        .comments-count {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        /* Rating System */
-        .rating-display {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-            padding: 15px;
-            background: white;
-            border-radius: 8px;
-            border: 1px solid #B8860B;
-        }
-
-        .rating-stars {
-            display: flex;
-            gap: 5px;
-        }
-
-        .star {
-            cursor: pointer;
-            font-size: 24px;
-            color: #ddd;
-            transition: all 0.2s ease;
-        }
-
-        .star.active, .star.hovered {
-            color: #FFD700;
-            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
-        }
-
-        .rating-info {
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .rating-thanks {
-            display: none;
-            color: #28a745;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-
-        .rating-thanks.show {
-            display: inline-block;
-        }
-
-        /* Help Accordion */
-        .help-accordion {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .help-item {
-            background: white;
-            border: 2px solid #B8860B;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .help-item.active {
-            border-color: #DAA520;
-            box-shadow: 0 0 10px rgba(218, 165, 32, 0.3);
-        }
-
-        .help-item-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px;
-            cursor: pointer;
-            background: #FFFACD;
-        }
-
-        .help-item-header:hover {
-            background: #FFD700;
-        }
-
-        .help-icon {
-            font-size: 16px;
-            color: #DAA520;
-        }
-
-        .help-item-title {
-            flex: 1;
-            font-weight: bold;
-            color: #4B0082;
-            font-size: 0.9rem;
-        }
-
-        .help-item-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .help-item.active .help-item-content {
-            max-height: 300px;
-        }
-
-        .help-item-text {
-            padding: 12px;
-            color: #4B0082;
-            font-size: 0.85rem;
-            line-height: 1.5;
-        }
-
-        /* Field Highlight */
-        .field-highlight {
-            animation: highlightPulse 2s ease-in-out;
-            box-shadow: 0 0 0 4px rgba(218, 165, 32, 0.5) !important;
-            border-color: #DAA520 !important;
-        }
-
-        @keyframes highlightPulse {
-            0%, 100% { box-shadow: 0 0 0 4px rgba(218, 165, 32, 0.5); }
-            50% { box-shadow: 0 0 0 8px rgba(218, 165, 32, 0.3); }
-        }
-
-        .field-arrow {
-            position: fixed;
-            z-index: 1000;
-            pointer-events: none;
-            animation: arrowBounce 0.8s ease-in-out infinite;
-        }
-
-        .field-arrow svg {
-            width: 32px;
-            height: 32px;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-        }
-
-        @keyframes arrowBounce {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(-8px); }
-        }
-
-        /* Error */
         .error {
             background-color: #ffdddd;
             color: red;
-            padding: 12px;
+            padding: 10px;
             margin-bottom: 20px;
-            border: 2px solid red;
-            border-radius: 8px;
+            border: 1px solid red;
+            border-radius: 5px;
             text-align: center;
-            font-weight: bold;
         }
-
-        /* Footer */
-        .footer {
+        #srt-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        #thanks {
             text-align: center;
-            margin-top: 40px;
-            padding: 20px;
+            margin-top: 20px;
+            font-size: 18px;
             color: #DAA520;
         }
-
-        .footer-quote {
-            font-size: 1.2rem;
-            font-style: italic;
-            margin-bottom: 10px;
+        #preview {
+            margin-bottom: 20px;
+            color: #4B0082;
+            text-align: center;
         }
-
-        .footer-brand a {
-            color: #DAA520;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .footer-brand a:hover {
-            text-decoration: underline;
-        }
-
-        /* Responsive */
-        @media (max-width: 600px) {
-            body { padding: 10px; }
-            h1 { font-size: 1.5rem; }
-            .division-row { flex-direction: column; align-items: stretch; }
-            .block-header { flex-direction: column; align-items: flex-start; }
-        }
-
-        /* Utility */
-        .text-center { text-align: center; }
-        .mb-20 { margin-bottom: 20px; }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Otimizador Gold</h1>
-
-        <!-- Main Input Card -->
-        <div class="card">
-            <div class="card-title">Configuracao</div>
-
-            <label for="fileName">Nome do arquivo</label>
-            <input type="text" id="fileName" placeholder="Digite o nome do arquivo...">
-
-            <label for="textInput">Texto para dividir</label>
-            <textarea id="textInput" placeholder="Cole seu texto aqui..."></textarea>
-
-            <!-- Division Controls -->
-            <div class="division-section">
-                <div class="division-row" id="charDivisionRow">
-                    <label for="charCount">Dividir por Caracteres:</label>
-                    <input type="number" id="charCount" value="490" min="1" style="width: 80px;">
-                    <label for="readingRate">c/s:</label>
-                    <input type="number" id="readingRate" value="10" min="1" max="50" style="width: 60px;">
-                    <label for="pauseTime">Intervalo (s):</label>
-                    <input type="number" id="pauseTime" value="1" min="0" max="10" step="0.1" style="width: 60px;">
-                    <button id="divideByCharsBtn">Dividir</button>
-                </div>
-
-                <div class="division-row" id="wordDivisionRow">
-                    <label for="wordCount">Dividir por Palavras:</label>
-                    <input type="number" id="wordCount" value="50" min="1">
-                    <button id="divideByWordsBtn">Dividir</button>
-                </div>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="text-center">
-                <button id="toggleOptionsBtn">Opcoes Avancadas</button>
-                <button id="exportSrtBtn" disabled>Exportar SRT</button>
-                <button id="exportTxtBtn" disabled>Exportar TXT</button>
-                <button id="exportPdfBtn" disabled>Exportar PDF</button>
-                <button id="resetBtn">Redefinir</button>
-                <button id="addBlockBtn">Adicionar Bloco</button>
-            </div>
-
-            <!-- Options Panel -->
-            <div id="optionsPanel" class="options-panel">
-                <div class="options-grid">
-                    <div class="option-item">
-                        <input type="checkbox" id="filterNumbers">
-                        <label for="filterNumbers">Filtrar numeros</label>
-                    </div>
-                    <div class="option-item">
-                        <input type="checkbox" id="clearAfterExport">
-                        <label for="clearAfterExport">Limpar apos exportar</label>
-                    </div>
-                    <div class="option-item">
-                        <label for="ignoreText">Ignorar texto:</label>
-                        <input type="text" id="ignoreText" placeholder="Regex...">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Stats Card -->
-        <div id="statsCard" class="card" style="display: none;">
-            <div class="card-title">Estatisticas</div>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-label">Caracteres</div>
-                    <div class="stat-value" id="totalChars">0</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label">Palavras</div>
-                    <div class="stat-value" id="totalWords">0</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label">Blocos</div>
-                    <div class="stat-value" id="totalBlocks">0</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label">Duracao</div>
-                    <div class="stat-value" id="totalDuration">0:00</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Blocks Card -->
-        <div id="blocksCard" class="card" style="display: none;">
-            <div class="card-title">Blocos Divididos</div>
-            <div id="blocks"></div>
-        </div>
-
-        <!-- Merge SRT Card -->
-        <div class="card">
-            <div class="card-title">Mesclar Arquivos SRT</div>
-            <input type="file" id="srtFiles" accept=".srt" multiple style="margin-bottom: 10px;">
-            <div class="text-center">
-                <button id="mergeSrtsBtn">Mesclar</button>
-                <button id="cancelMergeBtn">Cancelar</button>
-            </div>
-            <div id="mergeStatus" style="margin-top: 10px; text-align: center; color: #666;"></div>
-        </div>
-
-        <!-- Help Accordion -->
-        <div class="card">
-            <div class="card-title">Como Usar</div>
-            <div id="helpAccordion" class="help-accordion">
-                <div class="help-item" data-target="#textInput">
-                    <div class="help-item-header">
-                        <span class="help-icon">&#9654;</span>
-                        <span class="help-item-title">1. Cole o texto</span>
-                    </div>
-                    <div class="help-item-content">
-                        <div class="help-item-text">
-                            Cole o texto que deseja dividir no campo de texto principal.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="help-item" data-target="#charCount">
-                    <div class="help-item-header">
-                        <span class="help-icon">&#9654;</span>
-                        <span class="help-item-title">2. Escolha o tamanho</span>
-                    </div>
-                    <div class="help-item-content">
-                        <div class="help-item-text">
-                            Defina quantos caracteres ou palavras cada bloco deve ter. Recomendado: 490 caracteres.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="help-item" data-target="#divideByCharsBtn">
-                    <div class="help-item-header">
-                        <span class="help-icon">&#9654;</span>
-                        <span class="help-item-title">3. Clique em Dividir</span>
-                    </div>
-                    <div class="help-item-content">
-                        <div class="help-item-text">
-                            Clique no botao correspondente para dividir o texto. Os blocos aparecerao abaixo.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="help-item" data-target="#exportSrtBtn">
-                    <div class="help-item-header">
-                        <span class="help-icon">&#9654;</span>
-                        <span class="help-item-title">4. Exporte os arquivos</span>
-                    </div>
-                    <div class="help-item-content">
-                        <div class="help-item-text">
-                            Use os botoes "Exportar SRT" e "Exportar TXT" para baixar os arquivos separadamente.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Rating System -->
-        <div class="card">
-            <div class="card-title">Avalie esta ferramenta</div>
-            <div class="rating-display">
-                <div id="ratingStars" class="rating-stars">
-                    <span class="star" data-value="1">&#9733;</span>
-                    <span class="star" data-value="2">&#9733;</span>
-                    <span class="star" data-value="3">&#9733;</span>
-                    <span class="star" data-value="4">&#9733;</span>
-                    <span class="star" data-value="5">&#9733;</span>
-                </div>
-                <div class="rating-info">
-                    <span id="avgStars"></span>
-                    <span id="avgValue">-</span>
-                    <span id="avgCount"></span>
-                </div>
-                <span id="ratingThanks" class="rating-thanks">Obrigado!</span>
-            </div>
-        </div>
-
-        <!-- Comments Section -->
-        <div class="card">
-            <h3 style="color: #DAA520; margin-bottom: 15px;">
-                Comentarios <span id="commentsCount" class="comments-count"></span>
-            </h3>
-
-            <div class="auth-bar">
-                <div id="authStatus">
-                    <span style="color: #999; font-size: 0.85rem;">Entre para comentar</span>
-                </div>
-                <button id="googleLoginBtn" class="google-login-btn">
-                    <svg viewBox="0 0 18 18">
-                        <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/>
-                        <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/>
-                        <path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z"/>
-                        <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/>
-                    </svg>
-                    Google
-                </button>
-            </div>
-
-            <div class="comment-form">
-                <textarea id="commentInput" placeholder="Deixe seu feedback..." disabled></textarea>
-                <button id="submitCommentBtn" style="width: 100%;" disabled>Enviar</button>
-            </div>
-
-            <div id="commentsList" class="comments-list">
-                <div class="loading-comments">Carregando...</div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p class="footer-quote">"O sonho e a coisa mais real que existe!"</p>
-            <p class="footer-brand">Feito por <a href="https://nardoto.com.br" target="_blank">Nardoto</a></p>
-        </footer>
+    <h2>Otimizador Gold</h2>
+    <div id="form">
+        <input type="text" id="fileName" placeholder="Nome do arquivo" />
+        <input type="number" id="charCount" placeholder="Dividir em quantos caracteres:" value="490" />
+        <textarea id="textInput" rows="10" placeholder="Insira o texto aqui..."></textarea>
+        <button onclick="divideTextByChars()">Dividir por Caracteres</button>
+        <button onclick="resetForm()">Redefinir</button>
+        <label for="speed">Espaçamento entre áudios:</label>
+        <input type="range" id="speed" min="0.5" max="2" step="0.1" value="1">
+        <span id="speedValue">1.0x</span>
+        <label for="readingRate">Caracteres por segundo:</label>
+        <input type="range" id="readingRate" min="10" max="50" step="1" value="14">
+        <span id="readingRateValue">14 c/s</span>
+        <button onclick="exportToSrt()">Exportar para SRT</button>
+        <button onclick="exportToPdf()">Exportar para PDF</button>
     </div>
+    <div id="preview"></div>
+    <div id="totalInfo" style="text-align: center; font-size: 16px; color: #4B0082; margin-bottom: 10px;"></div>
+    <div id="blocks"></div>
+    <p id="thanks">O sonho é a coisa mais real que Existe! Gratidão</p>
 
-    <!-- Firebase SDK -->
-    <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getAuth, signInWithPopup, signOut, onAuthStateChanged, GoogleAuthProvider } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, where, serverTimestamp, limit, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBQPGu8l-JQqjHRubcAcYeUK7aIgH7vPIE",
-            authDomain: "nardoto-labs.web.app",
-            projectId: "tradutor-profissional-ai",
-            storageBucket: "tradutor-profissional-ai.firebasestorage.app",
-            messagingSenderId: "943297790089",
-            appId: "1:943297790089:web:75c2fa533bbe1310d2c658"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const provider = new GoogleAuthProvider();
-
-        const authStatus = document.getElementById('authStatus');
-        const googleLoginBtn = document.getElementById('googleLoginBtn');
-        const commentInput = document.getElementById('commentInput');
-        const submitCommentBtn = document.getElementById('submitCommentBtn');
-        const commentsList = document.getElementById('commentsList');
-        const commentsCount = document.getElementById('commentsCount');
-        const ratingStars = document.getElementById('ratingStars');
-        const avgStars = document.getElementById('avgStars');
-        const avgValue = document.getElementById('avgValue');
-        const avgCount = document.getElementById('avgCount');
-        const ratingThanks = document.getElementById('ratingThanks');
-
-        let currentUser = null;
-        let userRating = 0;
-
-        onAuthStateChanged(auth, (user) => {
-            currentUser = user;
-            if (user) {
-                authStatus.innerHTML = `
-                    <div class="user-info">
-                        <img src="${user.photoURL || ''}" alt="" class="user-photo" onerror="this.style.display='none'">
-                        <span class="user-name">${(user.displayName || 'Usuario').split(' ')[0]}</span>
-                    </div>
-                `;
-                googleLoginBtn.textContent = 'Sair';
-                googleLoginBtn.onclick = handleLogout;
-                commentInput.disabled = false;
-                submitCommentBtn.disabled = false;
-                commentInput.placeholder = 'Deixe seu feedback...';
-            } else {
-                authStatus.innerHTML = '<span style="color: #999; font-size: 0.85rem;">Entre para comentar</span>';
-                googleLoginBtn.innerHTML = `
-                    <svg viewBox="0 0 18 18">
-                        <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/>
-                        <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/>
-                        <path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z"/>
-                        <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/>
-                    </svg>
-                    Google
-                `;
-                googleLoginBtn.onclick = handleLogin;
-                commentInput.disabled = true;
-                submitCommentBtn.disabled = true;
-                commentInput.placeholder = 'Faca login para comentar...';
-            }
-        });
-
-        async function handleLogin() {
-            try {
-                await signInWithPopup(auth, provider);
-            } catch (error) {
-                if (error.code !== 'auth/popup-closed-by-user') {
-                    alert('Erro ao fazer login: ' + error.message);
-                }
-            }
-        }
-
-        async function handleLogout() {
-            try {
-                await signOut(auth);
-            } catch (error) {
-                console.error('Erro no logout:', error);
-            }
-        }
-
-        submitCommentBtn.addEventListener('click', async () => {
-            if (!currentUser) return;
-            const text = commentInput.value.trim();
-            if (!text) return;
-
-            try {
-                submitCommentBtn.disabled = true;
-                submitCommentBtn.textContent = 'Enviando...';
-
-                await addDoc(collection(db, 'otimizador-gold-comments'), {
-                    text: text,
-                    authorId: currentUser.uid,
-                    authorName: currentUser.displayName || 'Usuario',
-                    authorPhoto: currentUser.photoURL || '',
-                    authorEmail: currentUser.email,
-                    createdAt: serverTimestamp()
-                });
-
-                commentInput.value = '';
-                await loadComments();
-                submitCommentBtn.disabled = false;
-                submitCommentBtn.innerHTML = 'Enviar';
-            } catch (error) {
-                alert('Erro ao enviar: ' + error.message);
-                submitCommentBtn.disabled = false;
-                submitCommentBtn.innerHTML = 'Enviar';
-            }
-        });
-
-        async function loadComments() {
-            try {
-                const q = query(collection(db, 'otimizador-gold-comments'), orderBy('createdAt', 'desc'), limit(100));
-                const snapshot = await getDocs(q);
-
-                if (snapshot.empty) {
-                    commentsList.innerHTML = '<div class="no-comments">Nenhum comentario ainda. Seja o primeiro!</div>';
-                    commentsCount.textContent = '';
-                    return;
-                }
-
-                // Organizar comentarios e respostas
-                const allComments = [];
-                snapshot.forEach((doc) => {
-                    allComments.push({ id: doc.id, ...doc.data() });
-                });
-
-                // Separar comentarios principais e respostas
-                const mainComments = allComments.filter(c => !c.parentId);
-                const replies = allComments.filter(c => c.parentId);
-
-                // Contar apenas comentarios principais
-                commentsCount.textContent = `(${mainComments.length})`;
-
-                let html = '';
-                mainComments.forEach((comment) => {
-                    html += renderComment(comment, replies);
-                });
-                commentsList.innerHTML = html;
-            } catch (error) {
-                commentsList.innerHTML = '<div class="no-comments">Erro ao carregar</div>';
-            }
-        }
-
-        function renderComment(comment, allReplies) {
-            const date = comment.createdAt ? formatDate(comment.createdAt.toDate()) : 'Agora';
-            const commentReplies = allReplies.filter(r => r.parentId === comment.id);
-
-            let html = `
-                <div class="comment-item" data-comment-id="${comment.id}">
-                    <div class="comment-header">
-                        ${comment.authorPhoto ? `<img src="${comment.authorPhoto}" alt="" class="comment-photo" onerror="this.style.display='none'">` : ''}
-                        <div class="comment-meta">
-                            <div class="comment-author">${escapeHtml(comment.authorName.split(' ')[0])}</div>
-                            <div class="comment-date">${date}</div>
-                        </div>
-                        <button class="comment-reply-btn" onclick="toggleReplyForm('${comment.id}')">Responder</button>
-                        ${currentUser && currentUser.uid === comment.authorId ? `<button class="comment-delete-btn" onclick="deleteComment('${comment.id}')">excluir</button>` : ''}
-                    </div>
-                    <div class="comment-text">${escapeHtml(comment.text)}</div>
-
-                    <!-- Reply Form -->
-                    <div class="reply-form" id="reply-form-${comment.id}">
-                        <textarea id="reply-input-${comment.id}" placeholder="Escreva sua resposta..."></textarea>
-                        <div class="reply-form-actions">
-                            <button class="btn btn-secondary btn-sm" onclick="cancelReply('${comment.id}')">Cancelar</button>
-                            <button class="btn btn-primary btn-sm" onclick="submitReply('${comment.id}')">Enviar</button>
-                        </div>
-                    </div>
-
-                    <!-- Replies -->
-                    ${commentReplies.length > 0 ? `<div class="comment-replies">${commentReplies.map(reply => renderReply(reply)).join('')}</div>` : ''}
-                </div>
-            `;
-            return html;
-        }
-
-        function renderReply(reply) {
-            const date = reply.createdAt ? formatDate(reply.createdAt.toDate()) : 'Agora';
-            return `
-                <div class="comment-item">
-                    <div class="comment-header">
-                        ${reply.authorPhoto ? `<img src="${reply.authorPhoto}" alt="" class="comment-photo" onerror="this.style.display='none'">` : ''}
-                        <div class="comment-meta">
-                            <div class="comment-author">${escapeHtml(reply.authorName.split(' ')[0])}</div>
-                            <div class="comment-date">${date}</div>
-                        </div>
-                        ${currentUser && currentUser.uid === reply.authorId ? `<button class="comment-delete-btn" onclick="deleteComment('${reply.id}')">excluir</button>` : ''}
-                    </div>
-                    <div class="comment-text">${escapeHtml(reply.text)}</div>
-                </div>
-            `;
-        }
-
-        window.toggleReplyForm = function(commentId) {
-            const form = document.getElementById(`reply-form-${commentId}`);
-            const input = document.getElementById(`reply-input-${commentId}`);
-
-            // Fechar outros forms abertos
-            document.querySelectorAll('.reply-form.show').forEach(f => {
-                if (f.id !== `reply-form-${commentId}`) {
-                    f.classList.remove('show');
-                }
-            });
-
-            form.classList.toggle('show');
-            if (form.classList.contains('show')) {
-                input.focus();
-            }
-        };
-
-        window.cancelReply = function(commentId) {
-            const form = document.getElementById(`reply-form-${commentId}`);
-            const input = document.getElementById(`reply-input-${commentId}`);
-            form.classList.remove('show');
-            input.value = '';
-        };
-
-        window.submitReply = async function(commentId) {
-            if (!currentUser) {
-                alert('Faca login para responder!');
-                return;
-            }
-
-            const input = document.getElementById(`reply-input-${commentId}`);
-            const text = input.value.trim();
-
-            if (!text) return;
-
-            try {
-                await addDoc(collection(db, 'otimizador-gold-comments'), {
-                    text: text,
-                    parentId: commentId,
-                    authorId: currentUser.uid,
-                    authorName: currentUser.displayName || 'Usuario',
-                    authorPhoto: currentUser.photoURL || '',
-                    authorEmail: currentUser.email,
-                    createdAt: serverTimestamp()
-                });
-
-                input.value = '';
-                cancelReply(commentId);
-                await loadComments();
-            } catch (error) {
-                alert('Erro ao enviar resposta: ' + error.message);
-            }
-        };
-
-        function formatDate(date) {
-            const now = new Date();
-            const diff = now - date;
-            const minutes = Math.floor(diff / 60000);
-            const hours = Math.floor(diff / 3600000);
-            const days = Math.floor(diff / 86400000);
-            if (minutes < 1) return 'Agora';
-            if (minutes < 60) return `${minutes}min`;
-            if (hours < 24) return `${hours}h`;
-            if (days < 7) return `${days}d`;
-            return date.toLocaleDateString('pt-BR');
-        }
-
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        window.deleteComment = async function(commentId) {
-            if (!currentUser) return;
-            if (!confirm('Tem certeza que deseja apagar este comentario?')) return;
-
-            try {
-                await deleteDoc(doc(db, 'otimizador-gold-comments', commentId));
-                await loadComments();
-            } catch (error) {
-                alert('Erro ao apagar: ' + error.message);
-            }
-        };
-
-        // Rating System
-        const stars = ratingStars.querySelectorAll('.star');
-
-        stars.forEach(star => {
-            star.addEventListener('mouseenter', () => {
-                const value = parseInt(star.dataset.value);
-                updateStarsDisplay(value, true);
-            });
-
-            star.addEventListener('mouseleave', () => {
-                updateStarsDisplay(userRating, false);
-            });
-
-            star.addEventListener('click', async () => {
-                if (!currentUser) {
-                    alert('Faca login para avaliar!');
-                    return;
-                }
-                const value = parseInt(star.dataset.value);
-                userRating = value;
-                updateStarsDisplay(value, false);
-                await submitRating(value);
-            });
-        });
-
-        function updateStarsDisplay(value, isHover) {
-            stars.forEach(star => {
-                const starValue = parseInt(star.dataset.value);
-                star.classList.remove('active', 'hovered');
-                if (starValue <= value) {
-                    star.classList.add(isHover ? 'hovered' : 'active');
-                }
-            });
-        }
-
-        async function submitRating(value) {
-            try {
-                const ratingRef = doc(db, 'otimizador-gold-ratings', currentUser.uid);
-                await setDoc(ratingRef, {
-                    rating: value,
-                    userId: currentUser.uid,
-                    userName: currentUser.displayName || 'Usuario',
-                    userEmail: currentUser.email,
-                    updatedAt: serverTimestamp()
-                });
-                ratingThanks.classList.add('show');
-                setTimeout(() => ratingThanks.classList.remove('show'), 3000);
-                await loadRatings();
-            } catch (error) {
-                alert('Erro ao avaliar: ' + error.message);
-            }
-        }
-
-        async function loadRatings() {
-            try {
-                const ratingsQuery = query(collection(db, 'otimizador-gold-ratings'));
-                const snapshot = await getDocs(ratingsQuery);
-
-                if (snapshot.empty) {
-                    avgValue.textContent = '-';
-                    avgCount.textContent = '';
-                    avgStars.textContent = '';
-                    return;
-                }
-
-                let total = 0;
-                let count = 0;
-                snapshot.forEach(doc => {
-                    total += doc.data().rating;
-                    count++;
-                    if (currentUser && doc.id === currentUser.uid) {
-                        userRating = doc.data().rating;
-                        updateStarsDisplay(userRating, false);
-                    }
-                });
-
-                const average = (total / count).toFixed(1);
-                avgValue.textContent = average;
-                avgCount.textContent = `(${count} ${count === 1 ? 'voto' : 'votos'})`;
-                avgStars.textContent = '★'.repeat(Math.round(average));
-            } catch (error) {
-                console.error('Erro ao carregar avaliacoes:', error);
-            }
-        }
-
-        loadComments();
-        loadRatings();
-    </script>
-
-    <!-- Main App Script -->
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const ABBREVIATIONS = {
-            en: ['mr', 'mrs', 'ms', 'dr', 'prof', 'sr', 'jr', 'vs', 'etc', 'al', 'eg', 'ie', 'inc', 'ltd', 'co', 'corp', 'dept', 'est', 'vol', 'rev', 'ed', 'pp', 'approx', 'govt', 'intl', 'natl', 'jan', 'feb', 'mar', 'apr', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec', 'fig', 'ref', 'sec', 'ch', 'pg'],
-            pt: ['sr', 'sra', 'srta', 'dr', 'dra', 'prof', 'profa', 'eng', 'adv', 'av', 'etc', 'ex', 'obs', 'vol', 'cap', 'ed', 'num', 'tel', 'cel', 'ltda', 'cia', 'gov', 'min', 'sec', 'dep', 'jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez', 'fig', 'tab', 'ref', 'art'],
-            es: ['sr', 'sra', 'srta', 'dr', 'dra', 'prof', 'profa', 'ing', 'lic', 'arq', 'etc', 'ej', 'vol', 'cap', 'ed', 'tel', 'cel', 'gov', 'min', 'sec', 'dip', 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic', 'fig', 'tab', 'ref', 'art']
-        };
+        const PAUSE_TIME = 0.9; // Tempo de pausa entre blocos (segundos)
 
-        const ALL_ABBREVIATIONS = new Set([...ABBREVIATIONS.en, ...ABBREVIATIONS.pt, ...ABBREVIATIONS.es].map(a => a.toLowerCase().replace(/\./g, '')));
-
-        // PAUSE_TIME agora é lido do input #pauseTime
-        const TOLERANCE_PERCENT = 0.15;
-        const MIN_BLOCK_PERCENT = 0.5;
-
-        let currentDivisionMode = null;
-
-        const toggleOptionsBtn = document.getElementById('toggleOptionsBtn');
-        const optionsPanel = document.getElementById('optionsPanel');
-        const textInput = document.getElementById('textInput');
-        const fileNameInput = document.getElementById('fileName');
-        const charCountInput = document.getElementById('charCount');
-        const wordCountInput = document.getElementById('wordCount');
-        const readingRateInput = document.getElementById('readingRate');
-        const filterNumbersCheckbox = document.getElementById('filterNumbers');
-        const clearAfterExportCheckbox = document.getElementById('clearAfterExport');
-        const ignoreTextInput = document.getElementById('ignoreText');
-        const pauseTimeInput = document.getElementById('pauseTime');
-        const blocksDiv = document.getElementById('blocks');
-        const exportSrtBtn = document.getElementById('exportSrtBtn');
-        const exportTxtBtn = document.getElementById('exportTxtBtn');
-        const exportPdfBtn = document.getElementById('exportPdfBtn');
-        const charDivisionRow = document.getElementById('charDivisionRow');
-        const wordDivisionRow = document.getElementById('wordDivisionRow');
-
-        toggleOptionsBtn.addEventListener('click', () => {
-            optionsPanel.classList.toggle('show');
-            toggleOptionsBtn.classList.toggle('active');
+        document.getElementById('speed').addEventListener('input', function() {
+            document.getElementById('speedValue').innerText = this.value + 'x';
         });
 
-        document.getElementById('divideByCharsBtn').addEventListener('click', () => {
-            divideTextByChars();
-            setDivisionMode('chars');
+        document.getElementById('readingRate').addEventListener('input', function() {
+            document.getElementById('readingRateValue').innerText = this.value + ' c/s';
         });
 
-        document.getElementById('divideByWordsBtn').addEventListener('click', () => {
-            divideTextByWords();
-            setDivisionMode('words');
-        });
-
-        document.getElementById('resetBtn').addEventListener('click', resetForm);
-        exportSrtBtn.addEventListener('click', exportToSrt);
-        exportTxtBtn.addEventListener('click', exportToTxt);
-        exportPdfBtn.addEventListener('click', exportToPdf);
-        document.getElementById('addBlockBtn').addEventListener('click', () => createBlock(''));
-
-        document.getElementById('mergeSrtsBtn').addEventListener('click', mergeSrtFiles);
-        document.getElementById('cancelMergeBtn').addEventListener('click', () => {
-            document.getElementById('srtFiles').value = '';
-            document.getElementById('mergeStatus').textContent = '';
-        });
-
-        function setDivisionMode(mode) {
-            currentDivisionMode = mode;
-            charDivisionRow.classList.toggle('active', mode === 'chars');
-            wordDivisionRow.classList.toggle('active', mode === 'words');
-            exportSrtBtn.disabled = false;
-            exportTxtBtn.disabled = false;
-            exportPdfBtn.disabled = false;
-        }
-
-        function formatText(text) {
-            return text
-                .replace(/["«»""]/g, "'")
-                .replace(/['']/g, "'")
-                .replace(/[—–]/g, " - ")
-                .replace(/\.{3,}/g, "...")
-                .replace(/…/g, "...")
-                .replace(/\n/g, " ")
-                .replace(/\s+([.,!?;:])/g, "$1")
-                .replace(/([.,!?;:])([a-zA-ZáàâãéèêíìîóòôõúùûñçÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÑÇ])/g, "$1 $2")
-                .replace(/\s+/g, ' ')
-                .trim();
-        }
-
-        function isAbbreviation(word) {
-            if (!word) return false;
-            const cleaned = word.toLowerCase().replace(/[.,!?;:]+$/, '').replace(/\./g, '');
-            return ALL_ABBREVIATIONS.has(cleaned);
-        }
-
-        function splitIntoSentences(text) {
-            const sentences = [];
-            let currentSentence = '';
-            let i = 0;
-
-            while (i < text.length) {
-                const char = text[i];
-                currentSentence += char;
-
-                if (/[.!?]/.test(char)) {
-                    let j = i + 1;
-                    while (j < text.length && /[.!?]/.test(text[j])) {
-                        currentSentence += text[j];
-                        j++;
-                    }
-
-                    let whitespace = '';
-                    while (j < text.length && /\s/.test(text[j])) {
-                        whitespace += text[j];
-                        j++;
-                    }
-
-                    const wordsBefore = currentSentence.trim().split(/\s+/);
-                    const lastWord = wordsBefore[wordsBefore.length - 1];
-                    const nextChar = text[j];
-
-                    const isRealBreak = !isAbbreviation(lastWord) &&
-                                        !(nextChar && /[a-záàâãéèêíìîóòôõúùûñç\d]/.test(nextChar)) &&
-                                        whitespace.length > 0;
-
-                    if (isRealBreak && currentSentence.trim().length > 0) {
-                        sentences.push(currentSentence.trim());
-                        currentSentence = '';
-                        i = j - 1;
-                    }
-                }
-                i++;
+        function copyToClipboard(text, button) {
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = text;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+            if (button) {
+                button.classList.add('copied');
+                button.textContent = 'Copiado!';
             }
-
-            if (currentSentence.trim()) {
-                sentences.push(currentSentence.trim());
-            }
-
-            return sentences.length > 0 ? sentences : [text];
-        }
-
-        function findBestCutPoint(text, maxLength) {
-            const maxWithTolerance = Math.floor(maxLength * (1 + TOLERANCE_PERCENT));
-            const cutCandidates = [];
-
-            let match;
-            const sentenceEndRegex = /[.!?]+\s+/g;
-            while ((match = sentenceEndRegex.exec(text)) !== null) {
-                const pos = match.index + match[0].length;
-                if (pos <= maxWithTolerance) cutCandidates.push({ pos, priority: 1 });
-            }
-
-            const clauseRegex = /[;:]\s+/g;
-            while ((match = clauseRegex.exec(text)) !== null) {
-                const pos = match.index + match[0].length;
-                if (pos <= maxWithTolerance) cutCandidates.push({ pos, priority: 2 });
-            }
-
-            const commaRegex = /,\s+/g;
-            while ((match = commaRegex.exec(text)) !== null) {
-                const pos = match.index + match[0].length;
-                if (pos <= maxWithTolerance) cutCandidates.push({ pos, priority: 3 });
-            }
-
-            const spaceRegex = /\s+/g;
-            while ((match = spaceRegex.exec(text)) !== null) {
-                const pos = match.index + match[0].length;
-                if (pos <= maxWithTolerance) cutCandidates.push({ pos, priority: 4 });
-            }
-
-            if (cutCandidates.length === 0) return { pos: maxLength };
-
-            cutCandidates.sort((a, b) => {
-                if (a.priority === b.priority) return Math.abs(maxLength - a.pos) - Math.abs(maxLength - b.pos);
-                return a.priority - b.priority;
-            });
-
-            const bestPriority = cutCandidates[0].priority;
-            const bestCandidates = cutCandidates.filter(c => c.priority === bestPriority);
-
-            let bestCandidate = bestCandidates[0];
-            for (const candidate of bestCandidates) {
-                if (candidate.pos >= maxLength * 0.7 && candidate.pos <= maxWithTolerance) {
-                    if (candidate.pos > bestCandidate.pos) bestCandidate = candidate;
-                }
-            }
-
-            return bestCandidate;
-        }
-
-        function splitLongSentence(sentence, maxLength) {
-            const parts = [];
-            let remaining = sentence;
-
-            while (remaining.length > maxLength) {
-                const cutPoint = findBestCutPoint(remaining, maxLength);
-                if (cutPoint.pos <= 0 || cutPoint.pos >= remaining.length) {
-                    parts.push(remaining.substring(0, maxLength).trim());
-                    remaining = remaining.substring(maxLength).trim();
-                } else {
-                    parts.push(remaining.substring(0, cutPoint.pos).trim());
-                    remaining = remaining.substring(cutPoint.pos).trim();
-                }
-            }
-
-            if (remaining.trim()) parts.push(remaining.trim());
-            return parts;
-        }
-
-        function getTextBlocksWithCustomLength(text, maxLength) {
-            const blocks = [];
-            let currentBlock = "";
-            const maxWithTolerance = Math.floor(maxLength * (1 + TOLERANCE_PERCENT));
-            const minBlockLength = Math.floor(maxLength * MIN_BLOCK_PERCENT);
-
-            const formattedText = formatText(text);
-            const sentences = splitIntoSentences(formattedText);
-
-            const flushCurrentBlock = () => {
-                if (currentBlock.trim()) {
-                    blocks.push(currentBlock.trim());
-                    currentBlock = "";
-                }
-            };
-
-            for (const sentence of sentences) {
-                const trimmedSentence = sentence.trim();
-                if (!trimmedSentence) continue;
-
-                if (trimmedSentence.length > maxWithTolerance) {
-                    flushCurrentBlock();
-                    const splitParts = splitLongSentence(trimmedSentence, maxLength);
-                    for (let i = 0; i < splitParts.length - 1; i++) blocks.push(splitParts[i]);
-                    currentBlock = splitParts[splitParts.length - 1] + " ";
-                    continue;
-                }
-
-                const potentialBlock = currentBlock + trimmedSentence;
-
-                if (potentialBlock.length > maxLength) {
-                    if (currentBlock.trim().length >= minBlockLength) {
-                        flushCurrentBlock();
-                        currentBlock = trimmedSentence + " ";
-                    } else {
-                        if (potentialBlock.length <= maxWithTolerance) {
-                            currentBlock = potentialBlock + " ";
-                            flushCurrentBlock();
-                        } else {
-                            flushCurrentBlock();
-                            currentBlock = trimmedSentence + " ";
-                        }
-                    }
-                } else {
-                    currentBlock += trimmedSentence + " ";
-                    if (currentBlock.length >= maxLength) flushCurrentBlock();
-                }
-            }
-
-            flushCurrentBlock();
-            return blocks.filter(b => b.length > 0);
-        }
-
-        function getTextBlocksByWords(text, wordsPerBlock) {
-            const blocks = [];
-            let currentWords = [];
-            let currentCount = 0;
-            const maxWithTolerance = Math.floor(wordsPerBlock * (1 + TOLERANCE_PERCENT));
-            const minBlockWords = Math.floor(wordsPerBlock * MIN_BLOCK_PERCENT);
-
-            const formattedText = formatText(text);
-            const sentences = splitIntoSentences(formattedText);
-
-            const flushCurrent = () => {
-                if (currentWords.length > 0) {
-                    blocks.push(currentWords.join(' ').trim());
-                    currentWords = [];
-                    currentCount = 0;
-                }
-            };
-
-            for (const sentence of sentences) {
-                const tokens = sentence.trim().split(/\s+/).filter(Boolean);
-                if (tokens.length === 0) continue;
-
-                const sentenceWordCount = tokens.length;
-
-                if (currentCount + sentenceWordCount <= maxWithTolerance) {
-                    currentWords.push(...tokens);
-                    currentCount += sentenceWordCount;
-                    if (currentCount >= wordsPerBlock) flushCurrent();
-                } else {
-                    if (currentCount >= minBlockWords) flushCurrent();
-
-                    if (sentenceWordCount <= maxWithTolerance) {
-                        currentWords.push(...tokens);
-                        currentCount = sentenceWordCount;
-                        if (currentCount >= wordsPerBlock) flushCurrent();
-                    } else {
-                        const sentenceText = tokens.join(' ');
-                        const avgCharsPerWord = sentenceText.length / sentenceWordCount;
-                        const targetChars = Math.floor(wordsPerBlock * avgCharsPerWord);
-                        const parts = splitLongSentence(sentenceText, targetChars);
-
-                        for (const part of parts) {
-                            const partTokens = part.split(/\s+/).filter(Boolean);
-                            if (currentCount + partTokens.length <= maxWithTolerance) {
-                                currentWords.push(...partTokens);
-                                currentCount += partTokens.length;
-                            } else {
-                                if (currentCount >= minBlockWords) flushCurrent();
-                                currentWords.push(...partTokens);
-                                currentCount = partTokens.length;
-                            }
-                            if (currentCount >= wordsPerBlock) flushCurrent();
-                        }
-                    }
-                }
-            }
-
-            flushCurrent();
-            return blocks.filter(b => b.length > 0);
-        }
-
-        function applyFilters(text) {
-            const ignored = ignoreTextInput.value.trim();
-            if (ignored) {
-                const regex = new RegExp(ignored.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
-                text = text.replace(regex, '');
-            }
-            if (filterNumbersCheckbox.checked) text = text.replace(/\d+/g, '');
-            return text;
-        }
-
-        function divideTextByChars() {
-            const charCount = parseInt(charCountInput.value, 10);
-            if (isNaN(charCount) || charCount <= 0) {
-                showError("Insira um numero valido de caracteres.");
-                return;
-            }
-            let text = applyFilters(textInput.value);
-            const blocks = getTextBlocksWithCustomLength(text, charCount);
-            renderBlocks(blocks, text);
-        }
-
-        function divideTextByWords() {
-            const wordCount = parseInt(wordCountInput.value, 10);
-            if (isNaN(wordCount) || wordCount <= 0) {
-                showError("Insira um numero valido de palavras.");
-                return;
-            }
-            let text = applyFilters(textInput.value);
-            const blocks = getTextBlocksByWords(text, wordCount);
-            renderBlocks(blocks, text);
-        }
-
-        function renderBlocks(blocks, originalText) {
-            blocksDiv.innerHTML = '';
-            const totalChars = originalText.length;
-            const totalWords = originalText.split(/\s+/).filter(w => w.length > 0).length;
-            const readingRate = parseInt(readingRateInput.value, 10);
-            const pauseTime = parseFloat(pauseTimeInput.value) || 0;
-
-            let totalDuration = 0;
-            blocks.forEach((block, index) => {
-                totalDuration += block.length / readingRate + pauseTime;
-                createBlock(block, index + 1);
-            });
-
-            document.getElementById('totalChars').textContent = totalChars.toLocaleString();
-            document.getElementById('totalWords').textContent = totalWords.toLocaleString();
-            document.getElementById('totalBlocks').textContent = blocks.length;
-
-            const minutes = Math.floor(totalDuration / 60);
-            const seconds = Math.floor(totalDuration % 60);
-            document.getElementById('totalDuration').textContent = `${minutes}:${String(seconds).padStart(2, '0')}`;
-
-            document.getElementById('statsCard').style.display = 'block';
-            document.getElementById('blocksCard').style.display = 'block';
-            document.getElementById('statsCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-
-        function createBlock(content, number = null) {
-            const blockDiv = document.createElement('div');
-            blockDiv.classList.add('block');
-
-            const blockNum = number || (blocksDiv.children.length + 1);
-            const charCount = content.length;
-            const wordCount = content.split(/\s+/).filter(w => w.length > 0).length;
-
-            blockDiv.innerHTML = `
-                <div class="block-header">
-                    <span class="block-title">Bloco ${blockNum}</span>
-                    <div class="block-meta">
-                        <span class="char-count">${charCount} chars</span>
-                        <span class="word-count">${wordCount} palavras</span>
-                    </div>
-                    <div class="block-controls">
-                        <button class="btn btn-secondary btn-block btn-copy" title="Copiar">C</button>
-                        <button class="btn btn-secondary btn-block btn-add" title="Adicionar">+</button>
-                        <button class="btn btn-danger btn-block btn-delete" title="Excluir">X</button>
-                    </div>
-                </div>
-                <div class="block-content" contenteditable="true">${content}</div>
-            `;
-
-            const contentDiv = blockDiv.querySelector('.block-content');
-            contentDiv.addEventListener('input', () => {
-                const text = contentDiv.innerText;
-                blockDiv.querySelector('.char-count').textContent = `${text.length} chars`;
-                blockDiv.querySelector('.word-count').textContent = `${text.split(/\s+/).filter(Boolean).length} palavras`;
-                contentDiv.classList.add('edited');
-            });
-
-            blockDiv.querySelector('.btn-copy').addEventListener('click', () => {
-                navigator.clipboard.writeText(contentDiv.innerText);
-                const btn = blockDiv.querySelector('.btn-copy');
-                btn.innerHTML = 'OK';
-                setTimeout(() => { btn.innerHTML = 'C'; }, 1500);
-            });
-
-            blockDiv.querySelector('.btn-add').addEventListener('click', () => {
-                const newBlock = document.createElement('div');
-                createBlockElement(newBlock, '');
-                blockDiv.after(newBlock);
-                updateBlockNumbers();
-            });
-
-            blockDiv.querySelector('.btn-delete').addEventListener('click', () => {
-                blockDiv.remove();
-                updateBlockNumbers();
-            });
-
-            blocksDiv.appendChild(blockDiv);
-        }
-
-        function createBlockElement(container, content) {
-            container.classList.add('block');
-            const blockNum = blocksDiv.children.length + 1;
-
-            container.innerHTML = `
-                <div class="block-header">
-                    <span class="block-title">Bloco ${blockNum}</span>
-                    <div class="block-meta">
-                        <span class="char-count">0 chars</span>
-                        <span class="word-count">0 palavras</span>
-                    </div>
-                    <div class="block-controls">
-                        <button class="btn btn-secondary btn-block btn-copy" title="Copiar">C</button>
-                        <button class="btn btn-secondary btn-block btn-add" title="Adicionar">+</button>
-                        <button class="btn btn-danger btn-block btn-delete" title="Excluir">X</button>
-                    </div>
-                </div>
-                <div class="block-content" contenteditable="true">${content}</div>
-            `;
-
-            const contentDiv = container.querySelector('.block-content');
-            contentDiv.addEventListener('input', () => {
-                const text = contentDiv.innerText;
-                container.querySelector('.char-count').textContent = `${text.length} chars`;
-                container.querySelector('.word-count').textContent = `${text.split(/\s+/).filter(Boolean).length} palavras`;
-            });
-
-            container.querySelector('.btn-copy').addEventListener('click', () => {
-                navigator.clipboard.writeText(contentDiv.innerText);
-            });
-
-            container.querySelector('.btn-add').addEventListener('click', () => {
-                const newBlock = document.createElement('div');
-                createBlockElement(newBlock, '');
-                container.after(newBlock);
-                updateBlockNumbers();
-            });
-
-            container.querySelector('.btn-delete').addEventListener('click', () => {
-                container.remove();
-                updateBlockNumbers();
-            });
-        }
-
-        function updateBlockNumbers() {
-            const blocks = blocksDiv.querySelectorAll('.block');
-            blocks.forEach((block, index) => {
-                block.querySelector('.block-title').textContent = `Bloco ${index + 1}`;
-            });
-            document.getElementById('totalBlocks').textContent = blocks.length;
-        }
-
-        function showError(message) {
-            const existingError = document.querySelector('.error');
-            if (existingError) existingError.remove();
-            const errorDiv = document.createElement('div');
-            errorDiv.classList.add('error');
-            errorDiv.textContent = message;
-            document.querySelector('.container').prepend(errorDiv);
-            setTimeout(() => errorDiv.remove(), 4000);
-        }
-
-        function resetForm() {
-            textInput.value = '';
-            fileNameInput.value = '';
-            charCountInput.value = '490';
-            wordCountInput.value = '50';
-            readingRateInput.value = '10';
-            pauseTimeInput.value = '1';
-            ignoreTextInput.value = '';
-            filterNumbersCheckbox.checked = false;
-            clearAfterExportCheckbox.checked = false;
-            blocksDiv.innerHTML = '';
-            document.getElementById('statsCard').style.display = 'none';
-            document.getElementById('blocksCard').style.display = 'none';
-            currentDivisionMode = null;
-            charDivisionRow.classList.remove('active');
-            wordDivisionRow.classList.remove('active');
-            exportSrtBtn.disabled = true;
-            exportTxtBtn.disabled = true;
-            exportPdfBtn.disabled = true;
-        }
-
-        function formatTimestamp(totalSeconds) {
-            const hours = Math.floor(totalSeconds / 3600);
-            const minutes = Math.floor((totalSeconds % 3600) / 60);
-            const seconds = Math.floor(totalSeconds % 60);
-            const milliseconds = Math.round((totalSeconds - Math.floor(totalSeconds)) * 1000);
-            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')},${String(milliseconds).padStart(3, '0')}`;
         }
 
         function exportToSrt() {
-            const readingRate = parseInt(readingRateInput.value, 10);
-            const pauseTime = parseFloat(pauseTimeInput.value) || 0;
-            const blocks = blocksDiv.querySelectorAll('.block-content');
+            const speed = parseFloat(document.getElementById('speed').value);
+            const blocks = document.querySelectorAll('.block .srt');
             let srtContent = '';
-            let currentTime = 0;
-
             blocks.forEach((block, index) => {
-                const text = block.innerText.trim();
-                if (!text) return;
-                const duration = text.length / readingRate;
-                const startTime = formatTimestamp(currentTime);
-                const endTime = formatTimestamp(currentTime + duration);
-                srtContent += `${index + 1}\n${startTime} --> ${endTime}\n${text}\n\n`;
-                currentTime += duration + pauseTime;
+                const startTime = adjustTimestamp(block.dataset.startTime, speed);
+                const endTime = adjustTimestamp(block.dataset.endTime, speed);
+                srtContent += `${index + 1}\n${startTime} --> ${endTime}\n${block.innerText.trim()}\n\n`;
             });
+            downloadSrtFile(srtContent.trim());
+        }
 
-            const fileName = fileNameInput.value || 'subtitles';
-            const blob = new Blob([srtContent.trim()], { type: 'text/srt' });
+        function adjustTimestamp(timestamp, speed) {
+            if (!timestamp) return '00:00:00,000'; // Evita erro se timestamp for indefinido
+
+            const parts = timestamp.split(':');
+            const hours = parseInt(parts[0]);
+            const minutes = parseInt(parts[1]);
+            const secondsParts = parts[2].split(',');
+            const seconds = parseInt(secondsParts[0]);
+            const milliseconds = parseInt(secondsParts[1]);
+
+            let totalMilliseconds = ((hours * 3600 + minutes * 60 + seconds) * 1000 + milliseconds) * speed;
+
+            const newHours = Math.floor(totalMilliseconds / 3600000);
+            totalMilliseconds %= 3600000;
+            const newMinutes = Math.floor(totalMilliseconds / 60000);
+            totalMilliseconds %= 60000;
+            const newSeconds = Math.floor(totalMilliseconds / 1000);
+            const newMilliseconds = totalMilliseconds % 1000;
+
+            return `${String(newHours).padStart(2, '0')}:${String(newMinutes).padStart(2, '0')}:${String(newSeconds).padStart(2, '0')},${String(newMilliseconds).padStart(3, '0')}`;
+        }
+
+        function downloadSrtFile(content) {
+            const fileName = document.getElementById('fileName').value || 'subtitles';
+            const blob = new Blob([content], { type: 'text/srt' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -1824,67 +209,181 @@
             URL.revokeObjectURL(url);
         }
 
-        function exportToTxt() {
-            const blocks = blocksDiv.querySelectorAll('.block-content');
-            let txtContent = '';
+        function createBlock(type, content, startTime, endTime) {
+            const blockDiv = document.createElement('div');
+            blockDiv.classList.add('block');
+            blockDiv.innerHTML = `
+                <div class="info">
+                    <span>${type}</span>
+                    <span>${content.length} caracteres, ${content.split(/\s+/).length} palavras</span>
+                </div>
+                <div class="srt" data-start-time="${formatTimestamp(startTime)}" data-end-time="${formatTimestamp(endTime)}">
+                    ${content}
+                </div>
+            `;
+            document.getElementById('blocks').appendChild(blockDiv);
+        }
+
+        function divideTextByChars() {
+            if (!validateCharCount()) return;
+            const charCount = document.getElementById('charCount').value;
+            const text = document.getElementById('textInput').value;
+
+            // Calcular total de caracteres e palavras
+            const totalChars = text.length;
+            const totalWords = text.split(/\s+/).filter(word => word.length > 0).length;
+
+            // Exibir total de caracteres e palavras
+            document.getElementById('totalInfo').textContent = `Total de caracteres: ${totalChars} | Total de palavras: ${totalWords}`;
+
+            const blocks = getTextBlocksWithCustomLength(text, parseInt(charCount));
+            document.getElementById('blocks').innerHTML = '';
+            let currentTime = 0;
+            const readingRate = parseInt(document.getElementById('readingRate').value); // Obtém o valor atual do slider
             blocks.forEach((block, index) => {
-                const text = block.innerText.trim();
-                if (text) txtContent += `Bloco ${index + 1}:\n${text}\n\n`;
+                const duration = block.length / readingRate;
+                const startTime = currentTime;
+                const endTime = currentTime + duration;
+                createBlock(`Bloco ${index + 1}`, block, startTime, endTime);
+                currentTime = endTime + PAUSE_TIME; // adiciona a pausa entre blocos
             });
 
-            const fileName = fileNameInput.value || 'documento';
-            const blob = new Blob([txtContent.trim()], { type: 'text/plain;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `${fileName}.txt`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            // Atualiza a pré-visualização
+            updatePreview(blocks);
+        }
 
-            if (clearAfterExportCheckbox.checked) {
-                resetForm();
+        function resetForm() {
+            document.getElementById('charCount').value = '490';
+            document.getElementById('textInput').value = '';
+            document.getElementById('blocks').innerHTML = '';
+            document.getElementById('totalInfo').textContent = '';
+            document.getElementById('preview').innerHTML = '';
+        }
+
+        function validateCharCount() {
+            const charCount = document.getElementById('charCount').value;
+            if (isNaN(charCount) || charCount <= 0) {
+                showError("Por favor, insira um número válido de caracteres.");
+                return false;
             }
+            return true;
+        }
+
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.classList.add('error');
+            errorDiv.textContent = message;
+            document.body.prepend(errorDiv);
+            setTimeout(() => errorDiv.remove(), 3000);
+        }
+
+        function getTextBlocksWithCustomLength(text, maxLength) {
+            text = formatText(text);
+            return splitTextIntoBlocks(text, maxLength);
+        }
+
+        function formatText(text) {
+            text = text.replace(/\"/g, "'");
+            text = text.replace(/«/g, "'").replace(/»/g, "'");
+            text = text.replace(/\n/g, " ");
+            text = text.replace(/([a-zA-Z])([.,!?;:])/g, "$1 $2");
+            text = text.replace(/([.,!?;:])([a-zA-Z])/g, "$1 $2");
+            text = text.replace(/([.,!?;:])([.,!?;:])/g, "$1 $2").replace(/([.,!?;:])\s([.,!?;:])/g, "$1$2");
+            text = text.replace(/\. \. \./g, "...");
+            text = addSpacesAroundSingleQuotes(text);
+            return text;
+        }
+
+        function addSpacesAroundSingleQuotes(text) {
+            return text.replace(/(\B')(?=\w)|(?<=\w)('\B)/g, "$1 $2");
+        }
+
+        function splitTextIntoBlocks(text, maxLength) {
+            const blocks = [];
+            let currentBlock = "";
+            const sentences = text.split(/(?<=\.|\?|!)(?=\s)/g);
+
+            for (let i = 0; i < sentences.length; i++) {
+                const sentence = sentences[i].trim();
+                if ((currentBlock.length + sentence.length + 1) <= maxLength) {
+                    currentBlock += sentence + " ";
+                } else {
+                    if (currentBlock.trim().length > 0) {
+                        blocks.push(currentBlock.trim());
+                    }
+                    currentBlock = sentence + " ";
+                }
+            }
+
+            if (currentBlock.trim().length > 0) {
+                blocks.push(currentBlock.trim());
+            }
+
+            return blocks;
+        }
+
+        function formatTimestamp(seconds) {
+            const date = new Date(seconds * 1000);
+            const hours = String(date.getUTCHours()).padStart(2, '0');
+            const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+            const secs = String(date.getUTCSeconds()).padStart(2, '0');
+            const millis = String(date.getUTCMilliseconds()).padStart(3, '0');
+            return `${hours}:${minutes}:${secs},${millis}`;
+        }
+
+        function updatePreview(blocks) {
+            const previewDiv = document.getElementById('preview');
+            previewDiv.innerHTML = '';
+            blocks.forEach((block, index) => {
+                const previewItem = document.createElement('div');
+                previewItem.textContent = `Bloco ${index + 1}: ${block}`;
+                previewDiv.appendChild(previewItem);
+            });
         }
 
         async function exportToPdf() {
             const { jsPDF } = window.jspdf;
-            const fileName = fileNameInput.value || 'documento';
+            const fileName = document.getElementById('fileName').value || 'documento';
 
             const doc = new jsPDF();
-            const blocks = blocksDiv.querySelectorAll('.block-content');
+            const blocks = document.querySelectorAll('.block');
 
             if (blocks.length > 0) {
-                let y = 10;
+                let y = 10; // posição inicial
 
                 blocks.forEach((block, index) => {
-                    const blockContent = block.innerText.trim();
+                    const blockContent = block.querySelector('.srt').innerText;
                     const blockInfo = `Bloco ${index + 1}\n${blockContent}`;
-
-                    const lines = doc.splitTextToSize(blockInfo, 180);
+                    
+                    // Adiciona o texto do bloco ao PDF
+                    const lines = doc.splitTextToSize(blockInfo, 180); // Divide o texto em linhas com largura máxima de 180 unidades
                     lines.forEach(line => {
                         doc.text(line, 10, y);
                         y += 10;
 
+                        // Adiciona nova página se necessário
                         if (y > 270) {
                             doc.addPage();
                             y = 10;
                         }
                     });
 
-                    y += 10;
+                    y += 10; // Adiciona um espaço após cada bloco
                 });
             } else {
-                const text = textInput.value;
-                const lines = doc.splitTextToSize(text, 180);
+                const text = document.getElementById('textInput').value;
+                const lines = doc.splitTextToSize(text, 180); // Divide o texto em linhas com largura máxima de 180 unidades
 
-                let y = 10;
+                let y = 10; // posição inicial
 
                 lines.forEach((line) => {
+                    // Adiciona o texto ao PDF
                     doc.text(line, 10, y);
+                    
+                    // Atualiza a posição para a próxima linha
                     y += 10;
 
+                    // Adiciona nova página se necessário
                     if (y > 270) {
                         doc.addPage();
                         y = 10;
@@ -1892,232 +391,9 @@
                 });
             }
 
+            // Salva o PDF com nome definido pelo usuário
             doc.save(`${fileName}.pdf`);
-
-            if (clearAfterExportCheckbox.checked) {
-                resetForm();
-            }
         }
-
-        async function mergeSrtFiles() {
-            const fileInput = document.getElementById('srtFiles');
-            const statusDiv = document.getElementById('mergeStatus');
-            const files = fileInput.files;
-
-            if (files.length < 2) {
-                statusDiv.textContent = 'Selecione pelo menos 2 arquivos.';
-                return;
-            }
-
-            statusDiv.textContent = 'Processando...';
-
-            try {
-                const srtContents = [];
-                for (const file of files) {
-                    const content = await file.text();
-                    srtContents.push({ name: file.name, content });
-                }
-
-                srtContents.sort((a, b) => a.name.localeCompare(b.name));
-
-                let mergedContent = '';
-                let blockIndex = 1;
-                let timeOffset = 0;
-
-                for (const srt of srtContents) {
-                    const blocks = parseSrt(srt.content);
-                    for (const block of blocks) {
-                        const startSeconds = parseTimestamp(block.start) + timeOffset;
-                        const endSeconds = parseTimestamp(block.end) + timeOffset;
-                        mergedContent += `${blockIndex}\n`;
-                        mergedContent += `${formatTimestamp(startSeconds)} --> ${formatTimestamp(endSeconds)}\n`;
-                        mergedContent += `${block.text}\n\n`;
-                        blockIndex++;
-                    }
-                    if (blocks.length > 0) {
-                        timeOffset = parseTimestamp(blocks[blocks.length - 1].end) + timeOffset + 1;
-                    }
-                }
-
-                const blob = new Blob([mergedContent.trim()], { type: 'text/srt' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'merged.srt';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-
-                statusDiv.textContent = `${files.length} arquivos unidos!`;
-                fileInput.value = '';
-            } catch (error) {
-                statusDiv.textContent = 'Erro: ' + error.message;
-            }
-        }
-
-        function parseSrt(content) {
-            const blocks = [];
-            const lines = content.split('\n');
-            let i = 0;
-
-            while (i < lines.length) {
-                while (i < lines.length && (lines[i].trim() === '' || /^\d+$/.test(lines[i].trim()))) i++;
-                if (i >= lines.length) break;
-
-                const timestampLine = lines[i].trim();
-                const timestampMatch = timestampLine.match(/(\d{2}:\d{2}:\d{2},\d{3})\s*-->\s*(\d{2}:\d{2}:\d{2},\d{3})/);
-
-                if (timestampMatch) {
-                    const start = timestampMatch[1];
-                    const end = timestampMatch[2];
-                    i++;
-
-                    let text = '';
-                    while (i < lines.length && lines[i].trim() !== '' && !/^\d+$/.test(lines[i].trim()) && !lines[i].includes('-->')) {
-                        text += (text ? '\n' : '') + lines[i].trim();
-                        i++;
-                    }
-
-                    if (text) blocks.push({ start, end, text });
-                } else {
-                    i++;
-                }
-            }
-
-            return blocks;
-        }
-
-        function parseTimestamp(timestamp) {
-            const parts = timestamp.split(':');
-            const hours = parseInt(parts[0], 10);
-            const minutes = parseInt(parts[1], 10);
-            const secondsParts = parts[2].split(',');
-            const seconds = parseInt(secondsParts[0], 10);
-            const milliseconds = parseInt(secondsParts[1], 10);
-            return hours * 3600 + minutes * 60 + seconds + milliseconds / 1000;
-        }
-
-        function saveState() {
-            try {
-                const state = {
-                    fileName: fileNameInput.value,
-                    textInput: textInput.value,
-                    charCount: charCountInput.value,
-                    wordCount: wordCountInput.value,
-                    readingRate: readingRateInput.value,
-                    pauseTime: pauseTimeInput.value,
-                    timestamp: Date.now()
-                };
-                localStorage.setItem('otimizadorGoldState', JSON.stringify(state));
-            } catch (e) {}
-        }
-
-        function restoreState() {
-            try {
-                const savedState = localStorage.getItem('otimizadorGoldState');
-                if (!savedState) return;
-
-                const state = JSON.parse(savedState);
-                if (Date.now() - state.timestamp > 3600000) {
-                    localStorage.removeItem('otimizadorGoldState');
-                    return;
-                }
-
-                if (state.fileName) fileNameInput.value = state.fileName;
-                if (state.textInput) textInput.value = state.textInput;
-                if (state.charCount) charCountInput.value = state.charCount;
-                if (state.wordCount) wordCountInput.value = state.wordCount;
-                if (state.readingRate) readingRateInput.value = state.readingRate;
-                if (state.pauseTime) pauseTimeInput.value = state.pauseTime;
-            } catch (e) {}
-        }
-
-        restoreState();
-        setInterval(saveState, 5000);
-    });
-    </script>
-
-    <!-- Help Accordion Interactive Script -->
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const accordion = document.getElementById('helpAccordion');
-
-        if (!accordion) return;
-
-        let arrowIndicator = null;
-
-        function createArrowIndicator() {
-            const arrow = document.createElement('div');
-            arrow.className = 'field-arrow';
-            arrow.innerHTML = `
-                <svg viewBox="0 0 24 24" fill="none">
-                    <path d="M13 5l7 7-7 7" stroke="#DAA520" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M5 12h15" stroke="#DAA520" stroke-width="3" stroke-linecap="round"/>
-                </svg>
-            `;
-            arrow.style.display = 'none';
-            document.body.appendChild(arrow);
-            return arrow;
-        }
-
-        arrowIndicator = createArrowIndicator();
-
-        accordion.querySelectorAll('.help-item-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const item = header.closest('.help-item');
-                const wasActive = item.classList.contains('active');
-                const targetSelector = item.dataset.target;
-
-                accordion.querySelectorAll('.help-item').forEach(i => i.classList.remove('active'));
-
-                document.querySelectorAll('.field-highlight').forEach(el => {
-                    el.classList.remove('field-highlight');
-                });
-
-                if (!wasActive) {
-                    item.classList.add('active');
-
-                    if (targetSelector) {
-                        const targetElement = document.querySelector(targetSelector);
-                        if (targetElement) {
-                            targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            setTimeout(() => {
-                                targetElement.classList.add('field-highlight');
-                                showArrowAtElement(targetElement);
-                                setTimeout(() => {
-                                    targetElement.classList.remove('field-highlight');
-                                    hideArrow();
-                                }, 2500);
-                            }, 300);
-                        }
-                    }
-                } else {
-                    hideArrow();
-                }
-            });
-        });
-
-        function showArrowAtElement(element) {
-            if (!arrowIndicator) return;
-
-            const rect = element.getBoundingClientRect();
-            const arrowX = rect.left - 40;
-            const arrowY = rect.top + (rect.height / 2) - 16;
-
-            arrowIndicator.style.left = `${arrowX}px`;
-            arrowIndicator.style.top = `${arrowY}px`;
-            arrowIndicator.style.display = 'block';
-        }
-
-        function hideArrow() {
-            if (arrowIndicator) {
-                arrowIndicator.style.display = 'none';
-            }
-        }
-
-        window.addEventListener('scroll', hideArrow);
-    });
     </script>
 </body>
 </html>
