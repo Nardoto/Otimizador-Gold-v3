@@ -2,9 +2,15 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Otimizador Gold</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Otimizador Gold - Nardoto</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Modo Escuro (default) */
         :root {
             --bg-dark: #0a0a0f;
             --bg-card: #141419;
@@ -25,7 +31,7 @@
             --shadow-primary: 0 4px 20px rgba(255, 107, 53, 0.3);
         }
 
-        /* Modo Claro */
+        /* Classic Theme */
         body.classic-theme {
             --bg-dark: #FFFFFF;
             --bg-card: #FFFEF9;
@@ -46,7 +52,28 @@
             --shadow-primary: 0 4px 20px rgba(218, 165, 32, 0.3);
         }
 
-        /* Tema Retro Original */
+        /* Retro Theme */
+        body.retro-theme {
+            --bg-dark: #FFFFFF;
+            --bg-card: #FFFEF9;
+            --bg-card-hover: #FFD700;
+            --bg-input: #FFD700;
+            --primary: #DAA520;
+            --primary-light: #FFD700;
+            --primary-dark: #B8860B;
+            --success: #22c55e;
+            --success-dark: #16a34a;
+            --danger: #dc3545;
+            --text-primary: #4B0082;
+            --text-secondary: #4B0082;
+            --text-muted: #999;
+            --border-light: rgba(184, 134, 11, 0.3);
+            --gradient-primary: linear-gradient(135deg, #DAA520 0%, #FFD700 100%);
+            --gradient-glow: radial-gradient(ellipse at center, rgba(218, 165, 32, 0.1) 0%, transparent 70%);
+            --shadow-primary: 0 4px 20px rgba(218, 165, 32, 0.3);
+        }
+
+        /* TEMA RETRO - CODIGO ORIGINAL */
         body.retro-theme {
             font-family: 'Arial', sans-serif;
             background-color: #FFFFFF;
@@ -157,240 +184,2405 @@
             text-align: center;
         }
 
-        /* Modos Modernos (Escuro e Claro) - usam CSS variables */
-        body:not(.retro-theme) {
-            font-family: 'Arial', sans-serif;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-primary);
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        body:not(.retro-theme) h2 {
-            text-align: center;
-            color: var(--primary);
-        }
-        body:not(.retro-theme) #form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        body:not(.retro-theme) #form input, body:not(.retro-theme) #form textarea {
-            width: 80%;
-            padding: 10px;
-            font-size: 16px;
-            border: 2px solid var(--border-light);
-            border-radius: 5px;
-            background-color: var(--bg-input);
-            color: var(--text-primary);
-        }
-        body:not(.retro-theme) #form button {
-            width: 40%;
-            padding: 15px;
-            font-size: 16px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-        body:not(.retro-theme) #form button:hover {
-            background-color: var(--primary-light);
-            transform: translateY(-2px);
-        }
-        body:not(.retro-theme) #blocks {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-        body:not(.retro-theme) .block {
-            width: 80%;
-            padding: 15px;
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-light);
-            border-radius: 5px;
-            position: relative;
-            color: var(--text-primary);
-        }
-        body:not(.retro-theme) .block .info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        body:not(.retro-theme) .block .info span {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-        body:not(.retro-theme) .block button.copy {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            padding: 5px 10px;
-            transition: background-color 0.3s;
-        }
-        body:not(.retro-theme) .block button.copy.copied {
-            background-color: var(--success);
-            color: white;
-        }
-        body:not(.retro-theme) .block button.copy:hover {
-            background-color: var(--primary-light);
-        }
-        body:not(.retro-theme) .error {
-            background-color: var(--danger);
-            color: white;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid var(--danger);
-            border-radius: 5px;
-            text-align: center;
-        }
-        body:not(.retro-theme) #srt-form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        body:not(.retro-theme) #thanks {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 18px;
-            color: var(--primary);
-        }
-        body:not(.retro-theme) #preview {
-            margin-bottom: 20px;
-            color: var(--text-secondary);
-            text-align: center;
-        }
-        body:not(.retro-theme) label {
-            color: var(--text-primary);
-        }
-        body:not(.retro-theme) #totalInfo {
-            color: var(--text-primary) !important;
+            min-height: 100vh;
+            line-height: 1.6;
         }
 
-        /* Theme Switcher Button */
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 20px 30px;
+            position: relative;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 300px;
+            background: var(--gradient-glow);
+            pointer-events: none;
+        }
         .theme-switcher {
-            position: fixed;
+            position: absolute;
             top: 20px;
             right: 20px;
-            background: var(--primary);
-            border: none;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
             border-radius: 8px;
-            padding: 10px 16px;
+            padding: 8px 16px;
             cursor: pointer;
-            font-size: 0.9rem;
-            color: white;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
             transition: all 0.3s ease;
-            z-index: 1000;
+            z-index: 10;
             display: flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
         .theme-switcher:hover {
+            border-color: var(--primary);
+            color: var(--primary);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         .theme-icon {
             font-size: 1.1rem;
+        }
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.2rem;
+            font-weight: 400;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-top: 6px;
+        }
+
+        /* 3-Column Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr 300px;
+            gap: 24px;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 24px 60px;
+        }
+
+        @media (max-width: 1200px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+                max-width: 900px;
+            }
+            .sidebar-left { order: 2; }
+            .main-content { order: 1; }
+            .sidebar-right { order: 3; }
+        }
+
+        /* Sidebars */
+        .sidebar-left, .sidebar-right {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sidebar-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 20px;
+            position: sticky;
+            top: 20px;
+        }
+
+        .sidebar-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-title-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--gradient-primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        /* Help Section */
+        /* Accordion Help System */
+        .help-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .help-item {
+            background: var(--bg-input);
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .help-item:hover {
+            border-color: rgba(255, 107, 53, 0.3);
+        }
+
+        .help-item.active {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(255, 107, 53, 0.15);
+        }
+
+        .help-item-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s ease;
+        }
+
+        .help-item-header:hover {
+            background: rgba(255, 107, 53, 0.05);
+        }
+
+        .help-icon {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            color: var(--text-muted);
+            transition: color 0.2s ease;
+        }
+
+        .help-item.active .help-icon {
+            color: var(--primary);
+        }
+
+        .help-item-title {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+            margin: 0;
+            flex: 1;
+        }
+
+        .help-item.active .help-item-title {
+            color: var(--primary);
+        }
+
+        .help-item-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .help-item.active .help-item-content {
+            max-height: 300px;
+        }
+
+        .help-item-text {
+            padding: 0 12px 12px;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            line-height: 1.5;
+        }
+
+        /* Field Highlight Animation */
+        .field-highlight {
+            animation: highlightPulse 2s ease-in-out;
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.5), 0 0 20px rgba(255, 107, 53, 0.3) !important;
+            border-color: var(--primary) !important;
+        }
+
+        @keyframes highlightPulse {
+            0%, 100% { box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.5), 0 0 20px rgba(255, 107, 53, 0.3); }
+            50% { box-shadow: 0 0 0 6px rgba(255, 107, 53, 0.3), 0 0 30px rgba(255, 107, 53, 0.4); }
+        }
+
+        /* Floating Arrow Indicator */
+        .field-arrow {
+            position: fixed;
+            z-index: 1000;
+            pointer-events: none;
+            animation: arrowBounce 0.8s ease-in-out infinite;
+        }
+
+        .field-arrow svg {
+            width: 32px;
+            height: 32px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        @keyframes arrowBounce {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-8px); }
+        }
+
+        /* Collapsible Card */
+        .sidebar-title-collapsible {
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.2s ease;
+        }
+
+        .sidebar-title-collapsible:hover {
+            color: var(--primary);
+        }
+
+        .sidebar-collapse-arrow {
+            margin-left: auto;
+            font-size: 12px;
+            color: var(--text-muted);
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-card.collapsed .sidebar-collapse-arrow {
+            transform: rotate(-90deg);
+        }
+
+        .sidebar-card.collapsed .help-accordion {
+            display: none;
+        }
+
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(232, 90, 42, 0.05) 100%);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .cta-badge {
+            display: inline-block;
+            background: var(--gradient-primary);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .cta-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .cta-text {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .cta-features {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .cta-feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .cta-feature-icon {
+            color: var(--success);
+            font-size: 12px;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px 20px;
+            background: var(--gradient-primary);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-primary);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.4);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Card */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            background: var(--bg-card-hover);
+        }
+        .card-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card-title-icon {
+            width: 30px;
+            height: 30px;
+            background: var(--gradient-primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        /* Form Elements */
+        .form-group { margin-bottom: 16px; }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        @media (max-width: 500px) {
+            .form-row { grid-template-columns: 1fr; }
+        }
+        label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            background: var(--bg-input);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.15);
+        }
+        input::placeholder, textarea::placeholder {
+            color: var(--text-muted);
+        }
+        textarea {
+            resize: vertical;
+            min-height: 140px;
+        }
+
+        /* Options Panel */
+        .options-panel {
+            background: var(--bg-input);
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 16px;
+            display: none;
+        }
+        .options-panel.show { display: block; }
+        .options-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .option-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary);
+        }
+        .option-item label {
+            margin-bottom: 0;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        .option-item input[type="text"] {
+            width: 100px;
+            padding: 5px 8px;
+            font-size: 0.75rem;
+        }
+
+        /* Division Rows */
+        .division-section { margin-bottom: 16px; }
+        .division-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+            flex-wrap: wrap;
+        }
+        .division-row.active {
+            border-color: var(--primary);
+            background: rgba(255, 107, 53, 0.05);
+        }
+        .division-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+        .division-row.active .division-label {
+            color: var(--primary);
+        }
+        .division-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            flex-wrap: wrap;
+        }
+        .input-mini {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .input-mini label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+        .input-mini input {
+            width: 60px;
+            padding: 6px 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .btn {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: inherit;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-primary);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-light);
+        }
+        .btn-secondary:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .btn-success {
+            background: linear-gradient(135deg, var(--success) 0%, var(--success-dark) 100%);
+            color: white;
+        }
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);
+            color: white;
+        }
+        .btn-sm {
+            padding: 7px 14px;
+            font-size: 0.8rem;
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Toggle Button */
+        .toggle-btn {
+            background: var(--bg-input);
+            border: 1px solid var(--border-light);
+            color: var(--text-secondary);
+            padding: 7px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .toggle-btn:hover, .toggle-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        @media (max-width: 500px) {
+            .stats { grid-template-columns: repeat(2, 1fr); }
+        }
+        .stat-item {
+            background: var(--bg-input);
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+        }
+        .stat-value {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* Blocks */
+        .blocks-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .block {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 14px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .block:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+        .block:hover::before { opacity: 1; }
+        .block-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .block-title {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.85rem;
+        }
+        .block-meta {
+            display: flex;
+            gap: 12px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .block-controls {
+            display: flex;
+            gap: 4px;
+        }
+        .block-content {
+            background: var(--bg-input);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            padding: 12px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.85rem;
+            min-height: 50px;
+            transition: all 0.3s ease;
+        }
+        .block-content:focus {
+            outline: none;
+            border-color: var(--primary);
+            color: var(--text-primary);
+        }
+        .block-content.edited {
+            border-color: var(--success);
+        }
+        .btn-block {
+            width: 26px;
+            height: 26px;
+            padding: 0;
+            font-size: 12px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Merge Section */
+        .merge-section {
+            background: var(--bg-input);
+            border: 1px dashed var(--border-light);
+            border-radius: 10px;
+            padding: 14px;
+        }
+        .merge-section input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        /* Comments Section (Right Sidebar) */
+        .comments-sidebar {
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+        }
+        .auth-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 16px;
+            padding: 10px 12px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            flex-wrap: wrap;
+        }
+        .auth-bar .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .auth-bar .user-photo {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+        }
+        .auth-bar .user-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.8rem;
+        }
+        .google-login-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: white;
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .google-login-btn:hover {
+            background: #f8f9fa;
+            border-color: var(--primary);
+        }
+        .google-login-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+        .comment-form textarea {
+            min-height: 60px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+        }
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 16px;
+        }
+        .comment-item {
+            background: var(--bg-input);
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 12px;
+            transition: all 0.3s ease;
+        }
+        .comment-item:hover {
+            border-color: rgba(255, 107, 53, 0.3);
+        }
+        .comment-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .comment-photo {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+        }
+        .comment-meta {
+            flex: 1;
+        }
+        .comment-author {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.8rem;
+        }
+        .comment-date {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+        }
+        .comment-text {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+        .comments-count {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-left: auto;
+        }
+        .no-comments {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        .loading-comments {
+            text-align: center;
+            padding: 16px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* Rating System */
+        .rating-section {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(232, 90, 42, 0.05) 100%);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        .rating-title {
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .rating-stars {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+        .rating-stars .star {
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+            line-height: 1;
+        }
+        .rating-stars .star:hover,
+        .rating-stars .star.active {
+            color: #FFD700;
+            transform: scale(1.1);
+        }
+        .rating-stars .star.hovered {
+            color: #FFD700;
+        }
+        .rating-average {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .rating-average-stars {
+            color: #FFD700;
+            font-size: 0.9rem;
+        }
+        .rating-average-value {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+        .rating-average-count {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+        .rating-thanks {
+            color: var(--success);
+            font-size: 0.8rem;
+            margin-top: 8px;
+            display: none;
+        }
+        .rating-thanks.show {
+            display: block;
+        }
+
+        /* Delete Comment Button */
+        .comment-delete-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            opacity: 0;
+        }
+        .comment-item:hover .comment-delete-btn {
+            opacity: 1;
+        }
+        .comment-delete-btn:hover {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+        .comment-reply-btn {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            background: none;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-left: auto;
+        }
+        .comment-reply-btn:hover {
+            background: rgba(255, 107, 53, 0.1);
+            color: var(--primary);
+        }
+        .comment-replies {
+            margin-left: 40px;
+            margin-top: 12px;
+            padding-left: 12px;
+            border-left: 2px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .reply-form {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: var(--bg-dark);
+            border-radius: 8px;
+            border: 1px solid var(--border-light);
+        }
+        .reply-form.show {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .reply-form textarea {
+            min-height: 60px;
+            padding: 8px;
+            font-size: 0.85rem;
+            background: var(--bg-input);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            color: var(--text-primary);
+            resize: vertical;
+        }
+        .reply-form textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .reply-form-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+        .reply-form-actions button {
+            padding: 6px 14px;
+            font-size: 0.8rem;
+        }
+        .comment-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--text-muted);
+        }
+        .footer-quote {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        .footer-brand {
+            margin-top: 10px;
+        }
+        .footer-brand a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .footer-brand a:hover { text-decoration: underline; }
+
+        /* Error */
+        .error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            text-align: center;
+            font-size: 0.85rem;
+            animation: shake 0.5s ease;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        #preview { display: none; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+
+        /* ESCONDER ELEMENTOS RETRO NOS MODOS MODERNOS */
+        body:not(.retro-theme) .retro-title,
+        body:not(.retro-theme) .retro-message {
+            display: none !important;
+        }
+
+        /* ESCONDER ELEMENTOS MODERNOS NO MODO RETRO */
+        body.retro-theme .header .logo,
+        body.retro-theme .header .subtitle,
+        body.retro-theme .sidebar-left,
+        body.retro-theme .sidebar-right,
+        body.retro-theme .footer,
+        body.retro-theme .card-title,
+        body.retro-theme .card-title-icon,
+        body.retro-theme .division-section,
+        body.retro-theme #statsCard,
+        body.retro-theme .form-row,
+        body.retro-theme .options-panel,
+        body.retro-theme #blocksCard {
+            display: none !important;
+        }
+
+        /* AJUSTAR LAYOUT NO MODO RETRO */
+        body.retro-theme .main-layout {
+            display: block !important;
+            max-width: none !important;
+            padding: 20px !important;
+        }
+
+        body.retro-theme .header {
+            padding: 20px !important;
+            text-align: center;
+        }
+
+        body.retro-theme .header::before {
+            display: none;
+        }
+
+        body.retro-theme .main-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        body.retro-theme .card {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+        }
+
+        body.retro-theme .theme-switcher {
+            position: fixed;
+            background: #DAA520 !important;
+            border: 1px solid #B8860B !important;
+            color: white !important;
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 </head>
 <body class="retro-theme">
-    <button class="theme-switcher" id="themeSwitcher" title="Alternar tema">
-        <span class="theme-icon" id="themeIcon">&#9733;</span>
-        <span id="themeLabel">Retro Original</span>
-    </button>
-    <h2>Otimizador Gold</h2>
-    <div id="form">
-        <input type="text" id="fileName" placeholder="Nome do arquivo" />
-        <input type="number" id="charCount" placeholder="Dividir em quantos caracteres:" value="490" />
-        <textarea id="textInput" rows="10" placeholder="Insira o texto aqui..."></textarea>
-        <button onclick="divideTextByChars()">Dividir por Caracteres</button>
-        <button onclick="resetForm()">Redefinir</button>
-        <label for="speed">Espaçamento entre áudios:</label>
-        <input type="range" id="speed" min="0.5" max="2" step="0.1" value="1">
-        <span id="speedValue">1.0x</span>
-        <label for="readingRate">Caracteres por segundo:</label>
-        <input type="range" id="readingRate" min="10" max="50" step="1" value="14">
-        <span id="readingRateValue">14 c/s</span>
-        <button onclick="exportToSrt()">Exportar para SRT</button>
-        <button onclick="exportToPdf()">Exportar para PDF</button>
+    <!-- Header -->
+    <header class="header">
+        <button class="theme-switcher" id="themeSwitcher" title="Alternar tema">
+            <span class="theme-icon" id="themeIcon">&#9733;</span>
+            <span id="themeLabel">Retro Original</span>
+        </button>
+        <div class="logo">
+            <div class="logo-icon">G</div>
+            <h1>Otimizador Gold</h1>
+        </div>
+        <p class="subtitle">Divisor de texto inteligente para legendas e audiovisual</p>
+    </header>
+
+    <!-- 3-Column Layout -->
+    <div class="main-layout">
+        <!-- LEFT SIDEBAR - Help & CTA -->
+        <aside class="sidebar-left">
+            <!-- Help Section -->
+            <div class="sidebar-card" id="helpCard">
+                <h3 class="sidebar-title sidebar-title-collapsible" id="helpCardToggle">
+                    <span class="sidebar-title-icon">?</span>
+                    Como Usar
+                    <span class="sidebar-collapse-arrow">v</span>
+                </h3>
+                <div class="help-accordion" id="helpAccordion">
+                    <div class="help-item" data-target="#charDivisionRow">
+                        <div class="help-item-header">
+                            <svg class="help-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+                            <div class="help-item-title">Divisao por Caracteres</div>
+                        </div>
+                        <div class="help-item-content">
+                            <div class="help-item-text">Define o numero maximo de caracteres por bloco. Ideal para legendas de video (490 chars e o padrao para ElevenLabs/TTS).</div>
+                        </div>
+                    </div>
+                    <div class="help-item" data-target="#wordDivisionRow">
+                        <div class="help-item-header">
+                            <svg class="help-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="3"/></svg>
+                            <div class="help-item-title">Divisao por Palavras</div>
+                        </div>
+                        <div class="help-item-content">
+                            <div class="help-item-text">Divide o texto por quantidade de palavras. Util para scripts de narracao e roteiros.</div>
+                        </div>
+                    </div>
+                    <div class="help-item" data-target="#toggleOptionsBtn">
+                        <div class="help-item-header">
+                            <svg class="help-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                            <div class="help-item-title">Opcoes Avancadas</div>
+                        </div>
+                        <div class="help-item-content">
+                            <div class="help-item-text">Filtrar numeros do texto, ignorar palavras especificas, ou limpar automaticamente apos exportar.</div>
+                        </div>
+                    </div>
+                    <div class="help-item" data-target="#readingRate">
+                        <div class="help-item-header">
+                            <svg class="help-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            <div class="help-item-title">C/S (Caracteres/Segundo)</div>
+                        </div>
+                        <div class="help-item-content">
+                            <div class="help-item-text">Taxa de leitura para calcular duracao. 14 c/s e a media humana. Usado para gerar timestamps no SRT.</div>
+                        </div>
+                    </div>
+                    <div class="help-item" data-target="#exportBtn">
+                        <div class="help-item-header">
+                            <svg class="help-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            <div class="help-item-title">Exportar Arquivos</div>
+                        </div>
+                        <div class="help-item-content">
+                            <div class="help-item-text">Use os botoes "Exportar SRT" para gerar arquivo de legendas e "Exportar TXT" para documento de texto organizado.</div>
+                        </div>
+                    </div>
+                    <div class="help-item" data-target="#srtFiles">
+                        <div class="help-item-header">
+                            <svg class="help-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+                            <div class="help-item-title">Juntar SRTs</div>
+                        </div>
+                        <div class="help-item-content">
+                            <div class="help-item-text">Selecione varios arquivos SRT e junte em um unico arquivo com timestamps ajustados automaticamente.</div>
+                        </div>
+                    </div>
+                    <div class="help-item" data-target="#textInput">
+                        <div class="help-item-header">
+                            <svg class="help-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                            <div class="help-item-title">Blocos Editaveis</div>
+                        </div>
+                        <div class="help-item-content">
+                            <div class="help-item-text">Apos dividir, clique em qualquer bloco para editar o texto. Use os botoes para copiar, adicionar ou excluir blocos.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="cta-section">
+                <span class="cta-badge">Novidade</span>
+                <h4 class="cta-title">Conheça o Ecossistema Nardoto</h4>
+                <p class="cta-text">Ferramentas de automação para criadores de conteúdo que querem escalar sua produção.</p>
+                <div class="cta-features">
+                    <div class="cta-feature">
+                        <span class="cta-feature-icon">-</span>
+                        <span>Automação de IA (GPT, Claude, Gemini)</span>
+                    </div>
+                    <div class="cta-feature">
+                        <span class="cta-feature-icon">-</span>
+                        <span>Geração de vídeos com VEO3</span>
+                    </div>
+                    <div class="cta-feature">
+                        <span class="cta-feature-icon">-</span>
+                        <span>TTS profissional (ElevenLabs)</span>
+                    </div>
+                    <div class="cta-feature">
+                        <span class="cta-feature-icon">-</span>
+                        <span>Edição automática (CapCut)</span>
+                    </div>
+                    <div class="cta-feature">
+                        <span class="cta-feature-icon">-</span>
+                        <span>Hub centralizado de ferramentas</span>
+                    </div>
+                </div>
+                <a href="https://nardoto.com.br" target="_blank" class="cta-btn">
+                    Conhecer Ferramentas
+                </a>
+            </div>
+
+            <!-- App Coming Soon -->
+            <div class="sidebar-card" style="text-align: center;">
+                <span class="cta-badge" style="background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);">Em Breve</span>
+                <h4 class="sidebar-title" style="justify-content: center; margin-top: 12px;">
+                    Nardoto Studio
+                </h4>
+                <p style="color: var(--text-muted); font-size: 0.8rem; line-height: 1.5;">
+                    App desktop para Windows com todas as ferramentas integradas, trabalho offline e interface ainda mais poderosa.
+                </p>
+                <a href="https://nardoto.com.br" target="_blank" style="color: var(--primary); font-size: 0.8rem; font-weight: 600; text-decoration: none; display: inline-block; margin-top: 12px;">
+                    Saiba mais ->
+                </a>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <!-- Titulo Simples Retro -->
+            <h2 class="retro-title">Otimizador Gold</h2>
+
+            <!-- Input Card -->
+            <div class="card">
+                <h2 class="card-title">
+                    <span class="card-title-icon">#</span>
+                    Configurações
+                </h2>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fileName">Nome do arquivo</label>
+                        <input type="text" id="fileName" placeholder="Ex: meu-video-legenda">
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: flex-end; gap: 8px;">
+                        <button class="toggle-btn" id="toggleOptionsBtn">Opcoes</button>
+                    </div>
+                </div>
+
+                <!-- Options Panel -->
+                <div id="optionsPanel" class="options-panel">
+                    <div class="options-grid">
+                        <div class="option-item">
+                            <input type="checkbox" id="filterNumbers">
+                            <label for="filterNumbers">Filtrar números</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="checkbox" id="clearAfterExport">
+                            <label for="clearAfterExport">Limpar após exportar</label>
+                        </div>
+                        <div class="option-item">
+                            <label>Ignorar:</label>
+                            <input type="text" id="ignoreText" placeholder="texto...">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="textInput">Texto para dividir</label>
+                    <textarea id="textInput" rows="6" placeholder="Cole seu texto aqui..."></textarea>
+                </div>
+
+                <!-- Division Controls -->
+                <div class="division-section">
+                    <label>Modo de Divisão</label>
+
+                    <div class="division-row" id="charDivisionRow">
+                        <span class="division-label">Caracteres</span>
+                        <div class="division-controls">
+                            <div class="input-mini">
+                                <label>Max</label>
+                                <input type="number" id="charCount" value="490" min="50" max="2000">
+                            </div>
+                            <div class="input-mini">
+                                <label>c/s</label>
+                                <input type="number" id="readingRate" value="10" min="10" max="50">
+                            </div>
+                            <div class="input-mini">
+                                <label>Intervalo (s)</label>
+                                <input type="number" id="pauseTime" value="1" min="0" max="10" step="0.1">
+                            </div>
+                            <button class="btn btn-primary btn-sm" id="divideByCharsBtn">Dividir</button>
+                        </div>
+                    </div>
+
+                    <div class="division-row" id="wordDivisionRow">
+                        <span class="division-label">Palavras</span>
+                        <div class="division-controls">
+                            <div class="input-mini">
+                                <label>Max</label>
+                                <input type="number" id="wordCount" value="50" min="10" max="500">
+                            </div>
+                            <button class="btn btn-secondary btn-sm" id="divideByWordsBtn">Dividir</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-success" id="exportSrtBtn" disabled>
+                        Exportar SRT
+                    </button>
+                    <button class="btn btn-success" id="exportTxtBtn" disabled>
+                        Exportar TXT
+                    </button>
+                    <button class="btn btn-success" id="exportPdfBtn" disabled>
+                        Exportar PDF
+                    </button>
+                    <button class="btn btn-secondary" id="resetBtn">
+                        Limpar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Card -->
+            <div id="statsCard" class="card" style="display: none;">
+                <h2 class="card-title">
+                    <span class="card-title-icon">#</span>
+                    Estatísticas
+                </h2>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalChars">0</div>
+                        <div class="stat-label">Caracteres</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalWords">0</div>
+                        <div class="stat-label">Palavras</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalBlocks">0</div>
+                        <div class="stat-label">Blocos</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalDuration">0:00</div>
+                        <div class="stat-label">Duração</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blocks Card -->
+            <div id="blocksCard" class="card" style="display: none;">
+                <h2 class="card-title">
+                    <span class="card-title-icon">#</span>
+                    Blocos Gerados
+                    <button class="btn btn-secondary btn-sm" id="addBlockBtn" style="margin-left: auto;">+ Bloco</button>
+                </h2>
+                <div id="blocks" class="blocks-container"></div>
+            </div>
+
+            <!-- Merge SRT Card -->
+            <div class="card">
+                <h2 class="card-title">
+                    <span class="card-title-icon">#</span>
+                    Juntar Arquivos SRT
+                </h2>
+                <div class="merge-section">
+                    <label for="srtFiles">Selecione os arquivos SRT:</label>
+                    <input type="file" id="srtFiles" accept=".srt" multiple>
+                    <div class="btn-group" style="margin-top: 10px;">
+                        <button class="btn btn-primary btn-sm" id="mergeSrtsBtn">Juntar SRTs</button>
+                        <button class="btn btn-secondary btn-sm" id="cancelMergeBtn">Cancelar</button>
+                    </div>
+                    <div id="mergeStatus" style="margin-top: 8px; font-size: 0.8rem; color: var(--text-muted);"></div>
+                </div>
+            </div>
+
+            <div id="preview"></div>
+
+            <!-- Mensagem Retro -->
+            <p id="thanks" class="retro-message">O sonho é a coisa mais real que Existe! Gratidão</p>
+        </main>
+
+        <!-- RIGHT SIDEBAR - Comments -->
+        <aside class="sidebar-right">
+            <!-- Rating Section -->
+            <div class="sidebar-card">
+                <div class="rating-section">
+                    <div class="rating-title">Avalie o Otimizador Gold</div>
+                    <div class="rating-stars" id="ratingStars">
+                        <span class="star" data-value="1">&#9733;</span>
+                        <span class="star" data-value="2">&#9733;</span>
+                        <span class="star" data-value="3">&#9733;</span>
+                        <span class="star" data-value="4">&#9733;</span>
+                        <span class="star" data-value="5">&#9733;</span>
+                    </div>
+                    <div class="rating-average" id="ratingAverage">
+                        <span class="rating-average-stars" id="avgStars"></span>
+                        <span class="rating-average-value" id="avgValue">-</span>
+                        <span class="rating-average-count" id="avgCount"></span>
+                    </div>
+                    <div class="rating-thanks" id="ratingThanks">Obrigado pela avaliação!</div>
+                </div>
+            </div>
+
+            <div class="sidebar-card comments-sidebar">
+                <h3 class="sidebar-title">
+                    <span class="sidebar-title-icon">#</span>
+                    Comentários
+                    <span id="commentsCount" class="comments-count"></span>
+                </h3>
+
+                <!-- Auth Bar -->
+                <div class="auth-bar">
+                    <div id="authStatus">
+                        <span style="color: var(--text-muted); font-size: 0.75rem;">Entre para comentar</span>
+                    </div>
+                    <button id="googleLoginBtn" class="google-login-btn">
+                        <svg viewBox="0 0 18 18">
+                            <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/>
+                            <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/>
+                            <path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z"/>
+                            <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/>
+                        </svg>
+                        Google
+                    </button>
+                </div>
+
+                <!-- Comment Form -->
+                <div class="comment-form">
+                    <textarea id="commentInput" placeholder="Deixe seu feedback..." disabled></textarea>
+                    <button id="submitCommentBtn" class="btn btn-primary btn-sm" style="width: 100%;" disabled>
+                        Enviar
+                    </button>
+                </div>
+
+                <!-- Comments List -->
+                <div id="commentsList" class="comments-list">
+                    <div class="loading-comments">Carregando...</div>
+                </div>
+            </div>
+        </aside>
     </div>
-    <div id="preview"></div>
-    <div id="totalInfo" style="text-align: center; font-size: 16px; color: #4B0082; margin-bottom: 10px;"></div>
-    <div id="blocks"></div>
-    <p id="thanks">O sonho é a coisa mais real que Existe! Gratidão</p>
 
-    <script>
-        const PAUSE_TIME = 0.9; // Tempo de pausa entre blocos (segundos)
+    <!-- Footer -->
+    <footer class="footer">
+        <p class="footer-quote">"O sonho é a coisa mais real que existe!"</p>
+        <p class="footer-brand">
+            Feito por <a href="https://nardoto.com.br" target="_blank">Nardoto</a>
+        </p>
+    </footer>
 
-        document.getElementById('speed').addEventListener('input', function() {
-            document.getElementById('speedValue').innerText = this.value + 'x';
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, signInWithPopup, signOut, onAuthStateChanged, GoogleAuthProvider } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, where, serverTimestamp, limit, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBQPGu8l-JQqjHRubcAcYeUK7aIgH7vPIE",
+            authDomain: "nardoto-labs.web.app",
+            projectId: "tradutor-profissional-ai",
+            storageBucket: "tradutor-profissional-ai.firebasestorage.app",
+            messagingSenderId: "943297790089",
+            appId: "1:943297790089:web:75c2fa533bbe1310d2c658"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const provider = new GoogleAuthProvider();
+
+        const authStatus = document.getElementById('authStatus');
+        const googleLoginBtn = document.getElementById('googleLoginBtn');
+        const commentInput = document.getElementById('commentInput');
+        const submitCommentBtn = document.getElementById('submitCommentBtn');
+        const commentsList = document.getElementById('commentsList');
+        const commentsCount = document.getElementById('commentsCount');
+        const ratingStars = document.getElementById('ratingStars');
+        const avgStars = document.getElementById('avgStars');
+        const avgValue = document.getElementById('avgValue');
+        const avgCount = document.getElementById('avgCount');
+        const ratingThanks = document.getElementById('ratingThanks');
+
+        let currentUser = null;
+        let userRating = 0;
+
+        onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            if (user) {
+                authStatus.innerHTML = `
+                    <div class="user-info">
+                        <img src="${user.photoURL || ''}" alt="" class="user-photo" onerror="this.style.display='none'">
+                        <span class="user-name">${(user.displayName || 'Usuário').split(' ')[0]}</span>
+                    </div>
+                `;
+                googleLoginBtn.textContent = 'Sair';
+                googleLoginBtn.onclick = handleLogout;
+                commentInput.disabled = false;
+                submitCommentBtn.disabled = false;
+                commentInput.placeholder = 'Deixe seu feedback...';
+            } else {
+                authStatus.innerHTML = '<span style="color: var(--text-muted); font-size: 0.75rem;">Entre para comentar</span>';
+                googleLoginBtn.innerHTML = `
+                    <svg viewBox="0 0 18 18">
+                        <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/>
+                        <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/>
+                        <path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z"/>
+                        <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/>
+                    </svg>
+                    Google
+                `;
+                googleLoginBtn.onclick = handleLogin;
+                commentInput.disabled = true;
+                submitCommentBtn.disabled = true;
+                commentInput.placeholder = 'Faca login para comentar...';
+            }
         });
 
-        document.getElementById('readingRate').addEventListener('input', function() {
-            document.getElementById('readingRateValue').innerText = this.value + ' c/s';
-        });
-
-        function copyToClipboard(text, button) {
-            const tempTextArea = document.createElement('textarea');
-            tempTextArea.value = text;
-            document.body.appendChild(tempTextArea);
-            tempTextArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempTextArea);
-            if (button) {
-                button.classList.add('copied');
-                button.textContent = 'Copiado!';
+        async function handleLogin() {
+            try {
+                await signInWithPopup(auth, provider);
+            } catch (error) {
+                if (error.code !== 'auth/popup-closed-by-user') {
+                    alert('Erro ao fazer login: ' + error.message);
+                }
             }
         }
 
-        function exportToSrt() {
-            const speed = parseFloat(document.getElementById('speed').value);
-            const blocks = document.querySelectorAll('.block .srt');
-            let srtContent = '';
-            blocks.forEach((block, index) => {
-                const startTime = adjustTimestamp(block.dataset.startTime, speed);
-                const endTime = adjustTimestamp(block.dataset.endTime, speed);
-                srtContent += `${index + 1}\n${startTime} --> ${endTime}\n${block.innerText.trim()}\n\n`;
+        async function handleLogout() {
+            try {
+                await signOut(auth);
+            } catch (error) {
+                console.error('Erro no logout:', error);
+            }
+        }
+
+        submitCommentBtn.addEventListener('click', async () => {
+            if (!currentUser) return;
+            const text = commentInput.value.trim();
+            if (!text) return;
+
+            try {
+                submitCommentBtn.disabled = true;
+                submitCommentBtn.textContent = 'Enviando...';
+
+                await addDoc(collection(db, 'otimizador-gold-comments'), {
+                    text: text,
+                    authorId: currentUser.uid,
+                    authorName: currentUser.displayName || 'Usuário',
+                    authorPhoto: currentUser.photoURL || '',
+                    authorEmail: currentUser.email,
+                    createdAt: serverTimestamp()
+                });
+
+                commentInput.value = '';
+                await loadComments();
+                submitCommentBtn.disabled = false;
+                submitCommentBtn.innerHTML = 'Enviar';
+            } catch (error) {
+                alert('Erro ao enviar: ' + error.message);
+                submitCommentBtn.disabled = false;
+                submitCommentBtn.innerHTML = 'Enviar';
+            }
+        });
+
+        async function loadComments() {
+            try {
+                const q = query(collection(db, 'otimizador-gold-comments'), orderBy('createdAt', 'desc'), limit(100));
+                const snapshot = await getDocs(q);
+
+                if (snapshot.empty) {
+                    commentsList.innerHTML = '<div class="no-comments">Nenhum comentário ainda. Seja o primeiro!</div>';
+                    commentsCount.textContent = '';
+                    return;
+                }
+
+                // Organizar comentarios e respostas
+                const allComments = [];
+                snapshot.forEach((doc) => {
+                    allComments.push({ id: doc.id, ...doc.data() });
+                });
+
+                // Separar comentarios principais e respostas
+                const mainComments = allComments.filter(c => !c.parentId);
+                const replies = allComments.filter(c => c.parentId);
+
+                // Contar apenas comentarios principais
+                commentsCount.textContent = `(${mainComments.length})`;
+
+                let html = '';
+                mainComments.forEach((comment) => {
+                    html += renderComment(comment, replies);
+                });
+                commentsList.innerHTML = html;
+            } catch (error) {
+                commentsList.innerHTML = '<div class="no-comments">Erro ao carregar</div>';
+            }
+        }
+
+        function renderComment(comment, allReplies) {
+            const date = comment.createdAt ? formatDate(comment.createdAt.toDate()) : 'Agora';
+            const commentReplies = allReplies.filter(r => r.parentId === comment.id);
+
+            let html = `
+                <div class="comment-item" data-comment-id="${comment.id}">
+                    <div class="comment-header">
+                        ${comment.authorPhoto ? `<img src="${comment.authorPhoto}" alt="" class="comment-photo" onerror="this.style.display='none'">` : ''}
+                        <div class="comment-meta">
+                            <div class="comment-author">${escapeHtml(comment.authorName.split(' ')[0])}</div>
+                            <div class="comment-date">${date}</div>
+                        </div>
+                        <button class="comment-reply-btn" onclick="toggleReplyForm('${comment.id}')">Responder</button>
+                        ${currentUser && currentUser.uid === comment.authorId ? `<button class="comment-delete-btn" onclick="deleteComment('${comment.id}')">excluir</button>` : ''}
+                    </div>
+                    <div class="comment-text">${escapeHtml(comment.text)}</div>
+
+                    <!-- Reply Form -->
+                    <div class="reply-form" id="reply-form-${comment.id}">
+                        <textarea id="reply-input-${comment.id}" placeholder="Escreva sua resposta..."></textarea>
+                        <div class="reply-form-actions">
+                            <button class="btn btn-secondary btn-sm" onclick="cancelReply('${comment.id}')">Cancelar</button>
+                            <button class="btn btn-primary btn-sm" onclick="submitReply('${comment.id}')">Enviar</button>
+                        </div>
+                    </div>
+
+                    <!-- Replies -->
+                    ${commentReplies.length > 0 ? `<div class="comment-replies">${commentReplies.map(reply => renderReply(reply)).join('')}</div>` : ''}
+                </div>
+            `;
+            return html;
+        }
+
+        function renderReply(reply) {
+            const date = reply.createdAt ? formatDate(reply.createdAt.toDate()) : 'Agora';
+            return `
+                <div class="comment-item">
+                    <div class="comment-header">
+                        ${reply.authorPhoto ? `<img src="${reply.authorPhoto}" alt="" class="comment-photo" onerror="this.style.display='none'">` : ''}
+                        <div class="comment-meta">
+                            <div class="comment-author">${escapeHtml(reply.authorName.split(' ')[0])}</div>
+                            <div class="comment-date">${date}</div>
+                        </div>
+                        ${currentUser && currentUser.uid === reply.authorId ? `<button class="comment-delete-btn" onclick="deleteComment('${reply.id}')">excluir</button>` : ''}
+                    </div>
+                    <div class="comment-text">${escapeHtml(reply.text)}</div>
+                </div>
+            `;
+        }
+
+        window.toggleReplyForm = function(commentId) {
+            const form = document.getElementById(`reply-form-${commentId}`);
+            const input = document.getElementById(`reply-input-${commentId}`);
+
+            // Fechar outros forms abertos
+            document.querySelectorAll('.reply-form.show').forEach(f => {
+                if (f.id !== `reply-form-${commentId}`) {
+                    f.classList.remove('show');
+                }
             });
-            downloadSrtFile(srtContent.trim());
+
+            form.classList.toggle('show');
+            if (form.classList.contains('show')) {
+                input.focus();
+            }
+        };
+
+        window.cancelReply = function(commentId) {
+            const form = document.getElementById(`reply-form-${commentId}`);
+            const input = document.getElementById(`reply-input-${commentId}`);
+            form.classList.remove('show');
+            input.value = '';
+        };
+
+        window.submitReply = async function(commentId) {
+            if (!currentUser) {
+                alert('Faca login para responder!');
+                return;
+            }
+
+            const input = document.getElementById(`reply-input-${commentId}`);
+            const text = input.value.trim();
+
+            if (!text) return;
+
+            try {
+                await addDoc(collection(db, 'otimizador-gold-comments'), {
+                    text: text,
+                    parentId: commentId,
+                    authorId: currentUser.uid,
+                    authorName: currentUser.displayName || 'Usuario',
+                    authorPhoto: currentUser.photoURL || '',
+                    authorEmail: currentUser.email,
+                    createdAt: serverTimestamp()
+                });
+
+                input.value = '';
+                cancelReply(commentId);
+                await loadComments();
+            } catch (error) {
+                alert('Erro ao enviar resposta: ' + error.message);
+            }
+        };
+
+        function formatDate(date) {
+            const now = new Date();
+            const diff = now - date;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+            if (minutes < 1) return 'Agora';
+            if (minutes < 60) return `${minutes}min`;
+            if (hours < 24) return `${hours}h`;
+            if (days < 7) return `${days}d`;
+            return date.toLocaleDateString('pt-BR');
         }
 
-        function adjustTimestamp(timestamp, speed) {
-            if (!timestamp) return '00:00:00,000'; // Evita erro se timestamp for indefinido
-
-            const parts = timestamp.split(':');
-            const hours = parseInt(parts[0]);
-            const minutes = parseInt(parts[1]);
-            const secondsParts = parts[2].split(',');
-            const seconds = parseInt(secondsParts[0]);
-            const milliseconds = parseInt(secondsParts[1]);
-
-            let totalMilliseconds = ((hours * 3600 + minutes * 60 + seconds) * 1000 + milliseconds) * speed;
-
-            const newHours = Math.floor(totalMilliseconds / 3600000);
-            totalMilliseconds %= 3600000;
-            const newMinutes = Math.floor(totalMilliseconds / 60000);
-            totalMilliseconds %= 60000;
-            const newSeconds = Math.floor(totalMilliseconds / 1000);
-            const newMilliseconds = totalMilliseconds % 1000;
-
-            return `${String(newHours).padStart(2, '0')}:${String(newMinutes).padStart(2, '0')}:${String(newSeconds).padStart(2, '0')},${String(newMilliseconds).padStart(3, '0')}`;
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
         }
 
-        function downloadSrtFile(content) {
-            const fileName = document.getElementById('fileName').value || 'subtitles';
-            const blob = new Blob([content], { type: 'text/srt' });
+        // Delete comment function
+        window.deleteComment = async function(commentId) {
+            if (!currentUser) return;
+            if (!confirm('Tem certeza que deseja apagar este comentário?')) return;
+
+            try {
+                await deleteDoc(doc(db, 'otimizador-gold-comments', commentId));
+                await loadComments();
+            } catch (error) {
+                alert('Erro ao apagar: ' + error.message);
+            }
+        };
+
+        // Rating System
+        const stars = ratingStars.querySelectorAll('.star');
+
+        stars.forEach(star => {
+            star.addEventListener('mouseenter', () => {
+                const value = parseInt(star.dataset.value);
+                updateStarsDisplay(value, true);
+            });
+
+            star.addEventListener('mouseleave', () => {
+                updateStarsDisplay(userRating, false);
+            });
+
+            star.addEventListener('click', async () => {
+                if (!currentUser) {
+                    alert('Faca login para avaliar!');
+                    return;
+                }
+                const value = parseInt(star.dataset.value);
+                userRating = value;
+                updateStarsDisplay(value, false);
+                await submitRating(value);
+            });
+        });
+
+        function updateStarsDisplay(value, isHover) {
+            stars.forEach(star => {
+                const starValue = parseInt(star.dataset.value);
+                star.classList.remove('active', 'hovered');
+                if (starValue <= value) {
+                    star.classList.add(isHover ? 'hovered' : 'active');
+                }
+            });
+        }
+
+        async function submitRating(value) {
+            try {
+                const ratingRef = doc(db, 'otimizador-gold-ratings', currentUser.uid);
+                await setDoc(ratingRef, {
+                    rating: value,
+                    userId: currentUser.uid,
+                    userName: currentUser.displayName || 'Usuário',
+                    userEmail: currentUser.email,
+                    updatedAt: serverTimestamp()
+                });
+                ratingThanks.classList.add('show');
+                setTimeout(() => ratingThanks.classList.remove('show'), 3000);
+                await loadRatings();
+            } catch (error) {
+                alert('Erro ao avaliar: ' + error.message);
+            }
+        }
+
+        async function loadRatings() {
+            try {
+                const ratingsQuery = query(collection(db, 'otimizador-gold-ratings'));
+                const snapshot = await getDocs(ratingsQuery);
+
+                if (snapshot.empty) {
+                    avgValue.textContent = '-';
+                    avgCount.textContent = '';
+                    avgStars.textContent = '';
+                    return;
+                }
+
+                let total = 0;
+                let count = 0;
+                snapshot.forEach(doc => {
+                    total += doc.data().rating;
+                    count++;
+                    // Check if current user has rated
+                    if (currentUser && doc.id === currentUser.uid) {
+                        userRating = doc.data().rating;
+                        updateStarsDisplay(userRating, false);
+                    }
+                });
+
+                const average = (total / count).toFixed(1);
+                avgValue.textContent = average;
+                avgCount.textContent = `(${count} ${count === 1 ? 'voto' : 'votos'})`;
+                avgStars.textContent = '★'.repeat(Math.round(average));
+            } catch (error) {
+                console.error('Erro ao carregar avaliações:', error);
+            }
+        }
+
+        async function loadUserRating() {
+            if (!currentUser) return;
+            try {
+                const ratingRef = doc(db, 'otimizador-gold-ratings', currentUser.uid);
+                const ratingDoc = await getDoc(ratingRef);
+                if (ratingDoc.exists()) {
+                    userRating = ratingDoc.data().rating;
+                    updateStarsDisplay(userRating, false);
+                }
+            } catch (error) {
+                console.error('Erro ao carregar avaliação do usuário:', error);
+            }
+        }
+
+        loadComments();
+        loadRatings();
+    </script>
+
+    <!-- Main App Script -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const ABBREVIATIONS = {
+            en: ['mr', 'mrs', 'ms', 'dr', 'prof', 'sr', 'jr', 'vs', 'etc', 'al', 'eg', 'ie', 'inc', 'ltd', 'co', 'corp', 'dept', 'est', 'vol', 'rev', 'ed', 'pp', 'approx', 'govt', 'intl', 'natl', 'jan', 'feb', 'mar', 'apr', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec', 'fig', 'ref', 'sec', 'ch', 'pg'],
+            pt: ['sr', 'sra', 'srta', 'dr', 'dra', 'prof', 'profa', 'eng', 'adv', 'av', 'etc', 'ex', 'obs', 'vol', 'cap', 'ed', 'num', 'tel', 'cel', 'ltda', 'cia', 'gov', 'min', 'sec', 'dep', 'jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez', 'fig', 'tab', 'ref', 'art'],
+            es: ['sr', 'sra', 'srta', 'dr', 'dra', 'prof', 'profa', 'ing', 'lic', 'arq', 'etc', 'ej', 'vol', 'cap', 'ed', 'tel', 'cel', 'gov', 'min', 'sec', 'dip', 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic', 'fig', 'tab', 'ref', 'art']
+        };
+
+        const ALL_ABBREVIATIONS = new Set([...ABBREVIATIONS.en, ...ABBREVIATIONS.pt, ...ABBREVIATIONS.es].map(a => a.toLowerCase().replace(/\./g, '')));
+
+        // PAUSE_TIME agora é lido do input #pauseTime
+        const TOLERANCE_PERCENT = 0.15;
+        const MIN_BLOCK_PERCENT = 0.5;
+
+        let currentDivisionMode = null;
+
+        const toggleOptionsBtn = document.getElementById('toggleOptionsBtn');
+        const optionsPanel = document.getElementById('optionsPanel');
+        const textInput = document.getElementById('textInput');
+        const fileNameInput = document.getElementById('fileName');
+        const charCountInput = document.getElementById('charCount');
+        const wordCountInput = document.getElementById('wordCount');
+        const readingRateInput = document.getElementById('readingRate');
+        const filterNumbersCheckbox = document.getElementById('filterNumbers');
+        const clearAfterExportCheckbox = document.getElementById('clearAfterExport');
+        const ignoreTextInput = document.getElementById('ignoreText');
+        const pauseTimeInput = document.getElementById('pauseTime');
+        const blocksDiv = document.getElementById('blocks');
+        const exportSrtBtn = document.getElementById('exportSrtBtn');
+        const exportTxtBtn = document.getElementById('exportTxtBtn');
+        const exportPdfBtn = document.getElementById('exportPdfBtn');
+        const charDivisionRow = document.getElementById('charDivisionRow');
+        const wordDivisionRow = document.getElementById('wordDivisionRow');
+
+        toggleOptionsBtn.addEventListener('click', () => {
+            optionsPanel.classList.toggle('show');
+            toggleOptionsBtn.classList.toggle('active');
+        });
+
+        document.getElementById('divideByCharsBtn').addEventListener('click', () => {
+            divideTextByChars();
+            setDivisionMode('chars');
+        });
+
+        document.getElementById('divideByWordsBtn').addEventListener('click', () => {
+            divideTextByWords();
+            setDivisionMode('words');
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', resetForm);
+        exportSrtBtn.addEventListener('click', exportToSrt);
+        exportTxtBtn.addEventListener('click', exportToTxt);
+        exportPdfBtn.addEventListener('click', exportToPdf);
+        document.getElementById('addBlockBtn').addEventListener('click', () => createBlock(''));
+
+        document.getElementById('mergeSrtsBtn').addEventListener('click', mergeSrtFiles);
+        document.getElementById('cancelMergeBtn').addEventListener('click', () => {
+            document.getElementById('srtFiles').value = '';
+            document.getElementById('mergeStatus').textContent = '';
+        });
+
+        function setDivisionMode(mode) {
+            currentDivisionMode = mode;
+            charDivisionRow.classList.toggle('active', mode === 'chars');
+            wordDivisionRow.classList.toggle('active', mode === 'words');
+            exportSrtBtn.disabled = false;
+            exportTxtBtn.disabled = false;
+            exportPdfBtn.disabled = false;
+        }
+
+        function formatText(text) {
+            return text
+                .replace(/["«»""]/g, "'")
+                .replace(/['']/g, "'")
+                .replace(/[—–]/g, " - ")
+                .replace(/\.{3,}/g, "...")
+                .replace(/…/g, "...")
+                .replace(/\n/g, " ")
+                .replace(/\s+([.,!?;:])/g, "$1")
+                .replace(/([.,!?;:])([a-zA-ZáàâãéèêíìîóòôõúùûñçÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÑÇ])/g, "$1 $2")
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+
+        function isAbbreviation(word) {
+            if (!word) return false;
+            const cleaned = word.toLowerCase().replace(/[.,!?;:]+$/, '').replace(/\./g, '');
+            return ALL_ABBREVIATIONS.has(cleaned);
+        }
+
+        function splitIntoSentences(text) {
+            const sentences = [];
+            let currentSentence = '';
+            let i = 0;
+
+            while (i < text.length) {
+                const char = text[i];
+                currentSentence += char;
+
+                if (/[.!?]/.test(char)) {
+                    let j = i + 1;
+                    while (j < text.length && /[.!?]/.test(text[j])) {
+                        currentSentence += text[j];
+                        j++;
+                    }
+
+                    let whitespace = '';
+                    while (j < text.length && /\s/.test(text[j])) {
+                        whitespace += text[j];
+                        j++;
+                    }
+
+                    const wordsBefore = currentSentence.trim().split(/\s+/);
+                    const lastWord = wordsBefore[wordsBefore.length - 1];
+                    const nextChar = text[j];
+
+                    const isRealBreak = !isAbbreviation(lastWord) &&
+                                        !(nextChar && /[a-záàâãéèêíìîóòôõúùûñç\d]/.test(nextChar)) &&
+                                        whitespace.length > 0;
+
+                    if (isRealBreak && currentSentence.trim().length > 0) {
+                        sentences.push(currentSentence.trim());
+                        currentSentence = '';
+                        i = j - 1;
+                    }
+                }
+                i++;
+            }
+
+            if (currentSentence.trim()) {
+                sentences.push(currentSentence.trim());
+            }
+
+            return sentences.length > 0 ? sentences : [text];
+        }
+
+        function findBestCutPoint(text, maxLength) {
+            const maxWithTolerance = Math.floor(maxLength * (1 + TOLERANCE_PERCENT));
+            const cutCandidates = [];
+
+            let match;
+            const sentenceEndRegex = /[.!?]+\s+/g;
+            while ((match = sentenceEndRegex.exec(text)) !== null) {
+                const pos = match.index + match[0].length;
+                if (pos <= maxWithTolerance) cutCandidates.push({ pos, priority: 1 });
+            }
+
+            const clauseRegex = /[;:]\s+/g;
+            while ((match = clauseRegex.exec(text)) !== null) {
+                const pos = match.index + match[0].length;
+                if (pos <= maxWithTolerance) cutCandidates.push({ pos, priority: 2 });
+            }
+
+            const commaRegex = /,\s+/g;
+            while ((match = commaRegex.exec(text)) !== null) {
+                const pos = match.index + match[0].length;
+                if (pos <= maxWithTolerance) cutCandidates.push({ pos, priority: 3 });
+            }
+
+            const spaceRegex = /\s+/g;
+            while ((match = spaceRegex.exec(text)) !== null) {
+                const pos = match.index + match[0].length;
+                if (pos <= maxWithTolerance) cutCandidates.push({ pos, priority: 4 });
+            }
+
+            if (cutCandidates.length === 0) return { pos: maxLength };
+
+            cutCandidates.sort((a, b) => {
+                if (a.priority === b.priority) return Math.abs(maxLength - a.pos) - Math.abs(maxLength - b.pos);
+                return a.priority - b.priority;
+            });
+
+            const bestPriority = cutCandidates[0].priority;
+            const bestCandidates = cutCandidates.filter(c => c.priority === bestPriority);
+
+            let bestCandidate = bestCandidates[0];
+            for (const candidate of bestCandidates) {
+                if (candidate.pos >= maxLength * 0.7 && candidate.pos <= maxWithTolerance) {
+                    if (candidate.pos > bestCandidate.pos) bestCandidate = candidate;
+                }
+            }
+
+            return bestCandidate;
+        }
+
+        function splitLongSentence(sentence, maxLength) {
+            const parts = [];
+            let remaining = sentence;
+
+            while (remaining.length > maxLength) {
+                const cutPoint = findBestCutPoint(remaining, maxLength);
+                if (cutPoint.pos <= 0 || cutPoint.pos >= remaining.length) {
+                    parts.push(remaining.substring(0, maxLength).trim());
+                    remaining = remaining.substring(maxLength).trim();
+                } else {
+                    parts.push(remaining.substring(0, cutPoint.pos).trim());
+                    remaining = remaining.substring(cutPoint.pos).trim();
+                }
+            }
+
+            if (remaining.trim()) parts.push(remaining.trim());
+            return parts;
+        }
+
+        function getTextBlocksWithCustomLength(text, maxLength) {
+            const blocks = [];
+            let currentBlock = "";
+            const maxWithTolerance = Math.floor(maxLength * (1 + TOLERANCE_PERCENT));
+            const minBlockLength = Math.floor(maxLength * MIN_BLOCK_PERCENT);
+
+            const formattedText = formatText(text);
+            const sentences = splitIntoSentences(formattedText);
+
+            const flushCurrentBlock = () => {
+                if (currentBlock.trim()) {
+                    blocks.push(currentBlock.trim());
+                    currentBlock = "";
+                }
+            };
+
+            for (const sentence of sentences) {
+                const trimmedSentence = sentence.trim();
+                if (!trimmedSentence) continue;
+
+                if (trimmedSentence.length > maxWithTolerance) {
+                    flushCurrentBlock();
+                    const splitParts = splitLongSentence(trimmedSentence, maxLength);
+                    for (let i = 0; i < splitParts.length - 1; i++) blocks.push(splitParts[i]);
+                    currentBlock = splitParts[splitParts.length - 1] + " ";
+                    continue;
+                }
+
+                const potentialBlock = currentBlock + trimmedSentence;
+
+                if (potentialBlock.length > maxLength) {
+                    if (currentBlock.trim().length >= minBlockLength) {
+                        flushCurrentBlock();
+                        currentBlock = trimmedSentence + " ";
+                    } else {
+                        if (potentialBlock.length <= maxWithTolerance) {
+                            currentBlock = potentialBlock + " ";
+                            flushCurrentBlock();
+                        } else {
+                            flushCurrentBlock();
+                            currentBlock = trimmedSentence + " ";
+                        }
+                    }
+                } else {
+                    currentBlock += trimmedSentence + " ";
+                    if (currentBlock.length >= maxLength) flushCurrentBlock();
+                }
+            }
+
+            flushCurrentBlock();
+            return blocks.filter(b => b.length > 0);
+        }
+
+        function getTextBlocksByWords(text, wordsPerBlock) {
+            const blocks = [];
+            let currentWords = [];
+            let currentCount = 0;
+            const maxWithTolerance = Math.floor(wordsPerBlock * (1 + TOLERANCE_PERCENT));
+            const minBlockWords = Math.floor(wordsPerBlock * MIN_BLOCK_PERCENT);
+
+            const formattedText = formatText(text);
+            const sentences = splitIntoSentences(formattedText);
+
+            const flushCurrent = () => {
+                if (currentWords.length > 0) {
+                    blocks.push(currentWords.join(' ').trim());
+                    currentWords = [];
+                    currentCount = 0;
+                }
+            };
+
+            for (const sentence of sentences) {
+                const tokens = sentence.trim().split(/\s+/).filter(Boolean);
+                if (tokens.length === 0) continue;
+
+                const sentenceWordCount = tokens.length;
+
+                if (currentCount + sentenceWordCount <= maxWithTolerance) {
+                    currentWords.push(...tokens);
+                    currentCount += sentenceWordCount;
+                    if (currentCount >= wordsPerBlock) flushCurrent();
+                } else {
+                    if (currentCount >= minBlockWords) flushCurrent();
+
+                    if (sentenceWordCount <= maxWithTolerance) {
+                        currentWords.push(...tokens);
+                        currentCount = sentenceWordCount;
+                        if (currentCount >= wordsPerBlock) flushCurrent();
+                    } else {
+                        const sentenceText = tokens.join(' ');
+                        const avgCharsPerWord = sentenceText.length / sentenceWordCount;
+                        const targetChars = Math.floor(wordsPerBlock * avgCharsPerWord);
+                        const parts = splitLongSentence(sentenceText, targetChars);
+
+                        for (const part of parts) {
+                            const partTokens = part.split(/\s+/).filter(Boolean);
+                            if (currentCount + partTokens.length <= maxWithTolerance) {
+                                currentWords.push(...partTokens);
+                                currentCount += partTokens.length;
+                            } else {
+                                if (currentCount >= minBlockWords) flushCurrent();
+                                currentWords.push(...partTokens);
+                                currentCount = partTokens.length;
+                            }
+                            if (currentCount >= wordsPerBlock) flushCurrent();
+                        }
+                    }
+                }
+            }
+
+            flushCurrent();
+            return blocks.filter(b => b.length > 0);
+        }
+
+        function applyFilters(text) {
+            const ignored = ignoreTextInput.value.trim();
+            if (ignored) {
+                const regex = new RegExp(ignored.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+                text = text.replace(regex, '');
+            }
+            if (filterNumbersCheckbox.checked) text = text.replace(/\d+/g, '');
+            return text;
+        }
+
+        function divideTextByChars() {
+            const charCount = parseInt(charCountInput.value, 10);
+            if (isNaN(charCount) || charCount <= 0) {
+                showError("Insira um número válido de caracteres.");
+                return;
+            }
+            let text = applyFilters(textInput.value);
+            const blocks = getTextBlocksWithCustomLength(text, charCount);
+            renderBlocks(blocks, text);
+        }
+
+        function divideTextByWords() {
+            const wordCount = parseInt(wordCountInput.value, 10);
+            if (isNaN(wordCount) || wordCount <= 0) {
+                showError("Insira um número válido de palavras.");
+                return;
+            }
+            let text = applyFilters(textInput.value);
+            const blocks = getTextBlocksByWords(text, wordCount);
+            renderBlocks(blocks, text);
+        }
+
+        function renderBlocks(blocks, originalText) {
+            blocksDiv.innerHTML = '';
+            const totalChars = originalText.length;
+            const totalWords = originalText.split(/\s+/).filter(w => w.length > 0).length;
+            const readingRate = parseInt(readingRateInput.value, 10);
+            const pauseTime = parseFloat(pauseTimeInput.value) || 0;
+
+            let totalDuration = 0;
+            blocks.forEach((block, index) => {
+                totalDuration += block.length / readingRate + pauseTime;
+                createBlock(block, index + 1);
+            });
+
+            document.getElementById('totalChars').textContent = totalChars.toLocaleString();
+            document.getElementById('totalWords').textContent = totalWords.toLocaleString();
+            document.getElementById('totalBlocks').textContent = blocks.length;
+
+            const minutes = Math.floor(totalDuration / 60);
+            const seconds = Math.floor(totalDuration % 60);
+            document.getElementById('totalDuration').textContent = `${minutes}:${String(seconds).padStart(2, '0')}`;
+
+            document.getElementById('statsCard').style.display = 'block';
+            document.getElementById('blocksCard').style.display = 'block';
+            document.getElementById('statsCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function createBlock(content, number = null) {
+            const blockDiv = document.createElement('div');
+            blockDiv.classList.add('block');
+
+            const blockNum = number || (blocksDiv.children.length + 1);
+            const charCount = content.length;
+            const wordCount = content.split(/\s+/).filter(w => w.length > 0).length;
+
+            blockDiv.innerHTML = `
+                <div class="block-header">
+                    <span class="block-title">Bloco ${blockNum}</span>
+                    <div class="block-meta">
+                        <span class="char-count">${charCount} chars</span>
+                        <span class="word-count">${wordCount} palavras</span>
+                    </div>
+                    <div class="block-controls">
+                        <button class="btn btn-secondary btn-block btn-copy" title="Copiar">C</button>
+                        <button class="btn btn-secondary btn-block btn-add" title="Adicionar">+</button>
+                        <button class="btn btn-danger btn-block btn-delete" title="Excluir">X</button>
+                    </div>
+                </div>
+                <div class="block-content" contenteditable="true">${content}</div>
+            `;
+
+            const contentDiv = blockDiv.querySelector('.block-content');
+            contentDiv.addEventListener('input', () => {
+                const text = contentDiv.innerText;
+                blockDiv.querySelector('.char-count').textContent = `${text.length} chars`;
+                blockDiv.querySelector('.word-count').textContent = `${text.split(/\s+/).filter(Boolean).length} palavras`;
+                contentDiv.classList.add('edited');
+            });
+
+            blockDiv.querySelector('.btn-copy').addEventListener('click', () => {
+                navigator.clipboard.writeText(contentDiv.innerText);
+                const btn = blockDiv.querySelector('.btn-copy');
+                btn.innerHTML = 'OK';
+                setTimeout(() => { btn.innerHTML = 'C'; }, 1500);
+            });
+
+            blockDiv.querySelector('.btn-add').addEventListener('click', () => {
+                const newBlock = document.createElement('div');
+                createBlockElement(newBlock, '');
+                blockDiv.after(newBlock);
+                updateBlockNumbers();
+            });
+
+            blockDiv.querySelector('.btn-delete').addEventListener('click', () => {
+                blockDiv.remove();
+                updateBlockNumbers();
+            });
+
+            blocksDiv.appendChild(blockDiv);
+        }
+
+        function createBlockElement(container, content) {
+            container.classList.add('block');
+            const blockNum = blocksDiv.children.length + 1;
+
+            container.innerHTML = `
+                <div class="block-header">
+                    <span class="block-title">Bloco ${blockNum}</span>
+                    <div class="block-meta">
+                        <span class="char-count">0 chars</span>
+                        <span class="word-count">0 palavras</span>
+                    </div>
+                    <div class="block-controls">
+                        <button class="btn btn-secondary btn-block btn-copy" title="Copiar">C</button>
+                        <button class="btn btn-secondary btn-block btn-add" title="Adicionar">+</button>
+                        <button class="btn btn-danger btn-block btn-delete" title="Excluir">X</button>
+                    </div>
+                </div>
+                <div class="block-content" contenteditable="true">${content}</div>
+            `;
+
+            const contentDiv = container.querySelector('.block-content');
+            contentDiv.addEventListener('input', () => {
+                const text = contentDiv.innerText;
+                container.querySelector('.char-count').textContent = `${text.length} chars`;
+                container.querySelector('.word-count').textContent = `${text.split(/\s+/).filter(Boolean).length} palavras`;
+            });
+
+            container.querySelector('.btn-copy').addEventListener('click', () => {
+                navigator.clipboard.writeText(contentDiv.innerText);
+            });
+
+            container.querySelector('.btn-add').addEventListener('click', () => {
+                const newBlock = document.createElement('div');
+                createBlockElement(newBlock, '');
+                container.after(newBlock);
+                updateBlockNumbers();
+            });
+
+            container.querySelector('.btn-delete').addEventListener('click', () => {
+                container.remove();
+                updateBlockNumbers();
+            });
+        }
+
+        function updateBlockNumbers() {
+            const blocks = blocksDiv.querySelectorAll('.block');
+            blocks.forEach((block, index) => {
+                block.querySelector('.block-title').textContent = `Bloco ${index + 1}`;
+            });
+            document.getElementById('totalBlocks').textContent = blocks.length;
+        }
+
+        function showError(message) {
+            const existingError = document.querySelector('.error');
+            if (existingError) existingError.remove();
+            const errorDiv = document.createElement('div');
+            errorDiv.classList.add('error');
+            errorDiv.textContent = message;
+            document.querySelector('.main-content').prepend(errorDiv);
+            setTimeout(() => errorDiv.remove(), 4000);
+        }
+
+        function resetForm() {
+            textInput.value = '';
+            fileNameInput.value = '';
+            charCountInput.value = '490';
+            wordCountInput.value = '50';
+            readingRateInput.value = '10';
+            ignoreTextInput.value = '';
+            filterNumbersCheckbox.checked = false;
+            clearAfterExportCheckbox.checked = false;
+            blocksDiv.innerHTML = '';
+            document.getElementById('statsCard').style.display = 'none';
+            document.getElementById('blocksCard').style.display = 'none';
+            currentDivisionMode = null;
+            charDivisionRow.classList.remove('active');
+            wordDivisionRow.classList.remove('active');
+            exportSrtBtn.disabled = true;
+            exportTxtBtn.disabled = true;
+            exportPdfBtn.disabled = true;
+        }
+
+        function formatTimestamp(totalSeconds) {
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = Math.floor(totalSeconds % 60);
+            const milliseconds = Math.round((totalSeconds - Math.floor(totalSeconds)) * 1000);
+            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')},${String(milliseconds).padStart(3, '0')}`;
+        }
+
+        function exportToSrt() {
+            const readingRate = parseInt(readingRateInput.value, 10);
+            const pauseTime = parseFloat(pauseTimeInput.value) || 0;
+            const blocks = blocksDiv.querySelectorAll('.block-content');
+            let srtContent = '';
+            let currentTime = 0;
+
+            blocks.forEach((block, index) => {
+                const text = block.innerText.trim();
+                if (!text) return;
+                const duration = text.length / readingRate;
+                const startTime = formatTimestamp(currentTime);
+                const endTime = formatTimestamp(currentTime + duration);
+                srtContent += `${index + 1}\n${startTime} --> ${endTime}\n${text}\n\n`;
+                currentTime += duration + pauseTime;
+            });
+
+            const fileName = fileNameInput.value || 'subtitles';
+            const blob = new Blob([srtContent.trim()], { type: 'text/srt' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -401,181 +2593,67 @@
             URL.revokeObjectURL(url);
         }
 
-        function createBlock(type, content, startTime, endTime) {
-            const blockDiv = document.createElement('div');
-            blockDiv.classList.add('block');
-            blockDiv.innerHTML = `
-                <div class="info">
-                    <span>${type}</span>
-                    <span>${content.length} caracteres, ${content.split(/\s+/).length} palavras</span>
-                </div>
-                <div class="srt" data-start-time="${formatTimestamp(startTime)}" data-end-time="${formatTimestamp(endTime)}">
-                    ${content}
-                </div>
-            `;
-            document.getElementById('blocks').appendChild(blockDiv);
-        }
-
-        function divideTextByChars() {
-            if (!validateCharCount()) return;
-            const charCount = document.getElementById('charCount').value;
-            const text = document.getElementById('textInput').value;
-
-            // Calcular total de caracteres e palavras
-            const totalChars = text.length;
-            const totalWords = text.split(/\s+/).filter(word => word.length > 0).length;
-
-            // Exibir total de caracteres e palavras
-            document.getElementById('totalInfo').textContent = `Total de caracteres: ${totalChars} | Total de palavras: ${totalWords}`;
-
-            const blocks = getTextBlocksWithCustomLength(text, parseInt(charCount));
-            document.getElementById('blocks').innerHTML = '';
-            let currentTime = 0;
-            const readingRate = parseInt(document.getElementById('readingRate').value); // Obtém o valor atual do slider
+        function exportToTxt() {
+            const blocks = blocksDiv.querySelectorAll('.block-content');
+            let txtContent = '';
             blocks.forEach((block, index) => {
-                const duration = block.length / readingRate;
-                const startTime = currentTime;
-                const endTime = currentTime + duration;
-                createBlock(`Bloco ${index + 1}`, block, startTime, endTime);
-                currentTime = endTime + PAUSE_TIME; // adiciona a pausa entre blocos
+                const text = block.innerText.trim();
+                if (text) txtContent += `Bloco ${index + 1}:\n${text}\n\n`;
             });
 
-            // Atualiza a pré-visualização
-            updatePreview(blocks);
-        }
+            const fileName = fileNameInput.value || 'documento';
+            const blob = new Blob([txtContent.trim()], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${fileName}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
 
-        function resetForm() {
-            document.getElementById('charCount').value = '490';
-            document.getElementById('textInput').value = '';
-            document.getElementById('blocks').innerHTML = '';
-            document.getElementById('totalInfo').textContent = '';
-            document.getElementById('preview').innerHTML = '';
-        }
-
-        function validateCharCount() {
-            const charCount = document.getElementById('charCount').value;
-            if (isNaN(charCount) || charCount <= 0) {
-                showError("Por favor, insira um número válido de caracteres.");
-                return false;
+            if (clearAfterExportCheckbox.checked) {
+                resetForm();
             }
-            return true;
-        }
-
-        function showError(message) {
-            const errorDiv = document.createElement('div');
-            errorDiv.classList.add('error');
-            errorDiv.textContent = message;
-            document.body.prepend(errorDiv);
-            setTimeout(() => errorDiv.remove(), 3000);
-        }
-
-        function getTextBlocksWithCustomLength(text, maxLength) {
-            text = formatText(text);
-            return splitTextIntoBlocks(text, maxLength);
-        }
-
-        function formatText(text) {
-            text = text.replace(/\"/g, "'");
-            text = text.replace(/«/g, "'").replace(/»/g, "'");
-            text = text.replace(/\n/g, " ");
-            text = text.replace(/([a-zA-Z])([.,!?;:])/g, "$1 $2");
-            text = text.replace(/([.,!?;:])([a-zA-Z])/g, "$1 $2");
-            text = text.replace(/([.,!?;:])([.,!?;:])/g, "$1 $2").replace(/([.,!?;:])\s([.,!?;:])/g, "$1$2");
-            text = text.replace(/\. \. \./g, "...");
-            text = addSpacesAroundSingleQuotes(text);
-            return text;
-        }
-
-        function addSpacesAroundSingleQuotes(text) {
-            return text.replace(/(\B')(?=\w)|(?<=\w)('\B)/g, "$1 $2");
-        }
-
-        function splitTextIntoBlocks(text, maxLength) {
-            const blocks = [];
-            let currentBlock = "";
-            const sentences = text.split(/(?<=\.|\?|!)(?=\s)/g);
-
-            for (let i = 0; i < sentences.length; i++) {
-                const sentence = sentences[i].trim();
-                if ((currentBlock.length + sentence.length + 1) <= maxLength) {
-                    currentBlock += sentence + " ";
-                } else {
-                    if (currentBlock.trim().length > 0) {
-                        blocks.push(currentBlock.trim());
-                    }
-                    currentBlock = sentence + " ";
-                }
-            }
-
-            if (currentBlock.trim().length > 0) {
-                blocks.push(currentBlock.trim());
-            }
-
-            return blocks;
-        }
-
-        function formatTimestamp(seconds) {
-            const date = new Date(seconds * 1000);
-            const hours = String(date.getUTCHours()).padStart(2, '0');
-            const minutes = String(date.getUTCMinutes()).padStart(2, '0');
-            const secs = String(date.getUTCSeconds()).padStart(2, '0');
-            const millis = String(date.getUTCMilliseconds()).padStart(3, '0');
-            return `${hours}:${minutes}:${secs},${millis}`;
-        }
-
-        function updatePreview(blocks) {
-            const previewDiv = document.getElementById('preview');
-            previewDiv.innerHTML = '';
-            blocks.forEach((block, index) => {
-                const previewItem = document.createElement('div');
-                previewItem.textContent = `Bloco ${index + 1}: ${block}`;
-                previewDiv.appendChild(previewItem);
-            });
         }
 
         async function exportToPdf() {
             const { jsPDF } = window.jspdf;
-            const fileName = document.getElementById('fileName').value || 'documento';
+            const fileName = fileNameInput.value || 'documento';
 
             const doc = new jsPDF();
-            const blocks = document.querySelectorAll('.block');
+            const blocks = blocksDiv.querySelectorAll('.block-content');
 
             if (blocks.length > 0) {
-                let y = 10; // posição inicial
+                let y = 10;
 
                 blocks.forEach((block, index) => {
-                    const blockContent = block.querySelector('.srt').innerText;
+                    const blockContent = block.innerText.trim();
                     const blockInfo = `Bloco ${index + 1}\n${blockContent}`;
-                    
-                    // Adiciona o texto do bloco ao PDF
-                    const lines = doc.splitTextToSize(blockInfo, 180); // Divide o texto em linhas com largura máxima de 180 unidades
+
+                    const lines = doc.splitTextToSize(blockInfo, 180);
                     lines.forEach(line => {
                         doc.text(line, 10, y);
                         y += 10;
 
-                        // Adiciona nova página se necessário
                         if (y > 270) {
                             doc.addPage();
                             y = 10;
                         }
                     });
 
-                    y += 10; // Adiciona um espaço após cada bloco
+                    y += 10;
                 });
             } else {
-                const text = document.getElementById('textInput').value;
-                const lines = doc.splitTextToSize(text, 180); // Divide o texto em linhas com largura máxima de 180 unidades
+                const text = textInput.value;
+                const lines = doc.splitTextToSize(text, 180);
 
-                let y = 10; // posição inicial
+                let y = 10;
 
                 lines.forEach((line) => {
-                    // Adiciona o texto ao PDF
                     doc.text(line, 10, y);
-                    
-                    // Atualiza a posição para a próxima linha
                     y += 10;
 
-                    // Adiciona nova página se necessário
                     if (y > 270) {
                         doc.addPage();
                         y = 10;
@@ -583,8 +2661,250 @@
                 });
             }
 
-            // Salva o PDF com nome definido pelo usuário
             doc.save(`${fileName}.pdf`);
+
+            if (clearAfterExportCheckbox.checked) {
+                resetForm();
+            }
+        }
+
+        async function mergeSrtFiles() {
+            const fileInput = document.getElementById('srtFiles');
+            const statusDiv = document.getElementById('mergeStatus');
+            const files = fileInput.files;
+
+            if (files.length < 2) {
+                statusDiv.textContent = 'Selecione pelo menos 2 arquivos.';
+                return;
+            }
+
+            statusDiv.textContent = 'Processando...';
+
+            try {
+                const srtContents = [];
+                for (const file of files) {
+                    const content = await file.text();
+                    srtContents.push({ name: file.name, content });
+                }
+
+                srtContents.sort((a, b) => a.name.localeCompare(b.name));
+
+                let mergedContent = '';
+                let blockIndex = 1;
+                let timeOffset = 0;
+
+                for (const srt of srtContents) {
+                    const blocks = parseSrt(srt.content);
+                    for (const block of blocks) {
+                        const startSeconds = parseTimestamp(block.start) + timeOffset;
+                        const endSeconds = parseTimestamp(block.end) + timeOffset;
+                        mergedContent += `${blockIndex}\n`;
+                        mergedContent += `${formatTimestamp(startSeconds)} --> ${formatTimestamp(endSeconds)}\n`;
+                        mergedContent += `${block.text}\n\n`;
+                        blockIndex++;
+                    }
+                    if (blocks.length > 0) {
+                        timeOffset = parseTimestamp(blocks[blocks.length - 1].end) + timeOffset + 1;
+                    }
+                }
+
+                const blob = new Blob([mergedContent.trim()], { type: 'text/srt' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'merged.srt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                statusDiv.textContent = `${files.length} arquivos unidos!`;
+                fileInput.value = '';
+            } catch (error) {
+                statusDiv.textContent = 'Erro: ' + error.message;
+            }
+        }
+
+        function parseSrt(content) {
+            const blocks = [];
+            const lines = content.split('\n');
+            let i = 0;
+
+            while (i < lines.length) {
+                while (i < lines.length && (lines[i].trim() === '' || /^\d+$/.test(lines[i].trim()))) i++;
+                if (i >= lines.length) break;
+
+                const timestampLine = lines[i].trim();
+                const timestampMatch = timestampLine.match(/(\d{2}:\d{2}:\d{2},\d{3})\s*-->\s*(\d{2}:\d{2}:\d{2},\d{3})/);
+
+                if (timestampMatch) {
+                    const start = timestampMatch[1];
+                    const end = timestampMatch[2];
+                    i++;
+
+                    let text = '';
+                    while (i < lines.length && lines[i].trim() !== '' && !/^\d+$/.test(lines[i].trim()) && !lines[i].includes('-->')) {
+                        text += (text ? '\n' : '') + lines[i].trim();
+                        i++;
+                    }
+
+                    if (text) blocks.push({ start, end, text });
+                } else {
+                    i++;
+                }
+            }
+
+            return blocks;
+        }
+
+        function parseTimestamp(timestamp) {
+            const parts = timestamp.split(':');
+            const hours = parseInt(parts[0], 10);
+            const minutes = parseInt(parts[1], 10);
+            const secondsParts = parts[2].split(',');
+            const seconds = parseInt(secondsParts[0], 10);
+            const milliseconds = parseInt(secondsParts[1], 10);
+            return hours * 3600 + minutes * 60 + seconds + milliseconds / 1000;
+        }
+
+        function saveState() {
+            try {
+                const state = {
+                    fileName: fileNameInput.value,
+                    textInput: textInput.value,
+                    charCount: charCountInput.value,
+                    wordCount: wordCountInput.value,
+                    readingRate: readingRateInput.value,
+                    timestamp: Date.now()
+                };
+                localStorage.setItem('otimizadorGoldState', JSON.stringify(state));
+            } catch (e) {}
+        }
+
+        function restoreState() {
+            try {
+                const savedState = localStorage.getItem('otimizadorGoldState');
+                if (!savedState) return;
+
+                const state = JSON.parse(savedState);
+                if (Date.now() - state.timestamp > 3600000) {
+                    localStorage.removeItem('otimizadorGoldState');
+                    return;
+                }
+
+                if (state.fileName) fileNameInput.value = state.fileName;
+                if (state.textInput) textInput.value = state.textInput;
+                if (state.charCount) charCountInput.value = state.charCount;
+                if (state.wordCount) wordCountInput.value = state.wordCount;
+                if (state.readingRate) readingRateInput.value = state.readingRate;
+            } catch (e) {}
+        }
+
+        restoreState();
+        setInterval(saveState, 5000);
+    });
+    </script>
+
+    <!-- Help Accordion Interactive Script -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const accordion = document.getElementById('helpAccordion');
+
+        if (!accordion) return;
+
+        // Arrow indicator element
+        let arrowIndicator = null;
+
+        function createArrowIndicator() {
+            const arrow = document.createElement('div');
+            arrow.className = 'field-arrow';
+            arrow.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M13 5l7 7-7 7" stroke="#ff6b35" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5 12h15" stroke="#ff6b35" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+            `;
+            arrow.style.display = 'none';
+            document.body.appendChild(arrow);
+            return arrow;
+        }
+
+        arrowIndicator = createArrowIndicator();
+
+        // Toggle accordion item and show field automatically
+        accordion.querySelectorAll('.help-item-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.closest('.help-item');
+                const wasActive = item.classList.contains('active');
+                const targetSelector = item.dataset.target;
+
+                // Close all
+                accordion.querySelectorAll('.help-item').forEach(i => i.classList.remove('active'));
+
+                // Remove previous highlights
+                document.querySelectorAll('.field-highlight').forEach(el => {
+                    el.classList.remove('field-highlight');
+                });
+
+                // Open clicked if it wasn't active and show field
+                if (!wasActive) {
+                    item.classList.add('active');
+
+                    // Auto-show the target field
+                    if (targetSelector) {
+                        const targetElement = document.querySelector(targetSelector);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            setTimeout(() => {
+                                targetElement.classList.add('field-highlight');
+                                showArrowAtElement(targetElement);
+                                setTimeout(() => {
+                                    targetElement.classList.remove('field-highlight');
+                                    hideArrow();
+                                }, 2500);
+                            }, 300);
+                        }
+                    }
+                } else {
+                    hideArrow();
+                }
+            });
+        });
+
+        // Show arrow pointing to element
+        function showArrowAtElement(element) {
+            if (!arrowIndicator) return;
+
+            const rect = element.getBoundingClientRect();
+            const arrowX = rect.left - 40;
+            const arrowY = rect.top + (rect.height / 2) - 16;
+
+            arrowIndicator.style.left = `${arrowX}px`;
+            arrowIndicator.style.top = `${arrowY}px`;
+            arrowIndicator.style.display = 'block';
+        }
+
+        function hideArrow() {
+            if (arrowIndicator) {
+                arrowIndicator.style.display = 'none';
+            }
+        }
+
+        // Hide arrow on scroll
+        window.addEventListener('scroll', hideArrow);
+
+        // Collapsible Help Card
+        const helpCardToggle = document.getElementById('helpCardToggle');
+        const helpCard = document.getElementById('helpCard');
+
+        if (helpCardToggle && helpCard) {
+            // Start collapsed by default
+            helpCard.classList.add('collapsed');
+
+            helpCardToggle.addEventListener('click', () => {
+                helpCard.classList.toggle('collapsed');
+                hideArrow();
+            });
         }
 
         // Theme Switcher - 3 temas ciclicos
@@ -609,9 +2929,9 @@
         if (currentThemeIndex === -1) currentThemeIndex = 0;
 
         function applyTheme(theme) {
-            document.body.classList.remove('retro-theme', 'classic-theme');
-            if (theme === 'retro') document.body.classList.add('retro-theme');
+            document.body.classList.remove('classic-theme', 'retro-theme');
             if (theme === 'classic') document.body.classList.add('classic-theme');
+            if (theme === 'retro') document.body.classList.add('retro-theme');
 
             themeIcon.innerHTML = THEME_ICONS[theme];
             themeLabel.textContent = THEME_LABELS[theme];
@@ -624,6 +2944,7 @@
             currentThemeIndex = (currentThemeIndex + 1) % THEMES.length;
             applyTheme(THEMES[currentThemeIndex]);
         });
+    });
     </script>
 </body>
 </html>
