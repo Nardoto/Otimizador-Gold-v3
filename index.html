@@ -73,7 +73,7 @@
             --shadow-primary: 0 4px 20px rgba(218, 165, 32, 0.3);
         }
 
-        /* Ocultar sidebars no tema retro */
+        /* Ocultar sidebars e simplificar layout no tema retro */
         body.retro-theme .sidebar-left,
         body.retro-theme .sidebar-right {
             display: none !important;
@@ -82,6 +82,70 @@
         body.retro-theme .main-layout {
             grid-template-columns: 1fr;
             max-width: 900px;
+            padding: 20px;
+        }
+
+        /* Simplificar header no tema retro */
+        body.retro-theme .header::before {
+            display: none;
+        }
+
+        body.retro-theme .header {
+            padding: 20px;
+        }
+
+        body.retro-theme .title {
+            font-size: 2rem;
+        }
+
+        body.retro-theme .subtitle {
+            display: none;
+        }
+
+        /* Esconder elementos desnecessários no retro */
+        body.retro-theme #statsCard,
+        body.retro-theme .division-label,
+        body.retro-theme .input-mini label {
+            font-size: 0.9rem;
+            font-weight: normal;
+        }
+
+        /* Botões maiores e mais simples no retro */
+        body.retro-theme button {
+            padding: 15px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        body.retro-theme .btn-sm,
+        body.retro-theme .input-mini button {
+            padding: 10px 15px;
+            font-size: 14px;
+        }
+
+        /* Cards mais simples */
+        body.retro-theme .card {
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(184, 134, 11, 0.2);
+        }
+
+        body.retro-theme .card-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        /* Inputs e textareas amarelos */
+        body.retro-theme input[type="text"],
+        body.retro-theme input[type="number"],
+        body.retro-theme textarea {
+            background-color: #FFD700 !important;
+            border: 1px solid #B8860B;
+            color: #4B0082;
+            font-size: 16px;
+        }
+
+        body.retro-theme textarea {
+            min-height: 200px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
