@@ -2269,7 +2269,7 @@
         const ALL_ABBREVIATIONS = new Set([...ABBREVIATIONS.en, ...ABBREVIATIONS.pt, ...ABBREVIATIONS.es].map(a => a.toLowerCase().replace(/\./g, '')));
 
         // PAUSE_TIME agora é lido do input #pauseTime
-        const TOLERANCE_PERCENT = 0.15;
+        const TOLERANCE_PERCENT = 0;  // LIMITE RIGIDO - nunca ultrapassa maxLength
         const MIN_BLOCK_PERCENT = 0.5;
 
         let currentDivisionMode = null;
