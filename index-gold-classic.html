@@ -729,7 +729,11 @@
                 <div class="options-grid">
                     <div class="option-item">
                         <label for="readingRate">Caracteres/seg:</label>
-                        <input type="number" id="readingRate" value="14" min="1" max="50">
+                        <input type="number" id="readingRate" value="10" min="1" max="50">
+                    </div>
+                    <div class="option-item">
+                        <label for="pauseTime">Intervalo (seg):</label>
+                        <input type="number" id="pauseTime" value="1" min="0" max="10" step="0.1">
                     </div>
                     <div class="option-item">
                         <input type="checkbox" id="filterNumbers">
@@ -1282,7 +1286,7 @@
 
         const ALL_ABBREVIATIONS = new Set([...ABBREVIATIONS.en, ...ABBREVIATIONS.pt, ...ABBREVIATIONS.es].map(a => a.toLowerCase().replace(/\./g, '')));
 
-        const PAUSE_TIME = 0.9;
+        // PAUSE_TIME agora é lido do input #pauseTime
         const TOLERANCE_PERCENT = 0.15;
         const MIN_BLOCK_PERCENT = 0.5;
 
@@ -1298,6 +1302,7 @@
         const filterNumbersCheckbox = document.getElementById('filterNumbers');
         const clearAfterExportCheckbox = document.getElementById('clearAfterExport');
         const ignoreTextInput = document.getElementById('ignoreText');
+        const pauseTimeInput = document.getElementById('pauseTime');
         const blocksDiv = document.getElementById('blocks');
         const exportSrtBtn = document.getElementById('exportSrtBtn');
         const exportTxtBtn = document.getElementById('exportTxtBtn');
@@ -1623,10 +1628,11 @@
             const totalChars = originalText.length;
             const totalWords = originalText.split(/\s+/).filter(w => w.length > 0).length;
             const readingRate = parseInt(readingRateInput.value, 10);
+            const pauseTime = parseFloat(pauseTimeInput.value) || 0;
 
             let totalDuration = 0;
             blocks.forEach((block, index) => {
-                totalDuration += block.length / readingRate + PAUSE_TIME;
+                totalDuration += block.length / readingRate + pauseTime;
                 createBlock(block, index + 1);
             });
 
@@ -1788,6 +1794,7 @@
 
         function exportToSrt() {
             const readingRate = parseInt(readingRateInput.value, 10);
+            const pauseTime = parseFloat(pauseTimeInput.value) || 0;
             const blocks = blocksDiv.querySelectorAll('.block-content');
             let srtContent = '';
             let currentTime = 0;
@@ -1799,7 +1806,7 @@
                 const startTime = formatTimestamp(currentTime);
                 const endTime = formatTimestamp(currentTime + duration);
                 srtContent += `${index + 1}\n${startTime} --> ${endTime}\n${text}\n\n`;
-                currentTime += duration + PAUSE_TIME;
+                currentTime += duration + pauseTime;
             });
 
             const fileName = fileNameInput.value || 'subtitles';
