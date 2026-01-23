@@ -52,6 +52,39 @@
             --shadow-primary: 0 4px 20px rgba(218, 165, 32, 0.3);
         }
 
+        /* Retro Theme */
+        body.retro-theme {
+            --bg-dark: #FFFFFF;
+            --bg-card: #FFFEF9;
+            --bg-card-hover: #FFD700;
+            --bg-input: #FFD700;
+            --primary: #DAA520;
+            --primary-light: #FFD700;
+            --primary-dark: #B8860B;
+            --success: #22c55e;
+            --success-dark: #16a34a;
+            --danger: #dc3545;
+            --text-primary: #4B0082;
+            --text-secondary: #4B0082;
+            --text-muted: #999;
+            --border-light: rgba(184, 134, 11, 0.3);
+            --gradient-primary: linear-gradient(135deg, #DAA520 0%, #FFD700 100%);
+            --gradient-glow: radial-gradient(ellipse at center, rgba(218, 165, 32, 0.1) 0%, transparent 70%);
+            --shadow-primary: 0 4px 20px rgba(218, 165, 32, 0.3);
+        }
+
+        /* Ocultar sidebars no tema retro */
+        body.retro-theme .help-section,
+        body.retro-theme .comments-section,
+        body.retro-theme .rating-section {
+            display: none !important;
+        }
+
+        body.retro-theme .main-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
@@ -1326,6 +1359,9 @@
                     <button class="btn btn-success" id="exportTxtBtn" disabled>
                         Exportar TXT
                     </button>
+                    <button class="btn btn-success" id="exportPdfBtn" disabled>
+                        Exportar PDF
+                    </button>
                     <button class="btn btn-secondary" id="resetBtn">
                         Limpar
                     </button>
@@ -1876,6 +1912,7 @@
         const blocksDiv = document.getElementById('blocks');
         const exportSrtBtn = document.getElementById('exportSrtBtn');
         const exportTxtBtn = document.getElementById('exportTxtBtn');
+        const exportPdfBtn = document.getElementById('exportPdfBtn');
         const charDivisionRow = document.getElementById('charDivisionRow');
         const wordDivisionRow = document.getElementById('wordDivisionRow');
 
@@ -1897,6 +1934,7 @@
         document.getElementById('resetBtn').addEventListener('click', resetForm);
         exportSrtBtn.addEventListener('click', exportToSrt);
         exportTxtBtn.addEventListener('click', exportToTxt);
+        exportPdfBtn.addEventListener('click', exportToPdf);
         document.getElementById('addBlockBtn').addEventListener('click', () => createBlock(''));
 
         document.getElementById('mergeSrtsBtn').addEventListener('click', mergeSrtFiles);
@@ -1911,6 +1949,7 @@
             wordDivisionRow.classList.toggle('active', mode === 'words');
             exportSrtBtn.disabled = false;
             exportTxtBtn.disabled = false;
+            exportPdfBtn.disabled = false;
         }
 
         function formatText(text) {
@@ -2352,6 +2391,7 @@
             wordDivisionRow.classList.remove('active');
             exportSrtBtn.disabled = true;
             exportTxtBtn.disabled = true;
+            exportPdfBtn.disabled = true;
         }
 
         function formatTimestamp(totalSeconds) {
@@ -2409,6 +2449,61 @@
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
+
+            if (clearAfterExportCheckbox.checked) {
+                resetForm();
+            }
+        }
+
+        async function exportToPdf() {
+            const { jsPDF } = window.jspdf;
+            const fileName = fileNameInput.value || 'documento';
+
+            const doc = new jsPDF();
+            const blocks = blocksDiv.querySelectorAll('.block-content');
+
+            if (blocks.length > 0) {
+                let y = 10;
+
+                blocks.forEach((block, index) => {
+                    const blockContent = block.innerText.trim();
+                    const blockInfo = `Bloco ${index + 1}\n${blockContent}`;
+
+                    const lines = doc.splitTextToSize(blockInfo, 180);
+                    lines.forEach(line => {
+                        doc.text(line, 10, y);
+                        y += 10;
+
+                        if (y > 270) {
+                            doc.addPage();
+                            y = 10;
+                        }
+                    });
+
+                    y += 10;
+                });
+            } else {
+                const text = textInput.value;
+                const lines = doc.splitTextToSize(text, 180);
+
+                let y = 10;
+
+                lines.forEach((line) => {
+                    doc.text(line, 10, y);
+                    y += 10;
+
+                    if (y > 270) {
+                        doc.addPage();
+                        y = 10;
+                    }
+                });
+            }
+
+            doc.save(`${fileName}.pdf`);
+
+            if (clearAfterExportCheckbox.checked) {
+                resetForm();
+            }
         }
 
         async function mergeSrtFiles() {
@@ -2650,31 +2745,42 @@
             });
         }
 
-        // Theme Switcher
+        // Theme Switcher - 3 temas ciclicos
         const themeSwitcher = document.getElementById('themeSwitcher');
         const themeIcon = document.getElementById('themeIcon');
         const themeLabel = document.getElementById('themeLabel');
 
-        // Carregar tema salvo
+        const THEMES = ['modern', 'classic', 'retro'];
+        const THEME_LABELS = {
+            modern: 'Light',
+            classic: 'Retro',
+            retro: 'Dark'
+        };
+        const THEME_ICONS = {
+            modern: '&#9790;',
+            classic: '&#9733;',
+            retro: '&#9788;'
+        };
+
         const savedTheme = localStorage.getItem('otimizador-theme') || 'modern';
-        if (savedTheme === 'classic') {
-            document.body.classList.add('classic-theme');
-            themeIcon.innerHTML = '&#9790;';
-            themeLabel.textContent = 'Moderno';
+        let currentThemeIndex = THEMES.indexOf(savedTheme);
+        if (currentThemeIndex === -1) currentThemeIndex = 0;
+
+        function applyTheme(theme) {
+            document.body.classList.remove('classic-theme', 'retro-theme');
+            if (theme === 'classic') document.body.classList.add('classic-theme');
+            if (theme === 'retro') document.body.classList.add('retro-theme');
+
+            themeIcon.innerHTML = THEME_ICONS[theme];
+            themeLabel.textContent = THEME_LABELS[theme];
+            localStorage.setItem('otimizador-theme', theme);
         }
 
-        themeSwitcher.addEventListener('click', () => {
-            const isClassic = document.body.classList.toggle('classic-theme');
+        applyTheme(THEMES[currentThemeIndex]);
 
-            if (isClassic) {
-                themeIcon.innerHTML = '&#9790;';
-                themeLabel.textContent = 'Moderno';
-                localStorage.setItem('otimizador-theme', 'classic');
-            } else {
-                themeIcon.innerHTML = '&#9788;';
-                themeLabel.textContent = 'Classico';
-                localStorage.setItem('otimizador-theme', 'modern');
-            }
+        themeSwitcher.addEventListener('click', () => {
+            currentThemeIndex = (currentThemeIndex + 1) % THEMES.length;
+            applyTheme(THEMES[currentThemeIndex]);
         });
     });
     </script>
