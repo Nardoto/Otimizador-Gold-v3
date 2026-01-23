@@ -704,7 +704,11 @@
             <div class="division-section">
                 <div class="division-row" id="charDivisionRow">
                     <label for="charCount">Dividir por Caracteres:</label>
-                    <input type="number" id="charCount" value="490" min="1">
+                    <input type="number" id="charCount" value="490" min="1" style="width: 80px;">
+                    <label for="readingRate">c/s:</label>
+                    <input type="number" id="readingRate" value="10" min="1" max="50" style="width: 60px;">
+                    <label for="pauseTime">Intervalo (s):</label>
+                    <input type="number" id="pauseTime" value="1" min="0" max="10" step="0.1" style="width: 60px;">
                     <button id="divideByCharsBtn">Dividir</button>
                 </div>
 
@@ -727,14 +731,6 @@
             <!-- Options Panel -->
             <div id="optionsPanel" class="options-panel">
                 <div class="options-grid">
-                    <div class="option-item">
-                        <label for="readingRate">Caracteres/seg:</label>
-                        <input type="number" id="readingRate" value="10" min="1" max="50">
-                    </div>
-                    <div class="option-item">
-                        <label for="pauseTime">Intervalo (seg):</label>
-                        <input type="number" id="pauseTime" value="1" min="0" max="10" step="0.1">
-                    </div>
                     <div class="option-item">
                         <input type="checkbox" id="filterNumbers">
                         <label for="filterNumbers">Filtrar numeros</label>
@@ -1770,7 +1766,8 @@
             fileNameInput.value = '';
             charCountInput.value = '490';
             wordCountInput.value = '50';
-            readingRateInput.value = '14';
+            readingRateInput.value = '10';
+            pauseTimeInput.value = '1';
             ignoreTextInput.value = '';
             filterNumbersCheckbox.checked = false;
             clearAfterExportCheckbox.checked = false;
@@ -1948,6 +1945,7 @@
                     charCount: charCountInput.value,
                     wordCount: wordCountInput.value,
                     readingRate: readingRateInput.value,
+                    pauseTime: pauseTimeInput.value,
                     timestamp: Date.now()
                 };
                 localStorage.setItem('otimizadorGoldState', JSON.stringify(state));
@@ -1970,6 +1968,7 @@
                 if (state.charCount) charCountInput.value = state.charCount;
                 if (state.wordCount) wordCountInput.value = state.wordCount;
                 if (state.readingRate) readingRateInput.value = state.readingRate;
+                if (state.pauseTime) pauseTimeInput.value = state.pauseTime;
             } catch (e) {}
         }
 
