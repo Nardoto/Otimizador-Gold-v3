@@ -392,6 +392,99 @@
             margin: 0;
         }
 
+        .comment-reply-btn {
+            font-size: 0.75rem;
+            color: #DAA520;
+            background: none;
+            border: 1px solid #B8860B;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-left: auto;
+            margin: 0;
+        }
+
+        .comment-reply-btn:hover {
+            background: #FFD700;
+            color: #4B0082;
+        }
+
+        .comment-replies {
+            margin-left: 40px;
+            margin-top: 12px;
+            padding-left: 12px;
+            border-left: 3px solid #B8860B;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .reply-form {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: #FFFACD;
+            border-radius: 8px;
+            border: 2px solid #B8860B;
+        }
+
+        .reply-form.show {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .reply-form textarea {
+            min-height: 60px;
+            padding: 8px;
+            font-size: 0.9rem;
+            background: white;
+            border: 2px solid #B8860B;
+            border-radius: 5px;
+            color: #4B0082;
+            resize: vertical;
+        }
+
+        .reply-form textarea:focus {
+            outline: none;
+            border-color: #DAA520;
+            box-shadow: 0 0 5px #DAA520;
+        }
+
+        .reply-form-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        .reply-form-actions button {
+            padding: 6px 14px;
+            font-size: 0.85rem;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+        }
+
+        .btn-secondary {
+            background-color: #999;
+        }
+
+        .btn-secondary:hover {
+            background-color: #777;
+        }
+
+        .btn-primary {
+            background-color: #DAA520;
+        }
+
+        .btn-primary:hover {
+            background-color: #FFD700;
+            color: #4B0082;
+        }
+
         .comment-text {
             color: #4B0082;
             line-height: 1.4;
@@ -625,7 +718,8 @@
             <!-- Action Buttons -->
             <div class="text-center">
                 <button id="toggleOptionsBtn">Opcoes Avancadas</button>
-                <button id="exportBtn" disabled>Exportar SRT + TXT</button>
+                <button id="exportSrtBtn" disabled>Exportar SRT</button>
+                <button id="exportTxtBtn" disabled>Exportar TXT</button>
                 <button id="resetBtn">Redefinir</button>
                 <button id="addBlockBtn">Adicionar Bloco</button>
             </div>
@@ -733,14 +827,14 @@
                     </div>
                 </div>
 
-                <div class="help-item" data-target="#exportBtn">
+                <div class="help-item" data-target="#exportSrtBtn">
                     <div class="help-item-header">
                         <span class="help-icon">&#9654;</span>
                         <span class="help-item-title">4. Exporte os arquivos</span>
                     </div>
                     <div class="help-item-content">
                         <div class="help-item-text">
-                            Clique em "Exportar SRT + TXT" para baixar os arquivos prontos.
+                            Use os botoes "Exportar SRT" e "Exportar TXT" para baixar os arquivos separadamente.
                         </div>
                     </div>
                 </div>
@@ -921,7 +1015,7 @@
 
         async function loadComments() {
             try {
-                const q = query(collection(db, 'otimizador-gold-comments'), orderBy('createdAt', 'desc'), limit(30));
+                const q = query(collection(db, 'otimizador-gold-comments'), orderBy('createdAt', 'desc'), limit(100));
                 const snapshot = await getDocs(q);
 
                 if (snapshot.empty) {
@@ -930,30 +1024,132 @@
                     return;
                 }
 
-                commentsCount.textContent = `(${snapshot.size})`;
-                let html = '';
+                // Organizar comentarios e respostas
+                const allComments = [];
                 snapshot.forEach((doc) => {
-                    const data = doc.data();
-                    const date = data.createdAt ? formatDate(data.createdAt.toDate()) : 'Agora';
-                    html += `
-                        <div class="comment-item">
-                            <div class="comment-header">
-                                ${data.authorPhoto ? `<img src="${data.authorPhoto}" alt="" class="comment-photo" onerror="this.style.display='none'">` : ''}
-                                <div class="comment-meta">
-                                    <div class="comment-author">${escapeHtml(data.authorName.split(' ')[0])}</div>
-                                    <div class="comment-date">${date}</div>
-                                </div>
-                                ${currentUser && currentUser.uid === data.authorId ? `<button class="comment-delete-btn" onclick="deleteComment('${doc.id}')">excluir</button>` : ''}
-                            </div>
-                            <div class="comment-text">${escapeHtml(data.text)}</div>
-                        </div>
-                    `;
+                    allComments.push({ id: doc.id, ...doc.data() });
+                });
+
+                // Separar comentarios principais e respostas
+                const mainComments = allComments.filter(c => !c.parentId);
+                const replies = allComments.filter(c => c.parentId);
+
+                // Contar apenas comentarios principais
+                commentsCount.textContent = `(${mainComments.length})`;
+
+                let html = '';
+                mainComments.forEach((comment) => {
+                    html += renderComment(comment, replies);
                 });
                 commentsList.innerHTML = html;
             } catch (error) {
                 commentsList.innerHTML = '<div class="no-comments">Erro ao carregar</div>';
             }
         }
+
+        function renderComment(comment, allReplies) {
+            const date = comment.createdAt ? formatDate(comment.createdAt.toDate()) : 'Agora';
+            const commentReplies = allReplies.filter(r => r.parentId === comment.id);
+
+            let html = `
+                <div class="comment-item" data-comment-id="${comment.id}">
+                    <div class="comment-header">
+                        ${comment.authorPhoto ? `<img src="${comment.authorPhoto}" alt="" class="comment-photo" onerror="this.style.display='none'">` : ''}
+                        <div class="comment-meta">
+                            <div class="comment-author">${escapeHtml(comment.authorName.split(' ')[0])}</div>
+                            <div class="comment-date">${date}</div>
+                        </div>
+                        <button class="comment-reply-btn" onclick="toggleReplyForm('${comment.id}')">Responder</button>
+                        ${currentUser && currentUser.uid === comment.authorId ? `<button class="comment-delete-btn" onclick="deleteComment('${comment.id}')">excluir</button>` : ''}
+                    </div>
+                    <div class="comment-text">${escapeHtml(comment.text)}</div>
+
+                    <!-- Reply Form -->
+                    <div class="reply-form" id="reply-form-${comment.id}">
+                        <textarea id="reply-input-${comment.id}" placeholder="Escreva sua resposta..."></textarea>
+                        <div class="reply-form-actions">
+                            <button class="btn btn-secondary btn-sm" onclick="cancelReply('${comment.id}')">Cancelar</button>
+                            <button class="btn btn-primary btn-sm" onclick="submitReply('${comment.id}')">Enviar</button>
+                        </div>
+                    </div>
+
+                    <!-- Replies -->
+                    ${commentReplies.length > 0 ? `<div class="comment-replies">${commentReplies.map(reply => renderReply(reply)).join('')}</div>` : ''}
+                </div>
+            `;
+            return html;
+        }
+
+        function renderReply(reply) {
+            const date = reply.createdAt ? formatDate(reply.createdAt.toDate()) : 'Agora';
+            return `
+                <div class="comment-item">
+                    <div class="comment-header">
+                        ${reply.authorPhoto ? `<img src="${reply.authorPhoto}" alt="" class="comment-photo" onerror="this.style.display='none'">` : ''}
+                        <div class="comment-meta">
+                            <div class="comment-author">${escapeHtml(reply.authorName.split(' ')[0])}</div>
+                            <div class="comment-date">${date}</div>
+                        </div>
+                        ${currentUser && currentUser.uid === reply.authorId ? `<button class="comment-delete-btn" onclick="deleteComment('${reply.id}')">excluir</button>` : ''}
+                    </div>
+                    <div class="comment-text">${escapeHtml(reply.text)}</div>
+                </div>
+            `;
+        }
+
+        window.toggleReplyForm = function(commentId) {
+            const form = document.getElementById(`reply-form-${commentId}`);
+            const input = document.getElementById(`reply-input-${commentId}`);
+
+            // Fechar outros forms abertos
+            document.querySelectorAll('.reply-form.show').forEach(f => {
+                if (f.id !== `reply-form-${commentId}`) {
+                    f.classList.remove('show');
+                }
+            });
+
+            form.classList.toggle('show');
+            if (form.classList.contains('show')) {
+                input.focus();
+            }
+        };
+
+        window.cancelReply = function(commentId) {
+            const form = document.getElementById(`reply-form-${commentId}`);
+            const input = document.getElementById(`reply-input-${commentId}`);
+            form.classList.remove('show');
+            input.value = '';
+        };
+
+        window.submitReply = async function(commentId) {
+            if (!currentUser) {
+                alert('Faca login para responder!');
+                return;
+            }
+
+            const input = document.getElementById(`reply-input-${commentId}`);
+            const text = input.value.trim();
+
+            if (!text) return;
+
+            try {
+                await addDoc(collection(db, 'otimizador-gold-comments'), {
+                    text: text,
+                    parentId: commentId,
+                    authorId: currentUser.uid,
+                    authorName: currentUser.displayName || 'Usuario',
+                    authorPhoto: currentUser.photoURL || '',
+                    authorEmail: currentUser.email,
+                    createdAt: serverTimestamp()
+                });
+
+                input.value = '';
+                cancelReply(commentId);
+                await loadComments();
+            } catch (error) {
+                alert('Erro ao enviar resposta: ' + error.message);
+            }
+        };
 
         function formatDate(date) {
             const now = new Date();
@@ -1103,7 +1299,8 @@
         const clearAfterExportCheckbox = document.getElementById('clearAfterExport');
         const ignoreTextInput = document.getElementById('ignoreText');
         const blocksDiv = document.getElementById('blocks');
-        const exportBtn = document.getElementById('exportBtn');
+        const exportSrtBtn = document.getElementById('exportSrtBtn');
+        const exportTxtBtn = document.getElementById('exportTxtBtn');
         const charDivisionRow = document.getElementById('charDivisionRow');
         const wordDivisionRow = document.getElementById('wordDivisionRow');
 
@@ -1123,7 +1320,8 @@
         });
 
         document.getElementById('resetBtn').addEventListener('click', resetForm);
-        document.getElementById('exportBtn').addEventListener('click', exportBoth);
+        exportSrtBtn.addEventListener('click', exportToSrt);
+        exportTxtBtn.addEventListener('click', exportToTxt);
         document.getElementById('addBlockBtn').addEventListener('click', () => createBlock(''));
 
         document.getElementById('mergeSrtsBtn').addEventListener('click', mergeSrtFiles);
@@ -1136,7 +1334,8 @@
             currentDivisionMode = mode;
             charDivisionRow.classList.toggle('active', mode === 'chars');
             wordDivisionRow.classList.toggle('active', mode === 'words');
-            exportBtn.disabled = false;
+            exportSrtBtn.disabled = false;
+            exportTxtBtn.disabled = false;
         }
 
         function formatText(text) {
@@ -1575,17 +1774,8 @@
             currentDivisionMode = null;
             charDivisionRow.classList.remove('active');
             wordDivisionRow.classList.remove('active');
-            exportBtn.disabled = true;
-        }
-
-        function exportBoth() {
-            if (!currentDivisionMode) {
-                showError('Primeiro divida o texto.');
-                return;
-            }
-            exportToSrt();
-            exportToTxt();
-            if (clearAfterExportCheckbox.checked) textInput.value = '';
+            exportSrtBtn.disabled = true;
+            exportTxtBtn.disabled = true;
         }
 
         function formatTimestamp(totalSeconds) {
