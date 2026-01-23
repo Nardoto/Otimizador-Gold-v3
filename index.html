@@ -1247,12 +1247,84 @@
         body.retro-theme .footer,
         body.retro-theme .card-title,
         body.retro-theme .card-title-icon,
-        body.retro-theme .division-section,
         body.retro-theme #statsCard,
         body.retro-theme .form-row,
         body.retro-theme .options-panel,
-        body.retro-theme #blocksCard {
+        body.retro-theme #blocksCard,
+        body.retro-theme #wordDivisionRow {
             display: none !important;
+        }
+
+        /* MOSTRAR CONTROLES DE DIVISAO NO MODO RETRO */
+        body.retro-theme .division-section {
+            display: block !important;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        body.retro-theme .division-section > label {
+            display: none;
+        }
+
+        body.retro-theme #charDivisionRow {
+            display: flex !important;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        body.retro-theme .division-label {
+            display: none;
+        }
+
+        body.retro-theme .division-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        body.retro-theme .input-mini {
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        body.retro-theme .input-mini label {
+            color: #4B0082;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        body.retro-theme .input-mini input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #B8860B;
+            border-radius: 5px;
+            background-color: #FFD700 !important;
+            color: #4B0082 !important;
+            text-align: center;
+        }
+
+        body.retro-theme #divideByCharsBtn {
+            width: 80%;
+            padding: 15px;
+            font-size: 16px;
+            background-color: #DAA520 !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        body.retro-theme #divideByCharsBtn:hover {
+            background-color: #FFD700 !important;
+            color: #4B0082 !important;
+            transform: translateY(-2px);
         }
 
         /* AJUSTAR LAYOUT NO MODO RETRO */
