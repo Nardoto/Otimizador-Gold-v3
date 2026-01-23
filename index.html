@@ -74,15 +74,14 @@
         }
 
         /* Ocultar sidebars no tema retro */
-        body.retro-theme .help-section,
-        body.retro-theme .comments-section,
-        body.retro-theme .rating-section {
+        body.retro-theme .sidebar-left,
+        body.retro-theme .sidebar-right {
             display: none !important;
         }
 
-        body.retro-theme .main-content {
+        body.retro-theme .main-layout {
+            grid-template-columns: 1fr;
             max-width: 900px;
-            margin: 0 auto;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
