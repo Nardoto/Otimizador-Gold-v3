@@ -73,79 +73,169 @@
             --shadow-primary: 0 4px 20px rgba(218, 165, 32, 0.3);
         }
 
-        /* Ocultar sidebars e simplificar layout no tema retro */
+        /* TEMA RETRO - Layout completamente simplificado */
         body.retro-theme .sidebar-left,
         body.retro-theme .sidebar-right {
             display: none !important;
         }
 
         body.retro-theme .main-layout {
-            grid-template-columns: 1fr;
+            display: block !important;
             max-width: 900px;
+            margin: 0 auto;
             padding: 20px;
         }
 
-        /* Simplificar header no tema retro */
         body.retro-theme .header::before {
             display: none;
         }
 
         body.retro-theme .header {
             padding: 20px;
+            text-align: center;
         }
 
         body.retro-theme .title {
             font-size: 2rem;
+            color: #DAA520;
+            font-family: Arial, sans-serif;
         }
 
         body.retro-theme .subtitle {
             display: none;
         }
 
-        /* Esconder elementos desnecessários no retro */
-        body.retro-theme #statsCard,
-        body.retro-theme .division-label,
-        body.retro-theme .input-mini label {
-            font-size: 0.9rem;
-            font-weight: normal;
+        body.retro-theme .theme-switcher {
+            background: #DAA520;
+            color: white;
+            border: none;
+            padding: 10px 20px;
         }
 
-        /* Botões maiores e mais simples no retro */
-        body.retro-theme button {
-            padding: 15px 20px;
-            font-size: 16px;
-            border-radius: 5px;
+        body.retro-theme .theme-switcher:hover {
+            background: #FFD700;
+            color: #4B0082;
         }
 
-        body.retro-theme .btn-sm,
-        body.retro-theme .input-mini button {
-            padding: 10px 15px;
-            font-size: 14px;
+        /* Esconder cards complexos - mostrar só o principal */
+        body.retro-theme .card:not(.card:first-of-type) {
+            display: block !important;
         }
 
-        /* Cards mais simples */
+        body.retro-theme #statsCard {
+            display: none !important;
+        }
+
         body.retro-theme .card {
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(184, 134, 11, 0.2);
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            padding: 0;
         }
 
         body.retro-theme .card-title {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
+            display: none;
         }
 
-        /* Inputs e textareas amarelos */
+        /* Inputs amarelos como original */
         body.retro-theme input[type="text"],
-        body.retro-theme input[type="number"],
-        body.retro-theme textarea {
-            background-color: #FFD700 !important;
-            border: 1px solid #B8860B;
-            color: #4B0082;
+        body.retro-theme input[type="number"] {
+            width: 80%;
+            padding: 10px;
             font-size: 16px;
+            border: 1px solid #B8860B;
+            border-radius: 5px;
+            background-color: #FFD700 !important;
+            color: #4B0082;
+            display: block;
+            margin: 10px auto;
         }
 
         body.retro-theme textarea {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #B8860B;
+            border-radius: 5px;
+            background-color: #FFD700 !important;
+            color: #4B0082;
             min-height: 200px;
+            display: block;
+            margin: 10px auto;
+        }
+
+        body.retro-theme label {
+            display: block;
+            text-align: center;
+            color: #4B0082;
+            margin-top: 10px;
+        }
+
+        /* Botões estilo original */
+        body.retro-theme button:not(.theme-switcher) {
+            width: 40%;
+            padding: 15px;
+            font-size: 16px;
+            background-color: #DAA520;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            display: block;
+            margin: 10px auto;
+        }
+
+        body.retro-theme button:not(.theme-switcher):hover {
+            background-color: #FFD700;
+            transform: translateY(-2px);
+        }
+
+        body.retro-theme .btn-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        body.retro-theme .btn-group button {
+            width: 40%;
+            margin: 5px 0;
+        }
+
+        /* Esconder elementos complexos */
+        body.retro-theme .division-section,
+        body.retro-theme .options-panel,
+        body.retro-theme #toggleOptionsBtn,
+        body.retro-theme #addBlockBtn,
+        body.retro-theme .help-accordion {
+            display: none !important;
+        }
+
+        /* Blocos amarelos estilo original */
+        body.retro-theme .block {
+            width: 80%;
+            padding: 15px;
+            background-color: #DAA520;
+            border: 1px solid #B8860B;
+            border-radius: 5px;
+            color: #FFFFFF;
+            margin: 10px auto;
+        }
+
+        body.retro-theme .block-header {
+            color: #FFFFFF;
+        }
+
+        body.retro-theme .block-content {
+            color: #FFFFFF;
+            background: transparent;
+        }
+
+        body.retro-theme #blocksCard {
+            background: transparent;
+            border: none;
+            box-shadow: none;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -2815,9 +2905,9 @@
 
         const THEMES = ['modern', 'classic', 'retro'];
         const THEME_LABELS = {
-            modern: 'Light',
+            modern: 'Light Mode',
             classic: 'Retro',
-            retro: 'Dark'
+            retro: 'Versao Moderna'
         };
         const THEME_ICONS = {
             modern: '&#9790;',
